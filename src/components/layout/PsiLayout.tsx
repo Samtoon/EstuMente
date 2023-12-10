@@ -4,10 +4,14 @@ import { ToastContainer } from "react-toastify";
 import Navbar from "@/components/navbar/Navbar";
 import { SideMenu } from "../ui/SideMenu";
 import { UiContext } from "@/context/ui/UiContext";
-import { useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
+interface Props {
+  title: string;
+  children: ReactNode;
+}
 
-export default function PsiLayout({ children, title }) {
+export default function PsiLayout ({ children, title }:Props) {
   const [isMenuOpen, toggleSideMenu] = useState(false)
   return(
     <>

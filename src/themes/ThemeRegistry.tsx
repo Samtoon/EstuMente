@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import createCache from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';
 import { CacheProvider } from '@emotion/react';
@@ -9,7 +9,13 @@ import { lightTheme } from './light-theme';
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
-export default function ThemeRegistry(props) {
+
+interface Props {
+  options: any;
+  children: ReactNode;
+}
+
+export default function ThemeRegistry(props: Props) {
   const { options, children } = props;
 
   const [{ cache, flush }] = useState(() => {
