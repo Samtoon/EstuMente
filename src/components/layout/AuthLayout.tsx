@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
   title: string;
+  children: any;
 }
 
 export const AuthLayout: FC<Props> = ({ children, title }) => {
