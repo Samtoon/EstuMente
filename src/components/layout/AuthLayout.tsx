@@ -1,7 +1,7 @@
 import { Box, AppBar, Toolbar, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import NextLink from "next/link";
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 //import { NavbarSingle } from "../navbar";
 //import { Footer } from "../ui";
 import { ToastContainer } from "react-toastify";
@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
   title: string;
-  children: any;
+  children: ReactNode;
 }
 
 export const AuthLayout: FC<Props> = ({ children, title }) => {
