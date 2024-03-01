@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import NextLink from "next/link";
 //import { signIn, getSession, getProviders } from "next-auth/react";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 //import { GetServerSideProps } from "next";
 import {
   Box,
@@ -60,6 +60,10 @@ const LoginPage: NextPage = () => {
 
     //await signIn("credentials", { email, password });
   };
+
+  function handleLogin(user: String) {
+    
+  }
 
   return (
     <AuthLayout title="Iniciar sesión">

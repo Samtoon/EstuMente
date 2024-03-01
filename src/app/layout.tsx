@@ -1,8 +1,6 @@
 import "../styles/globals.css"
 import CssBaseline from "@mui/material/CssBaseline"
-import { lightTheme } from "@/themes/light-theme";
-import { ThemeProvider } from "@mui/material";
-import ThemeRegistry from "@/themes/ThemeRegistry";
+import Providers from "@/providers/Providers";
 
 export const metadata = {
   title: 'Next.js',
@@ -17,9 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <CssBaseline />
-      <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
-      {/* {children} */}
+        <CssBaseline />
+        <Providers>
+          {children}
+        </Providers>
+        {/* {children} */}
       </body>
     </html>
   )

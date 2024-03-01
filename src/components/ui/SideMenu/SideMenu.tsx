@@ -1,4 +1,3 @@
-'use client'
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box/Box";
@@ -7,8 +6,10 @@ import Drawer from "@mui/material/Drawer/Drawer";
 import List from "@mui/material/List/List";
 import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText/ListItemText";
-import ListItem from "@mui/material/ListItem/ListItem";
+import ListItem from "@mui/material/ListItem";
+import NextLink from "next/link";
 import {
+  ListItemButton,
   ListSubheader,
 } from "@mui/material";
 import {
@@ -17,7 +18,10 @@ import {
   LogoutOutlined,
   SupervisedUserCircleOutlined,
 } from "@mui/icons-material";
-import { UiContext } from "../../context/ui/UiContext";
+import { UiContext } from "../../../contexts/ui/UiContext";
+import { useSession } from "next-auth/react";
+import { MenuItemPsychologist } from "./Items/MenuItemPsychologist";
+import { MenuItemPatient } from "./Items/MenuItemPatient";
 /*import { MenuItemPsychologist } from "./MenuItemPsychologist";
 import { MenuItemPatient } from "./MenuItemPatient";
 import { MenuItemAdmin } from "./MenuItemAdmin"; */
@@ -32,6 +36,7 @@ export const SideMenu = () => {
     router.push(url);
   }; */
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const { data: session, status } = useSession();
 
   return (
     <Drawer
@@ -43,7 +48,15 @@ export const SideMenu = () => {
       <Box sx={{ width: 250 }}>
         <List>
           
+          {session && session.user?.role === "patient" && (
+            /* Paciente */
+            <MenuItemPatient />
+          )}
 
+          {session && session.user?.role === "intern" && (
+            /* Psicólogo */
+            <MenuItemPsychologist />
+          )}
 
           {!true ? (
             /* Genérico */
@@ -55,8 +68,11 @@ export const SideMenu = () => {
             </ListItem>
           ) : (
             <>
-              <ListItem
-                button
+              
+              <ListItemButton
+                
+                component={NextLink}
+                href="/login"
                 /* onClick={() =>
                   navigateTo(`/autenticacion/login?p=${router.asPath}`)
                 } */
@@ -65,7 +81,8 @@ export const SideMenu = () => {
                   <LoginOutlined color="secondary" />
                 </ListItemIcon>
                 <ListItemText primary={"Iniciar sesión"} />
-              </ListItem>
+              </ListItemButton>
+              
               <ListItem button /* onClick={() => navigateTo("/psicologos")} */>
                 <ListItemIcon>
                   <SupervisedUserCircleOutlined color="secondary" />

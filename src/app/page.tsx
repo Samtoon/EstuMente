@@ -1,4 +1,3 @@
-
 //import Navbar from "@/components/navbar/Navbar";
 import PsiLayout from "@/components/layout/PsiLayout";
 import Navbar from "../components/navbar/Navbar";
@@ -6,16 +5,43 @@ import Button from "@mui/material/Button/Button";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import { Hero } from "@/components/ui/Hero";
+import { fetchServices, fetchUsers } from "../database/connection"
+import { currentModels } from "@/database/models/Service";
+import { Suspense } from "react";
 // import Button from "@mui/material";
-export default function Home() {
+
+async function Services() {
+  const servicio = await fetchServices();
   return(
-        <PsiLayout title="estumente">
+    <Typography color="secondary" align="center" variant="h1" gutterBottom>
+          Probando conexión: el primer servicio es: {servicio}
+    </Typography>
+  )
+}
+
+async function Usuarios() {
+  const usuarios = await fetchUsers();
+  return(
+    <Typography color="secondary" align="center" variant="h1" gutterBottom>
+          Probando conexión: Los usuarios registrados son: {usuarios}
+    </Typography>
+  )
+}
+
+export default async function Home() {
+  //const servicio = await fetchServices();
+  //const usuarios = await fetchUsers();
+  return(
+        <PsiLayout title="estumente" pageDescription="">
         <Hero></Hero>
         <Box sx={{ margin: "40px auto", padding: "0px 30px" }}>
-        <Typography color="secondary" align="center" variant="h1" gutterBottom>
-          Unidos para crecer
-        </Typography>
-
+        <Suspense fallback={<p>Cargando servicios</p>}>
+          <Services/>
+        </Suspense>
+        
+        <Suspense fallback={<p>Cargando usuarios</p>}>
+          <Usuarios/>
+        </Suspense>
         <Typography color="inherit" align="center" variant="h2" gutterBottom>
           Trabajamos con terapeutas especializados en su labor.
         </Typography>
@@ -56,7 +82,7 @@ export default function Home() {
         }}
       >
         <Typography align="center" variant="h1" gutterBottom>
-          ¿Eres psicólogo clínico?
+          ¿Eres estudiante de psicología apto para prácticas?
         </Typography>
 
         <Typography color="inherit" align="center" variant="h2" gutterBottom>
