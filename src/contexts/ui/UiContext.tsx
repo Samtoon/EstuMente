@@ -1,10 +1,11 @@
+'use client'
 import { createContext } from "react";
 
 interface ContextProps {
-  isMenuOpen: boolean;
+  isMenuOpen: boolean,
 
   //Methods
-  toggleSideMenu(): any;
+  toggleSideMenu: () => void,
 }
 
 export const UiContext = createContext({} as ContextProps);
