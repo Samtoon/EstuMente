@@ -1,5 +1,6 @@
 import IUser from "@/interfaces/IUser"
 import NextAuth from "next-auth"
+import { GoogleProfile } from "next-auth/providers/google"
 
 declare module "next-auth" {
   /**
@@ -8,4 +9,5 @@ declare module "next-auth" {
   interface Session {
     user: IUser
   }
+  interface Profile extends GoogleProfile {}
 }

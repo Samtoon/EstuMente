@@ -1,13 +1,25 @@
 'use client'
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { UiContext } from "@/contexts/ui/UiContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
-import { signOut } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation"
 
 
 const Navbar = () => {
   const {isMenuOpen ,toggleSideMenu} = useContext(UiContext);
+  const router = useRouter();
+    async function recurrente() {
+        const session = await getSession();
+        if (session) {
+            router.push("/".concat(session.user.role!.toLocaleLowerCase()));
+        }
+    }
+    useEffect(() => {
+        console.log("hola");
+        recurrente();
+    })
   return (
 
     <AppBar>
@@ -33,11 +45,11 @@ const Navbar = () => {
         <Box flex={1} />
         {!false && (
           <Box sx={{ display: { xs: "none", sm: "block" }, m: 1 }}>
-            <NextLink href="/loginRecurrente">
-            <Button variant="contained" color="secondary" className="hero-btn">
+            
+            <Button variant="contained" color="secondary" className="hero-btn" onClick={() => signIn("google")}>
                 Iniciar sesión
-              </Button>
-            </NextLink>
+            </Button>
+            
               
           </Box>
         )}
