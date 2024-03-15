@@ -1,5 +1,5 @@
 import mongoose, { Schema, model, Model } from "mongoose";
-//import { IUser } from "../interfaces";
+import IUser from "../../interfaces/IUser";
 
 const userSchema = new Schema(
   {
@@ -21,20 +21,18 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     role: {
       type: String,
       enum: {
-        values: ["admin", "patient", "psychologist"],
+        values: ["Administrador", "Consultante", "Practicante", "Tutor", "Coordinador"],
         message: "{VALUES} no es un role válido",
         default: "patient",
         required: true,
       },
     },
     phone: {
-      type: String,
-      required: true,
+      type: String
     },
     profilePicture: {
       public_id: {
@@ -47,8 +45,7 @@ const userSchema = new Schema(
       },
     },
     accept: {
-      type: Boolean,
-      required: true,
+      type: Boolean
     },
     state: {
       type: String,
@@ -69,6 +66,6 @@ const userSchema = new Schema(
 
 userSchema.index({ firstName: "text", lastName: "text" });
 
-const User = mongoose.models.User || model("User", userSchema);
+const User: Model<IUser> = mongoose.models.User || model("User", userSchema);
 
 export default User;

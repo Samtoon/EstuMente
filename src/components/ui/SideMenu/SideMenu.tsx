@@ -48,12 +48,12 @@ export const SideMenu = () => {
       <Box sx={{ width: 250 }}>
         <List>
           
-          {session && session.user?.role === "patient" && (
+          {session && session.user?.role === "Consultante" && (
             /* Paciente */
             <MenuItemPatient />
           )}
 
-          {session && session.user?.role === "intern" && (
+          {session && session.user?.role === "Practicante" && (
             /* Psicólogo */
             <MenuItemPsychologist />
           )}
