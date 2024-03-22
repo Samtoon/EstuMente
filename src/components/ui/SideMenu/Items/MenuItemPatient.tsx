@@ -20,7 +20,7 @@ export const MenuItemPatient = () => {
   };
   return (
     <>
-      <ListItem button onClick={() => navigateTo("/app/perfil")}>
+      <ListItem button onClick={() => navigateTo("/perfil")}>
         <ListItemIcon>
           <AccountCircleOutlined color="secondary" />
         </ListItemIcon>

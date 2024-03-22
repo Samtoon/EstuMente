@@ -19,13 +19,13 @@ export default function PsiLayout ({ children, title }:Props) {
     <Head>
       <title>{title}</title>
     </Head>
-    <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}>
+    {/* <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}> */}
     
-      <Navbar />
+      {/* <Navbar /> */}
     
 
     <SideMenu />
-    </UiContext.Provider>
+    {/* </UiContext.Provider> */}
     <main>
       <ToastContainer />
       {children}

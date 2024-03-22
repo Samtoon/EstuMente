@@ -1,3 +1,4 @@
+'use client'
 //import Navbar from "@/components/navbar/Navbar";
 import PsiLayout from "@/components/layout/PsiLayout";
 import Navbar from "../components/navbar/Navbar";
@@ -7,10 +8,13 @@ import Typography from "@mui/material/Typography/Typography";
 import { Hero } from "@/components/ui/Hero";
 import { fetchServices, fetchUsers } from "../database/connection"
 import { currentModels } from "@/database/models/Service";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import router from "next/router";
+import { useRouter } from "next/navigation";
 // import Button from "@mui/material";
 
-async function Services() {
+/* async function Services() {
   const servicio = await fetchServices();
   return(
     <Typography color="secondary" align="center" variant="h1" gutterBottom>
@@ -26,22 +30,33 @@ async function Usuarios() {
           Probando conexión: Los usuarios registrados son: {usuarios}
     </Typography>
   )
-}
+} */
 
-export default async function Home() {
+export default function Home() {
+  const {data:session} = useSession();
+  const router = useRouter();
+  function recurrente() {
+    if (session) {
+      router.push("/".concat(session.user.role!.toLocaleLowerCase()));
+    }
+  }
+  useEffect(() => {
+    console.log("hola");
+    recurrente();
+  })
   //const servicio = await fetchServices();
   //const usuarios = await fetchUsers();
   return(
         <PsiLayout title="estumente" pageDescription="">
         <Hero></Hero>
         <Box sx={{ margin: "40px auto", padding: "0px 30px" }}>
-        <Suspense fallback={<p>Cargando servicios</p>}>
+        {/* <Suspense fallback={<p>Cargando servicios</p>}>
           <Services/>
-        </Suspense>
+        </Suspense> */}
         
-        <Suspense fallback={<p>Cargando usuarios</p>}>
+        {/* <Suspense fallback={<p>Cargando usuarios</p>}>
           <Usuarios/>
-        </Suspense>
+        </Suspense> */}
         <Typography color="inherit" align="center" variant="h2" gutterBottom>
           Trabajamos con terapeutas especializados en su labor.
         </Typography>

@@ -23,7 +23,7 @@ export const MenuItemPsychologist = () => {
 
   return (
     <>
-      <ListItem button onClick={() => navigateTo("/psicologo/perfil")}>
+      <ListItem button onClick={() => navigateTo("/perfil")}>
         <ListItemIcon>
           <AccountCircleOutlined color="secondary" />
         </ListItemIcon>
