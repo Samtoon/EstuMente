@@ -1,7 +1,6 @@
 'use client'
 import React, { FC, ReactNode, useState } from "react";
 import Head from "next/head";
-import { NavbarPsychologist } from "../navbar/NavbarPsychologist";
 import { SideMenu } from "../ui/SideMenu/SideMenu";
 import { ToastContainer } from "react-toastify";
 
@@ -27,13 +26,13 @@ export const PsychologistLayout: FC<Props> = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}>
+      {/* <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}> */}
       
-      <NavbarPsychologist />
+      {/* <NavbarPsychologist /> */}
       
 
       <SideMenu />
-      </UiContext.Provider>
+      {/* </UiContext.Provider> */}
 
       <main>
         <ToastContainer />

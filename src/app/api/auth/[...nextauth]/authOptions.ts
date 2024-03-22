@@ -48,10 +48,10 @@ const authOptions: NextAuthOptions = {
             return true;
         },
         async jwt({ token, user, profile }) {
-            console.log("llamando jwt");
-            console.log("El usuario es:" + JSON.stringify(token.user))
-            console.log("El perfil es:" + JSON.stringify(profile))
-            console.log("El token es:" + JSON.stringify(token))
+            // console.log("llamando jwt");
+            // console.log("El usuario es:" + JSON.stringify(token.user))
+            // console.log("El perfil es:" + JSON.stringify(profile))
+            // console.log("El token es:" + JSON.stringify(token))
             if (user) {
                 await connect();
                 token.user = await User.findOne({ email: user.email })
@@ -59,7 +59,7 @@ const authOptions: NextAuthOptions = {
             return token;
         },
         session({ session, token, user }) {
-            console.log("llamando session");
+            // console.log("llamando session");
             session.user = token.user as any;
             return session;
         }

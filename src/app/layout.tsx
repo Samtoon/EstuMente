@@ -1,6 +1,7 @@
 import "../styles/globals.css"
 import CssBaseline from "@mui/material/CssBaseline"
 import Providers from "@/providers/Providers";
+import Navbar from "@/components/navbar/Navbar";
 
 export const metadata = {
   title: 'Next.js',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         <CssBaseline />
         <Providers>
+          <Navbar/>
           {children}
         </Providers>
         {/* {children} */}
