@@ -39,7 +39,7 @@ const Navbar = () => {
 
     <AppBar>
       <Toolbar>
-        <NextLink href="/" onClick={() => signOut({ redirect: false })} passHref>
+        <NextLink href="/" passHref>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Typography
               variant="h6"
