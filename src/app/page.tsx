@@ -37,6 +37,9 @@ export default function Home() {
   const router = useRouter();
   function recurrente() {
     if (session) {
+      if (session.user.role! === "Practicante") {
+        router.push("/psicologos");
+      }
       router.push("/".concat(session.user.role!.toLocaleLowerCase()));
     }
   }

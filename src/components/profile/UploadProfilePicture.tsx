@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const UploadProfilePicture: FC<Props> = ({ url }) => {
+  console.log("La url que estoy recibiendo es:" + url);
   const router = useRouter();
   const refreshData = () => {
     // router.replace(router.asPath);
