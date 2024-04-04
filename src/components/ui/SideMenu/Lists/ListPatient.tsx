@@ -18,10 +18,10 @@ export default function ListPatient() {
       <MenuItem label="Perfil" path="/perfil">
         <AccountCircleOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Citas pendientes" path="/app/citas">
+      <MenuItem label="Citas pendientes" path="/citas">
         <DateRangeOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Historial de citas" path="/app/citas/historial">
+      <MenuItem label="Historial de citas" path="/citas/historial">
         <HistoryOutlined color="secondary" />
       </MenuItem>
       <MenuItem label="Agendar una cita" path="/psicologos">
