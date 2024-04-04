@@ -13,7 +13,7 @@ const psychologistSchema = new Schema(
       type: String,
       trim: true,
     },
-    slug: { type: String, required: true, unique: true },
+    slug: { type: String, required: true },
     bio: { type: String, default: "" },
     calification: {
       type: Number,
