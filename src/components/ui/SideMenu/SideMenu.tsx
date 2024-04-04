@@ -8,6 +8,8 @@ import ListItemText from "@mui/material/ListItemText/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import NextLink from "next/link";
 import {
+  Avatar,
+  ListItemAvatar,
   ListItemButton
 } from "@mui/material";
 import {
@@ -47,6 +49,20 @@ export const SideMenu = () => {
       onClose={toggleSideMenu}
     >
       <Box sx={{ width: 250 }}>
+
+        {session && (
+          <div>
+            <List>
+              <ListItem>
+                <ListItemText primary={"Hola, " + session.user.firstName} />
+                <ListItemAvatar>
+                  <Avatar src={session.user.profilePicture?.url!} />
+                </ListItemAvatar>
+              </ListItem>
+            </List>
+            <Divider />
+          </div>
+        )}
 
         {role === "Consultante" && (
           /* Paciente */

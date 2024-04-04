@@ -14,7 +14,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const PatientLayout: FC<Props> = ({
+const PatientLayout: FC<Props> = ({
   children,
   title,
   pageDescription,
@@ -41,3 +41,5 @@ export const PatientLayout: FC<Props> = ({
     </>
   );
 };
+
+export default PatientLayout;
