@@ -36,15 +36,16 @@ async function Usuarios() {
 export default function Home() {
   const {data:session, status} = useSession();
   const router = useRouter();
-  async function recurrente() {
-    if (session) {
-      router.push(homepagePath(session.user.role!));
-    }
-  }
+  
   useEffect(() => {
+    function recurrente() {
+      if (session) {
+        router.push(homepagePath(session.user.role!));
+      }
+    }
     console.log("hola");
     recurrente();
-  }, [status])
+  }, [session, router])
   //const servicio = await fetchServices();
   //const usuarios = await fetchUsers();
   return(

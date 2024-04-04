@@ -17,7 +17,7 @@ export default function ListAdmin() {
             <MenuItem label="Tutores" path="">
                 <SupervisorAccountOutlined color="secondary"/>
             </MenuItem>
-            <MenuItem label="Practicantes" path="">
+            <MenuItem label="Practicantes" path="/psicologos">
                 <SupervisorAccountOutlined color="secondary"/>
             </MenuItem>
             <MenuItem label="Reportes" path="">

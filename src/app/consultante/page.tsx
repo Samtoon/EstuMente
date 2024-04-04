@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 //import { getSession } from "next-auth/react";
 //import { GetServerSideProps } from "next";
-import { PatientLayout } from "../../components/layout/PatientLayout";
+import PatientLayout from "../../components/layout/PatientLayout";
 import TestLayout from "@/components/layout/TestLayout";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
