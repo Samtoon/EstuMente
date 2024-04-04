@@ -1,5 +1,7 @@
 import { connect } from "@/database/connection"
+import Psychologist from "@/database/models/Psychologist";
 import User from "@/database/models/User";
+import { IPsychologist } from "@/interfaces/IPsychologist";
 import IUser from "@/interfaces/IUser";
 import NextAuth, { NextAuthOptions, Profile } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
@@ -38,8 +40,27 @@ const authOptions: NextAuthOptions = {
                 profilePicture: { public_id: profile.picture, url: profile.picture }
             }
             await connect();
-            if (await User.findOne({ email: profile.email })) {
-                await User.updateOne({ email: profile.email }, upsertUser)
+            const user = await User.findOne({ email: profile.email });
+            if (user) {
+                await User.updateOne({ email: profile.email }, upsertUser);
+                if (user.role === "Practicante") {
+                    const upsertPsychologist: IPsychologist = {
+                        fullName: user.firstName + " " + user.lastName,
+                        gender: user.gender || "Indefinido",
+                        profilePicture: user.profilePicture!.url,
+                        user: user._id,
+                        slug: "slug",
+                        isPublic: true
+                    }
+                    const psychologist = await Psychologist.findOne({ user: user._id });
+                    if (psychologist) {
+                        console.log("Este psicólogo sí existe");
+                        await Psychologist.updateOne({ user: user._id }, upsertPsychologist)
+                    } else {
+                        console.log("Este psicólogo no existe");
+                        await Psychologist.create(upsertPsychologist);
+                    }
+                }
             } else {
                 upsertUser.state = "activo";
                 upsertUser.role = "Consultante";
