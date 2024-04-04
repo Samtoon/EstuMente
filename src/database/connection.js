@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { Service } from "./models/Service";
 import User from "./models/User";
+import Psychologist from "./models/Psychologist";
 
 async function connect() {
   try {
@@ -38,4 +39,10 @@ async function fetchUsers() {
   return oneUser2 + "";
 }
 
-export { connect, fetchServices, fetchUsers };
+async function fetchPsychologists() {
+  await connect();
+  const psychologists = await Psychologist.find();
+  return psychologists;
+}
+
+export { connect, fetchServices, fetchUsers, fetchPsychologists };
