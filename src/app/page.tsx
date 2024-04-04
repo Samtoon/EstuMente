@@ -6,12 +6,13 @@ import Button from "@mui/material/Button/Button";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import { Hero } from "@/components/ui/Hero";
-import { fetchServices, fetchUsers } from "../database/connection"
+// import { fetchServices, fetchUsers } from "../database/connection"
 import { currentModels } from "@/database/models/Service";
 import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import router from "next/router";
 import { useRouter } from "next/navigation";
+import { homepagePath } from "@/utils/redirect";
 // import Button from "@mui/material";
 
 /* async function Services() {
@@ -33,17 +34,17 @@ async function Usuarios() {
 } */
 
 export default function Home() {
-  const {data:session} = useSession();
+  const {data:session, status} = useSession();
   const router = useRouter();
-  function recurrente() {
+  async function recurrente() {
     if (session) {
-      router.push("/".concat(session.user.role!.toLocaleLowerCase()));
+      router.push(homepagePath(session.user.role!));
     }
   }
   useEffect(() => {
     console.log("hola");
     recurrente();
-  })
+  }, [status])
   //const servicio = await fetchServices();
   //const usuarios = await fetchUsers();
   return(

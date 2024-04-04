@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { Box, Container, Grid } from "@mui/material";
 // import { PatientLayout } from "../../../components/layout";
-import { PatientLayout } from "@/components/layout/PatientLayout";
+import PatientLayout from "@/components/layout/PatientLayout";
 import IUser from "@/interfaces/IUser";
 import { UploadProfilePicture } from "@/components/profile/UploadProfilePicture";
 import { PersonalInfo } from "@/components/profile/PersonalInfo";
