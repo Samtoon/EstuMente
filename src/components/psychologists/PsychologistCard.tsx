@@ -22,9 +22,9 @@ interface Props {
 }
 
 export const PsychologistCard: FC<Props> = ({ psychologist }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  console.log("La foto del muchacho es: " +  psychologist.profilePicture);
-  console.log("isImageLodaded: " +  isImageLoaded);
+  // const [isImageLoaded, setIsImageLoaded] = useState(true);
+  // console.log("La foto del muchacho es: " +  psychologist.profilePicture);
+  // console.log("isImageLodaded: " +  isImageLoaded);
   return (
     <Grid item xs={12} sm={6} md={6} lg={4}>
       <Card variant="outlined" className="fadeIn">
@@ -38,11 +38,11 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
           <CardMedia
             component="img"
             image={psychologist.profilePicture}
-            alt="que verga mano??"
-            onLoad={() => setIsImageLoaded(true)}
+            alt="Practicante"
+            // onLoad={() => setIsImageLoaded(true)}
             sx={{ width: 120, height: 120, mt: 3, borderRadius: "50%" }}
           />
-           {!isImageLoaded && (<div> Loading... </div>)}
+           {/* {!isImageLoaded && (<div> Loading... </div>)} */}
           {/* <Avatar
             alt="Psychologist"
             src={psychologist.url}
@@ -51,7 +51,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
         </Box>
         <CardContent>
           <Box
-            sx={{ display: isImageLoaded ? "block" : "none" }}
+            sx={{ display: "block" }}
             className="fadeIn"
           >
             <Typography
@@ -61,7 +61,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
               variant="h2"
               gutterBottom
             >
-              {psychologist.user.firstName}
+              {psychologist.fullName}
             </Typography>
             {/* <Box sx={{ m: 2 }}>
               <ListSpecialties specialties={psychologist.specialties} />

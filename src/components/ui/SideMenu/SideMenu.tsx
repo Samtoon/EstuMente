@@ -18,7 +18,7 @@ import {
   SupervisedUserCircleOutlined,
 } from "@mui/icons-material";
 import { UiContext } from "../../../contexts/ui/UiContext";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import ListPsychologist from "./Lists/ListPsychologist";
 import ListPatient from "./Lists/ListPatient";
 import ListAdmin from "./Lists/ListAdmin";
@@ -109,8 +109,7 @@ export const SideMenu = () => {
 
             <ListItemButton
 
-              component={NextLink}
-              href="/login"
+              onClick={() => signIn("google")}
             /* onClick={() =>
               navigateTo(`/autenticacion/login?p=${router.asPath}`)
             } */

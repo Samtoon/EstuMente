@@ -15,7 +15,7 @@ export const PsychologistList = async () => {
   return (
     <Grid container spacing={4}>
       {psychologists.map((psychologist) => (
-        <PsychologistCard psychologist={psychologist.toObject()} key={psychologist.slug} />
+        <PsychologistCard psychologist={psychologist} key={psychologist.slug} />
       ))}
     </Grid>
   );

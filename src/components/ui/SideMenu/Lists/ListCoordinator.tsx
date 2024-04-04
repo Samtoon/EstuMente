@@ -14,7 +14,7 @@ export default function ListCoordinator() {
             <MenuItem label="Mis Tutores" path="">
                 <SupervisorAccountOutlined color="secondary"/>
             </MenuItem>
-            <MenuItem label="Practicantes" path="">
+            <MenuItem label="Practicantes" path="/psicologos">
                 <SupervisorAccountOutlined color="secondary"/>
             </MenuItem>
             <MenuItem label="Reportes" path="">

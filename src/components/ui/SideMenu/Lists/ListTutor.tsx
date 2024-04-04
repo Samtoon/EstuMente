@@ -11,7 +11,7 @@ export default function ListTutor() {
             <MenuItem label="Dar Aval" path="">
                 <ThumbUpOutlined color="secondary" />
             </MenuItem>
-            <MenuItem label="Mis Practicantes" path="">
+            <MenuItem label="Mis Practicantes" path="/psicologos">
                 <SupervisorAccountOutlined color="secondary"/>
             </MenuItem>
             <MenuItem label="Reportes" path="">
