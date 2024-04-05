@@ -17,7 +17,7 @@ import IUser from "@/interfaces/IUser";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { pruebaServerAction } from "@/utils/actions";
+// import { pruebaServerAction } from "@/utils/actions";
 //import { validations } from "../../utils";
 
 // type FormData = {
