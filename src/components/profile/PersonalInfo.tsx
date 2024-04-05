@@ -8,6 +8,7 @@ import {
   Stack,
   CircularProgress,
   TextField,
+  MenuItem,
 } from "@mui/material";
 //import { useForm } from "react-hook-form";
 import IUser from "@/interfaces/IUser";
@@ -16,37 +17,78 @@ import IUser from "@/interfaces/IUser";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { pruebaServerAction } from "@/utils/actions";
 //import { validations } from "../../utils";
 
-type FormData = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  gender: string;
-  email: string;
-};
+// type FormData = {
+//   firstName: string;
+//   lastName: string;
+//   phone: string;
+//   gender: string;
+//   email: string;
+// };
 
 interface Props {
   user: IUser;
 }
 
 export const PersonalInfo: FC<Props> = ({ user }) => {
+  
+  function ProfileField({
+    type,
+    label,
+    defaultValue,
+    disabled,
+    children
+  }: {
+    type: string,
+    label: string,
+    defaultValue: string | undefined,
+    disabled: boolean,
+    children?: React.ReactNode
+  }) {
+    return (
+      <Grid item xs={12}>
+        <TextField
+          type={type}
+          label={label}
+          name={label}
+          defaultValue={defaultValue}
+          disabled={disabled}
+          fullWidth
+          InputProps={{ readOnly: !updating }}
+        >
+          {children}
+        </TextField>
+      </Grid>
+    )
+  }
   const options = [
     {
-      label: "Hombre",
-      value: "Hombre",
+      label: "Masculino",
+      value: "Masculino",
     },
     {
-      label: "Mujer",
-      value: "Mujer",
+      label: "Femenino",
+      value: "Femenino",
     },
+    {
+      label: "Otro",
+      value: "Otro",
+    }
   ];
 
   const router = useRouter();
-  const {data: session, status} = useSession();
+  const { data: session, status, update } = useSession();
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
+
+  console.log("El género de este usuario es: " + session?.user.gender);
+  console.log("El número del usuario es: " + session?.user.phone);
+  function handleSubmit(formData: FormData) {
+    update({ phone: formData.get("Celular"), gender: formData.get("gender")});
+  }
   /* const {
     register,
     handleSubmit,
@@ -63,276 +105,166 @@ export const PersonalInfo: FC<Props> = ({ user }) => {
     },
   }); */
 
-  const onUpdateUser = async ({
-    firstName,
-    lastName,
-    phone,
-    gender,
-    email,
-  }: FormData) => {
-    setLoading(true);
-    try {
-      /* const { data } = await psiApi.put("/user/update-profile-info", {
-        firstName,
-        lastName,
-        phone,
-        gender,
-        email,
-      }); */
-      // router.reload();
-    } catch (error: any) {
-      setLoading(false);
-      if (error.response) {
-        return toast.error(error.response.data.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-      toast.error(
-        "No fue posible actualizar tu información, vuelve a intentarlo",
-        {
-          position: toast.POSITION.BOTTOM_CENTER,
-        }
-      );
-    }
-  };
+  // const onUpdateUser = async ({
+  //   firstName,
+  //   lastName,
+  //   phone,
+  //   gender,
+  //   email,
+  // }: FormData) => {
+  //   setLoading(true);
+  //   try {
+  //     /* const { data } = await psiApi.put("/user/update-profile-info", {
+  //       firstName,
+  //       lastName,
+  //       phone,
+  //       gender,
+  //       email,
+  //     }); */
+  //     // router.reload();
+  //   } catch (error: any) {
+  //     setLoading(false);
+  //     if (error.response) {
+  //       return toast.error(error.response.data.message, {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //     }
+  //     toast.error(
+  //       "No fue posible actualizar tu información, vuelve a intentarlo",
+  //       {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       }
+  //     );
+  //   }
+  // };
 
   return (
-    <form /* onSubmit={handleSubmit(onUpdateUser)} */ noValidate>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Stack direction="row" spacing={2} alignItems="center" mb={2}>
-            <Typography
-              variant="h6"
-              component="h6"
-              sx={{ fontSize: { xs: 16, md: 20 } }}
+    // <form /* onSubmit={handleSubmit(onUpdateUser)} */ noValidate>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+          <Typography
+            variant="h6"
+            component="h6"
+            sx={{ fontSize: { xs: 16, md: 20 } }}
+          >
+            Información personal
+          </Typography>
+
+          <Box flex={1} />
+
+          {!updating && (
+            <Button
+              color="secondary"
+              size="small"
+              onClick={() => {
+                setUpdating(true);
+              }}
             >
-              Información personal
-            </Typography>
-            <Box flex={1} />
-            {!disabled && (
-              <Button
-                color="secondary"
-                size="small"
-                onClick={() => {
-                  setDisabled(true);
-                }}
-              >
-                Editar
-              </Button>
-            )}
+              Editar
+            </Button>
+          )}
 
-            {disabled && (
-              <Button
-                size="small"
-                onClick={() => {
-                  setDisabled(false);
-                  // reset();
-                }}
-              >
-                Cancelar
-              </Button>
-            )}
+          {updating && (
+            <Button
+              size="small"
+              onClick={() => {
+                setUpdating(false);
+                // reset();
+              }}
+            >
+              Cancelar
+            </Button>
+          )}
 
-            {disabled && (
-              <Button
-                type="submit"
-                color="secondary"
-                size="small"
-                disabled={loading}
-              >
-                {loading && (
-                  <CircularProgress
-                    size={20}
-                    sx={{ position: "absolute" }}
-                    color="secondary"
-                  />
-                )}
-                Guardar
-              </Button>
-            )}
-          </Stack>
-        </Grid>
-
-        {/* <Grid item xs={12}>
-          <TextField
-            type="text"
-            label="Nombres"
-            variant="outlined"
-            fullWidth
-            disabled={!disabled}
-             {...register("firstName", {
-              required: "Debes ingresar un nombre",
-              minLength: {
-                value: 2,
-                message: "Tu nombre debe tener al menos 2 letras",
-              },
-            })} 
-            // error={!!errors.firstName}
-            // helperText={errors.firstName?.message}
-            InputLabelProps={{ shrink: true }}
-          />
-        </Grid> */}
-        <Grid item xs={4}>
+          {updating && (
+            <Button
+              type="submit"
+              color="secondary"
+              size="small"
+              disabled={loading}
+              form="profileForm"
+            >
+              {loading && (
+                <CircularProgress
+                  size={20}
+                  sx={{ position: "absolute" }}
+                  color="secondary"
+                />
+              )}
+              Guardar
+            </Button>
+          )}
+        </Stack>
+        {updating && (
           <Typography
             variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
+            component="h6"
+            sx={{ fontSize: { xs: 16, md: 15 }, color: "red" }}
           >
-            Nombre:
+            IMPORTANTE: Solo puedes actualizar tu celular y/o tu género. Para actualizar el resto de información,
+            debes hacerlo desde tu correo de Google
           </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.firstName}
-          </Typography>
-        </Grid>
-        {/* <Grid item xs={12}>
-          <TextField
-            type="text"
-            label="Apellidos"
-            variant="outlined"
-            fullWidth
-            disabled={!disabled}
-             {...register("lastName", {
-              required: "Debes ingresar un apellido",
-              minLength: {
-                value: 2,
-                message: "Tu apellido debe tener al menos 2 letras",
-              },
-            })} 
-            // error={!!errors.lastName}
-            // helperText={errors.lastName?.message}
-            InputLabelProps={{ shrink: true }}
-          />
-        </Grid> */}
-        <Grid item xs={4}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            Apellido:
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.lastName}
-          </Typography>
-        </Grid>
-        {/* <Grid item xs={12}>
-          <TextField
-            type="number"
-            label="Celular"
-            variant="outlined"
-            fullWidth
-            disabled={!disabled}
-             {...register("phone", {
-              required: "Debes ingresar un numero de celular",
-              minLength: {
-                value: 10,
-                message: "Tu celular debe tener al menos 10 números",
-              },
-            })} 
-            // error={!!errors.phone}
-            // helperText={errors.phone?.message}
-            InputLabelProps={{ shrink: true }}
-          />
-        </Grid> */}
-        <Grid item xs={4}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            Celular:
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.phone}
-          </Typography>
-        </Grid>
-
-        {/* <Grid item xs={12}>
-          { <FormInputDropdown
-            disabled={disabled}
-            name="gender"
-            control={control}
-            label="Género"
-            options={options}
-          /> }
-        </Grid> */}
-        <Grid item xs={4}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            Género:
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.gender}
-          </Typography>
-        </Grid>
-
-        {/* <Grid item xs={12}>
-          <TextField
-            type="email"
-            label="Correo"
-            variant="outlined"
-            fullWidth
-            disabled={!disabled}
-             {...register("email", {
-              required: "Debes ingresar un correo",
-              validate: validations.isEmail,
-            })} 
-            // error={!!errors.email}
-            // helperText={errors.email?.message}
-          />
-        </Grid> */}
-        <Grid item xs={4}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            Correo:
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.email}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            Rol:
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: 16, md: 20 } }}
-          >
-            {session?.user.role}
-          </Typography>
-        </Grid>
+        )}
       </Grid>
-    </form>
+      <ProfileField
+        type="text"
+        label="Nombres"
+        defaultValue={session?.user.firstName!}
+        disabled={updating}
+      />
+      <ProfileField
+        type="text"
+        label="Apellidos"
+        defaultValue={session?.user.lastName!}
+        disabled={updating}
+      />
+      <Grid item xs={12}>
+      <form id="profileForm" action={handleSubmit}>
+        <Grid container spacing={2}>
+          <ProfileField
+            type="tel"
+            label="Celular"
+            defaultValue={session?.user.phone}
+            disabled={false}
+          />
+          <Grid item xs={12}>
+            <TextField
+              select
+              name="gender"
+              label="Género"
+              defaultValue={session?.user.gender ? session.user.gender : options[0].value}
+              fullWidth
+              InputProps={{ readOnly: !updating }}
+            >
+              {options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          {/* <Grid item xs={12}>
+            <Button type="submit">Guardar</Button>
+          </Grid> */}
+        </Grid>
+      </form>
+      </Grid>
+      
+      <ProfileField
+        type="email"
+        label="Correo"
+        defaultValue={session?.user.email}
+        disabled={updating}
+      />
+      <ProfileField
+        type="text"
+        label="Rol"
+        defaultValue={session?.user.role}
+        disabled={updating}
+      />
+      
+    </Grid>
+    // </form>
   );
 };
