@@ -68,14 +68,19 @@ const authOptions: NextAuthOptions = {
             }
             return true;
         },
-        async jwt({ token, user, profile }) {
+        async jwt({ token, user, profile, trigger, session }) {
+            if (trigger === "update") {
+                console.log("Session es: " + JSON.stringify(session));
+                console.log("Token es: " + JSON.stringify(token));
+                token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
+            }
             // console.log("llamando jwt");
             // console.log("El usuario es:" + JSON.stringify(token.user))
             // console.log("El perfil es:" + JSON.stringify(profile))
             // console.log("El token es:" + JSON.stringify(token))
-            if (user) {
+            else if (user) {
                 await connect();
-                token.user = await User.findOne({ email: user.email })
+                token.user = await User.findOne({ email: user.email });
             }
             return token;
         },
