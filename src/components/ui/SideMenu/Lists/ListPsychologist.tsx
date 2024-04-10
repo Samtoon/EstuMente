@@ -21,7 +21,7 @@ export default function ListPsychologist() {
       <MenuItem label="Perfil" path="/perfil">
         <AccountCircleOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Configurar agenda" path="/psicologo/agenda/configurar">
+      <MenuItem label="Configurar agenda" path="/agenda">
         <EditCalendar color="secondary" />
       </MenuItem>
       <MenuItem label="Citas pendientes" path="/app/citas">
