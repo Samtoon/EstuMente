@@ -4,13 +4,17 @@ import User from "./models/User";
 import Psychologist from "./models/Psychologist";
 
 async function connect() {
-  try {
-    await mongoose.connect(process.env.DB_URL);
-    console.log("Conexión exitosa")
-  } catch (error) {
-    console.log(error);
+  if (mongoose.connection.readyState !== 1) {
+    console.log("No existe una conexión, intentando crear una...");
+    try {
+      await mongoose.connect(process.env.DB_URL);
+      console.log("Conexión exitosa")
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log("Ya existe una conexión");
   }
-
 }
 
 function myFunction(service) {
@@ -41,7 +45,11 @@ async function fetchUsers() {
 
 async function fetchPsychologists() {
   await connect();
-  const psychologists = await Psychologist.find();
+  const psychologists = await Psychologist.find().lean();
+  psychologists.forEach((psychologist) => {
+    psychologist._id = psychologist._id.toString();
+    psychologist.user = psychologist.user.toString();
+  })
   return psychologists;
 }
 
