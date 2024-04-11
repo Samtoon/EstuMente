@@ -1,4 +1,4 @@
 export interface ITimespan {
-    startHour: string,
-    endHour: string
+    key: string,
+    value: number
 }
