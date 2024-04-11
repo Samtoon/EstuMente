@@ -13,34 +13,91 @@ import Stack from "@mui/material/Stack/Stack";
 import { useState } from "react";
 import { IDay } from "@/interfaces/schedule/IDay";
 import React from "react";
+import List from "@mui/material/List/List";
+import { Dialog, Divider, InputLabel, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Modal, Select } from "@mui/material";
+import { AddBox, ExpandLess, ExpandMore } from "@mui/icons-material";
 
 interface state {
     day: IDay["day"],
     open: boolean
 }
 
-export default function ConfigureSchedulePage() {
-    const hours: string[] = [];
-    const [openStates, setOpenStates] = React.useState<state[]>([]);
-    for (let hour = 0; hour < 24; hour++) {
-        hours.push((hour < 10 ? "0" + hour : "" + hour) + ":00");
+const hours: string[] = [];
+const days: IDay["day"][] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+for (let hour = 0; hour < 24; hour++) {
+    hours.push((hour < 10 ? "0" + hour : "" + hour) + ":00");
+}
+console.log("Hours es: " + hours);
+
+function DayList({day} : {day: IDay["day"]}) {
+    const [open, setOpen] = useState(false);
+    return(
+        <ListItemButton id={day} onClick={()=>{
+            setOpen(!open);
+        }}>
+            <ListItemText primary={day}/>
+            {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+    )
+}
+
+function AddPeriodModal({schedule, setSchedule, open, close} : 
+    {
+        schedule: IDay[], 
+        setSchedule: React.Dispatch<React.SetStateAction<IDay[]>>,
+        open: boolean,
+        close: ()=>void
+    }) {
+        return(
+            <Dialog
+                open={open}
+                onClose={close}
+            >
+                <Box sx = {{width: 300, height: 300}}>
+                <InputLabel id="horaInicial">Desde las:</InputLabel>
+                <Select labelId="horaInicial">
+                    {hours.map((hour) => 
+                        <MenuItem value={hour}>{hour}</MenuItem>
+                    )}
+                </Select>
+                <InputLabel id="horaFinal">Hasta las:</InputLabel>
+                <Select labelId="horaFinal">
+                {hours.map((hour) => 
+                        <MenuItem value={hour}>{hour}</MenuItem>
+                    )}
+                </Select>
+                </Box>
+            </Dialog>
+        )
     }
-    console.log("Hours es: " + hours);
-    const days: IDay["day"][] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+export default function ConfigureSchedulePage() {
+    const [schedule, setSchedule] = React.useState<IDay[]>([]);
+    const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
+        <AddPeriodModal schedule={schedule} setSchedule={setSchedule} open={modalOpen} close={()=>setModalOpen(false)}/>
         <Toolbar/>
-        <Stack direction="row">
-        <div>
-        <Button>Agregar periodo</Button>
-        </div>
+        <Stack direction="row" sx={{ height: '80vh'}}>
+        <List>
+            <ListItem>
+                <ListItemButton onClick={() => setModalOpen(true)}>
+                    <ListItemIcon>
+                        <AddBox/>
+                    </ListItemIcon>
+                    <ListItemText primary="Agregar periodo"/>
+                </ListItemButton>
+            </ListItem>
+            <Divider/>
+            {days.map((day) => <DayList day={day}/>)}
+        </List>
         
         {/* <Box id="box1" sx = {{ height: '100vh'}}>
         <Toolbar/>
         <Box id="box2"sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100vw'}}>
         <Box id="box3" sx={{width: '100vw'}}> */}
         {/* <Paper sx={{ width: '100%',  }}> */}
-        <TableContainer>
+        <TableContainer sx={{ height: '100%'}}>
             <Table size="small" stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
