@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { IDay } from "@/interfaces/schedule/IDay";
 import React from "react";
 import List from "@mui/material/List/List";
-import { Dialog, Divider, InputLabel, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Modal, Select } from "@mui/material";
-import { AddBox, DisabledByDefault, ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Dialog, Divider, InputLabel, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Modal, Select, Typography } from "@mui/material";
+import { AddBox, Circle, DisabledByDefault, ExpandLess, ExpandMore } from "@mui/icons-material";
 import Hour from "@/utils/hour";
 import { useSession } from "next-auth/react";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
@@ -148,8 +148,17 @@ export default function ConfigureSchedulePage() {
     console.log("el lunes es: " + JSON.stringify(schedule));
     return (
         <PsychologistLayout title="configurar calendario" pageDescription="">
+            
         <AddPeriodModal schedule={schedule} setSchedule={setSchedule} state={modalOpen} close={()=>setModalOpen(ModalStates.Closed)}/>
         <Toolbar/>
+        <Typography
+          variant="h1"
+          component="h1"
+          gutterBottom
+          sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
+        >
+          Configurar Agenda
+        </Typography>
         <Stack direction="row" sx={{ height: '80vh'}}>
         <List>
             <ListItem key="addPeriod">
@@ -168,8 +177,19 @@ export default function ConfigureSchedulePage() {
                     <ListItemText primary="Eliminar periodo"/>
                 </ListItemButton>
             </ListItem>
-            {/* <Divider/>
-            {days.map((day) => <DayList day={day}/>)} */}
+            <Divider/>
+            <ListItem>
+                <ListItemIcon>
+                    <Circle sx={{ color: "violet" }}/>
+                </ListItemIcon>
+                <ListItemText primary="Disponible"/>
+            </ListItem>
+            <ListItem>
+                <ListItemIcon>
+                    <Circle sx={{ color: "whitesmoke" }}/>
+                </ListItemIcon>
+                <ListItemText primary="No disponible"/>
+            </ListItem>
         </List>
         
         {/* <Box id="box1" sx = {{ height: '100vh'}}>
@@ -183,7 +203,7 @@ export default function ConfigureSchedulePage() {
                     <TableRow>
                         <TableCell></TableCell>
                         {days.map((day) => 
-                            <TableCell key={`header${day}`} sx={{backgroundColor:"purple", color:"white"}} align="center">{day}</TableCell>
+                            <TableCell key={`header${day}`} sx={{backgroundColor:"purple", color:"white", borderLeft: 1}} align="center">{day}</TableCell>
                         )}
                     </TableRow>
                 </TableHead>
@@ -191,7 +211,16 @@ export default function ConfigureSchedulePage() {
                     {hours.map((hour) =>
                         <TableRow key={`fila${hour}`}>
                             <TableCell>{hour.getString()}</TableCell>
-                            {days.map((day, index) => <TableCell key={day + hour.getString()} sx={{paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: schedule[index].hours[hour.getValue()] ? "violet" : "whitesmoke"}}>
+                            {days.map((day, index) => <TableCell key={day + hour.getString()} sx={{
+                                paddingTop: 0, 
+                                paddingBottom: 0, 
+                                paddingLeft: 0, 
+                                paddingRight: 0, 
+                                backgroundColor: schedule[index].hours[hour.getValue()] ? "violet" : "whitesmoke", 
+                                
+                                borderLeft: 1, 
+                                borderRight: index === days.length - 1 ? 1 : 0,
+                                borderColor: "#e0e0e0", }}>
                                 {/* <Button size="large" sx={{paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, borderRadius: 1, minHeight: "32px", width: "100%", backgroundColor: schedule[index].hours[hour.getValue()] ? "violet" : "cyan"}}>
                                     
                                 </Button> */}
