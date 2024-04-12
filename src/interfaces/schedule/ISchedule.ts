@@ -3,5 +3,5 @@ import { IPsychologist } from "../IPsychologist";
 
 export interface ISchedule {
     psychologist: IPsychologist | string,
-    week: IDay
+    days: IDay[]
 }
