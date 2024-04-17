@@ -74,4 +74,10 @@ async function setScheduleByEmail(email: string, schedule: IDay[]) {
   console.log("Actualizado con éxito");
 }
 
-export { connect, fetchServices, fetchUsers, fetchPsychologists, getScheduleByEmail, setScheduleByEmail };
+async function getScheduleById(id: string) {
+  await connect();
+  const schedule = await Schedule.findOne({ psychologist: id }).lean();
+  return schedule;
+}
+
+export { connect, fetchServices, fetchUsers, fetchPsychologists, getScheduleByEmail, setScheduleByEmail, getScheduleById };
