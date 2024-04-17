@@ -1,9 +1,12 @@
 import { createTheme } from "@mui/material";
-import { blueGrey, purple } from "@mui/material/colors";
 
 export const scheduleTheme = createTheme({
     palette: {
-        primary: purple,
-        secondary: blueGrey,
+        primary: {
+          main: "#7F00FF"
+        },
+        secondary: {
+          main: "#f5f5f5"
+        },
       },
 })

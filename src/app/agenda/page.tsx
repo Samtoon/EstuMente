@@ -25,6 +25,7 @@ import { days, hours } from "@/utils/constants";
 import ModalStates from "@/enums/PeriodModalStates";
 import AddPeriodModal from "@/components/schedule/AddPeriodModal";
 import ScheduleTable from "@/components/schedule/ScheduleTable";
+import { SCHEDULES } from "@/utils/endpoints";
 
 interface state {
     day: IDay["day"],
@@ -36,8 +37,8 @@ interface state {
 
 export default function ConfigureSchedulePage() {
     function fetchSchedule() {
-        console.log("cambiando");
-        fetch(`http://localhost:3000/api/ejemplo?email=${session?.user.email}`).
+        console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?email=${session?.user.email}`).
         then((res) => res.json()).
         then((res) => {
             // console.log("Este es el resultado");
@@ -49,7 +50,7 @@ export default function ConfigureSchedulePage() {
     }
 
     function updateSchedule() {
-        fetch("http://localhost:3000/api/ejemplo", {
+        fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
             method: "POST",
             body: JSON.stringify({
                 email: session?.user.email,
