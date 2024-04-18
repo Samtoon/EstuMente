@@ -15,6 +15,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import { IPsychologist } from "@/interfaces/IPsychologist";
+import { useRouter } from "next/navigation";
 // import { IPsychologist } from "../../interfaces";
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export const PsychologistCard: FC<Props> = ({ psychologist }) => {
+  const router = useRouter();
   // const [isImageLoaded, setIsImageLoaded] = useState(true);
   // console.log("La foto del muchacho es: " +  psychologist.profilePicture);
   // console.log("isImageLodaded: " +  isImageLoaded);
@@ -93,6 +95,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
                     color="secondary"
                     className="card-btn"
                     sx={{ mb: 2 }}
+                    onClick={() => {router.push(`/citas/agendar/${psychologist.slug}`)}}
                   >
                     Pedir cita
                   </Button>

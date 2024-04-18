@@ -80,4 +80,8 @@ async function getScheduleById(id: string) {
   return schedule;
 }
 
-export { connect, fetchServices, fetchUsers, fetchPsychologists, getScheduleByEmail, setScheduleByEmail, getScheduleById };
+function serialize(object: mongoose.FlattenMaps<any>) {
+  return JSON.parse(JSON.stringify(object));
+}
+
+export { connect, fetchServices, fetchUsers, fetchPsychologists, getScheduleByEmail, setScheduleByEmail, getScheduleById, serialize };
