@@ -7,12 +7,12 @@ import React, { useContext, useEffect, useState } from "react";
 // import { useRouter } from "next/router";
 // import { NextPage, GetServerSideProps } from "next";
 import PatientLayout from "@/components/layout/PatientLayout";
-import PsychologistDisplay from "@/components/citas/agendar/Display";
-import ModalBox from "@/components/citas/agendar/ModalBox";
-import { getPsychologistBySlug } from "@/database/dbPsychologist";
+import PsychologistDisplay from "@/components/appointments/Display";
+import ModalBox from "@/components/appointments/ModalBox";
+import { getPsychologistBySlug } from "@/database/daos/psychologistDao";
 import { serialize } from "@/database/connection";
 import Box from "@mui/material/Box/Box";
-import AppointmentDatePicker from "@/components/citas/agendar/AppointmentDatePicker";
+import AppointmentDatePicker from "@/components/appointments/AppointmentDatePicker";
 // import { PatientLayout } from "../../../../components/layout";
 // import { IPsychologist, IService } from "../../../../interfaces";
 // import { dbPsychologists, dbServices } from "../../../../database";
@@ -40,10 +40,7 @@ const ScheduleAppointmentPage = async ({ params }: { params: { slug: string } })
   return (
     <PatientLayout title="Agendar cita" pageDescription="Agendar cita">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        {psychologist &&
-          <PsychologistDisplay psychologist={serialize(psychologist)}>
-            <AppointmentDatePicker/>
-          </PsychologistDisplay>}
+        {psychologist && <PsychologistDisplay psychologist={serialize(psychologist)}/>}
         <ModalBox />
       </Box>
     </PatientLayout>

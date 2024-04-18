@@ -1,3 +1,4 @@
+import { getUpcomingAppointmentsByPsychologist } from "@/database/daos/upcomingAppointmentDao";
 import { IPsychologist } from "@/interfaces/IPsychologist";
 import Avatar from "@mui/material/Avatar/Avatar";
 import Box from "@mui/material/Box/Box";
@@ -9,13 +10,18 @@ import TextField from "@mui/material/TextField/TextField";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup/ToggleButtonGroup";
 import Typography from "@mui/material/Typography/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker/DatePicker";
+import AppointmentDatePicker from "./AppointmentDatePicker";
+import { serialize } from "@/database/connection";
+import { getScheduleById } from "@/database/daos/scheduleDao";
 // import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { es } from "date-fns/locale";
 
-export default function PsychologistDisplay({ psychologist, children } : { psychologist: IPsychologist, children: React.ReactNode}) {
+export default async function PsychologistDisplay({ psychologist } : { psychologist: IPsychologist }) {
     const service = "Servicio";
     const date = new Date(2014, 4, 18);
+    const appointments = await getUpcomingAppointmentsByPsychologist(psychologist._id!);
+    const schedule = await getScheduleById(psychologist._id!);
     console.log("psychologist es:")
     console.log(psychologist);
     const handleChangeService = () => {}
@@ -73,7 +79,7 @@ export default function PsychologistDisplay({ psychologist, children } : { psych
               sx={{ alignItems: "center", justifyContent: "center" }}
               mb={2}
             >
-              {children}
+              <AppointmentDatePicker appointments={serialize(appointments)} schedule={serialize(schedule)}/>
               <Typography>
                 Aquí va el Date Picker
               </Typography>
