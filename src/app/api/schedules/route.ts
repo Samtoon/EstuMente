@@ -1,4 +1,5 @@
-import { fetchPsychologists, getScheduleByEmail, getScheduleById, setScheduleByEmail } from "@/database/connection";
+import { fetchPsychologists } from "@/database/connection";
+import { getScheduleByEmail, getScheduleById, setScheduleByEmail } from "@/database/daos/scheduleDao";
 import { IDay } from "@/interfaces/schedule/IDay";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
 
