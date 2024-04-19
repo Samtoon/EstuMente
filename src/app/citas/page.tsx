@@ -13,6 +13,9 @@ import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]/authOptions";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import { getUpcomingAppointmentsByUser } from "@/database/daos/upcomingAppointmentDao";
+import { getMyServerSession } from "@/utils/next-auth";
+import { serialize } from "@/database/connection";
 
 interface Props {
   appointments: IAppointment[];
@@ -23,6 +26,9 @@ const AppointmentPage = async () => {
   // const appointments = await getAppointmentsByPatient(
   //   session?.user._id!
   // );
+  const session = await getMyServerSession();
+  const appointments = await getUpcomingAppointmentsByUser(session?.user._id!);
+  console.log(`El tipo de las fechas es:${typeof appointments[0]}`)
   return (
     <PatientLayout title="Mis citas" pageDescription="Mis citas">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
@@ -35,12 +41,11 @@ const AppointmentPage = async () => {
           Mis citas
         </Typography>
 
-        {/* {appointments.length === 0 ? (
+        {appointments.length === 0 ? (
           <EmptyAppointment message={"No tienes citas activas"} />
         ) : (
-          <AppointmentList appointments={appointments} />
-        )} */}
-        <EmptyAppointment message={"No tienes citas activas"} />
+          <AppointmentList appointments={serialize(appointments)} />
+        )}
       </Box>
     </PatientLayout>
   );

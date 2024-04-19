@@ -75,14 +75,11 @@ export default async function PsychologistDisplay({ psychologist } : { psycholog
           <Grid item xs={12}>
             <Box
               display="flex"
-              flexDirection="column"
-              sx={{ alignItems: "center", justifyContent: "center" }}
+              flexDirection="row"
+              sx={{ alignItems: "stretch", justifyContent: "center" }}
               mb={2}
             >
               <AppointmentDatePicker appointments={serialize(appointments)} schedule={serialize(schedule)}/>
-              <Typography>
-                Aquí va el Date Picker
-              </Typography>
             </Box>
           </Grid>
         </Grid>

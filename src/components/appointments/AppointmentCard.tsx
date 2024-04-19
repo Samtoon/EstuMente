@@ -21,10 +21,12 @@ import { es } from "date-fns/locale";
 import { CalificationModal } from "./CalificationModal";
 import { CreditCardOffOutlined } from "@mui/icons-material";
 import { CancelModal } from "./CancelModal";
+import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
+import { IPsychologist } from "@/interfaces/IPsychologist";
 
 interface Props {
-  appointment: IAppointment;
-  psychologist: any;
+  appointment: IUpcomingAppointment;
+  psychologist: IPsychologist;
 }
 
 export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
@@ -46,7 +48,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
         >
           <CardMedia
             component="img"
-            image={psychologist.user.profilePicture.url}
+            image={psychologist.profilePicture}
             alt={psychologist.fullName}
             onLoad={() => setIsImageLoaded(true)}
             sx={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
@@ -60,22 +62,22 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
           }}
         >
           <CardContent sx={{ flex: "1 0 auto" }}>
-            <Typography component="div" variant="subtitle1">
+            {/* <Typography component="div" variant="subtitle1">
               {`${appointment.typeService} con`}
-            </Typography>
+            </Typography> */}
             <Typography color="text.secondary" component="div" variant="h5">
               {psychologist.fullName}
             </Typography>
 
             <Typography variant="h6" color="text.secondary" component="div">
               {`Fecha: ${format(
-                new Date(appointment.startTime * 1000),
+                appointment.date,
                 "EEEE dd",
                 {
                   locale: es,
                 }
               )} de ${format(
-                new Date(appointment.startTime * 1000),
+                appointment.date,
                 "MMMM yyyy",
                 {
                   locale: es,
@@ -84,11 +86,11 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
             </Typography>
             <Typography variant="h6" color="text.secondary" component="div">
               {`Hora de inicio: ${format(
-                new Date(appointment.startTime * 1000 + 600000),
-                "hh:mm a"
+                new Date(appointment.date).setHours(appointment.hour),
+                "HH:mm a"
               )}`}
             </Typography>
-            <NextLink href={`/app/citas/${appointment._id}`} passHref>
+            {/* <NextLink href={`/app/citas/${appointment._id}`} passHref> */}
               <Link>
                 <Typography
                   variant="body1"
@@ -99,8 +101,8 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                   Ver información de la cita
                 </Typography>
               </Link>
-            </NextLink>
-            {!appointment.isPaid ? (
+            {/* </NextLink> */}
+            {/* {!appointment.isPaid ? (
               <Chip
                 label={`Pendiente de pago`}
                 color="error"
@@ -115,7 +117,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                 variant="outlined"
                 size="small"
               />
-            )}
+            )} */}
           </CardContent>
         </Box>
         <Box flex={1} />
@@ -134,7 +136,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {appointment.isPaid ? (
+                {/* {appointment.isPaid ? (
                   <NextLink
                     href={`/app/citas/meet/${appointment._id}`}
                     passHref
@@ -164,19 +166,19 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                       Pagar cita
                     </Button>
                   </NextLink>
-                )}
+                )} */}
 
-                {!appointment.isPaid && (
+                {/* {!appointment.isPaid && (
                   <CancelModal appointmentId={appointment._id} />
-                )}
+                )} */}
 
-                {appointment.checkinTimePsychologist &&
+                {/* {appointment.checkinTimePsychologist &&
                   appointment.endTime <= Date.now() / 1000 &&
                   appointment.calification === 0 && (
                     <CalificationModal appointmentId={appointment._id} />
-                  )}
+                  )} */}
 
-                {!appointment.checkinTimePsychologist &&
+                {/* {!appointment.checkinTimePsychologist &&
                   (appointment.endTime <= Date.now() / 1000 ||
                     Date.now() / 1000 <= appointment.startTime - 7200) &&
                   (appointment.state === "activa" ||
@@ -190,7 +192,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                         Reagendar cita
                       </Button>
                     </NextLink>
-                  )}
+                  )} */}
               </Stack>
             </Box>
           </CardActions>

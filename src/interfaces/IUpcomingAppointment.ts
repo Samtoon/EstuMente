@@ -1,5 +1,5 @@
 export interface IUpcomingAppointment {
-    id_?: string,
+    _id?: string,
     user: string,
     psychologist: string,
     hour: number,

@@ -6,14 +6,69 @@ import { es } from "date-fns/locale/es";
 import { esES } from "@mui/x-date-pickers/locales";
 import { IAppointment } from "@/interfaces/IAppointment";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
-import { processAvailability } from "@/utils/schedule";
+import { getAvailableHours, isDayAvailable, processAvailability } from "@/utils/schedule";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
+import { useReducer, useState } from "react";
+import React from "react";
+import { Button, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
+import Hour from "@/utils/hour";
+import { scheduleAppointment } from "@/utils/actions";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+
+interface IState {
+  date?: Date,
+  availableHours?: boolean[],
+  hour?: number,
+  appointments: IUpcomingAppointment[]
+}
+
+interface IAction {
+  type: "date" | "hour" | "reset"
+  appointments?: IUpcomingAppointment[],
+  schedule?: ISchedule
+  body?: Date | number
+}
+
+function reducer(state: IState, action: IAction) {
+  switch (action.type) {
+    case "date":
+      return {
+        ...state,
+        date: action.body as Date, 
+        availableHours: getAvailableHours(action.body as Date, state.appointments!, action.schedule!),
+        hour: 0
+      }
+    case "hour":
+      return {
+        ...state,
+        hour: action.body as number
+      }
+    default:
+      return {
+        ...state,
+        availableHours: getAvailableHours(state.date!, action.appointments!, action.schedule!),
+        appointments: action.appointments!
+      }
+  }
+}
 
 export default function AppointmentDatePicker({ appointments, schedule } : { appointments: IUpcomingAppointment[], schedule: ISchedule }) {
-
+  // const [state, setState] = useState<IState>({});
+  
+  const [state, dispatcher] = useReducer(reducer, {
+        date: undefined,
+        availableHours: undefined,
+        hour: 0,
+        appointments: appointments
+  })
+  console.log("hay " + state.appointments.length + "appointments");
+  const { data: session } = useSession();
+  // const router = useRouter();
+  let hour: number;
   //const trueSchedule = processAvailability(schedule, appointments);
-  function isDayAvailable(date: Date) {
-    
+  function isDisabled(date: Date) {
+    return !isDayAvailable(date, state.appointments, schedule);
   }
 
   return (
@@ -24,8 +79,14 @@ export default function AppointmentDatePicker({ appointments, schedule } : { app
     >
       <StaticDatePicker
       disablePast
-      views={['day', 'month']}
+      views={['month', 'day']}
       orientation="landscape"
+      shouldDisableDate={isDisabled}
+      onChange={(newValue) => newValue && dispatcher({
+        type: "date", 
+        schedule: schedule,
+        body: newValue
+      })}
         // label="Selecciona una fecha"
       // onChange={(newValue: any) => {
       //   newValue && setDate(newValue);
@@ -34,6 +95,34 @@ export default function AppointmentDatePicker({ appointments, schedule } : { app
       // }}
       // renderInput={(params: any) => <TextField {...params} />}
       />
+    <Stack spacing={2} justifyContent={"flex-start"} sx={{ height: "100%"}}>
+    <InputLabel id="hora">Hora:</InputLabel>
+      <Select
+        labelId="hora"
+        value={state.hour}
+        onChange={(e) => dispatcher({
+          type: "hour", 
+          schedule: schedule,
+          body: e.target.value as number
+        })}
+      >
+        {
+          state.availableHours?.map((hour, index) => 
+            hour && <MenuItem value={index}>{new Hour(index).getString()}</MenuItem>
+          )
+        }
+      </Select>
+    <Button 
+    size="large" 
+    color="secondary" 
+    disabled={state?.hour === undefined} 
+    onClick={async () => {
+      appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!, state.hour!);
+      dispatcher({type: "reset", appointments: appointments, schedule: schedule});
+    }}>
+      Programar ahora
+    </Button>
+    </Stack>
     </LocalizationProvider>
   )
 }
