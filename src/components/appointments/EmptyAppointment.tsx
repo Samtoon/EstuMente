@@ -6,14 +6,14 @@ import Box from "@mui/material/Box/Box";
 import Link from "@mui/material/Link/Link";
 import Button from "@mui/material/Button/Button";
 import { EventBusy } from "@mui/icons-material";
-import { getServerSession } from "@/utils/next-auth";
+import { getMyServerSession } from "@/utils/next-auth";
 
 interface Props {
   message: string;
 }
 
 export const EmptyAppointment: FC<Props> = async ({ message }) => {
-  const session = await getServerSession();
+  const session = await getMyServerSession();
   return (
     <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
       <Box
