@@ -13,9 +13,10 @@ import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]/authOptions";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { getUpcomingAppointmentsByUser } from "@/database/daos/upcomingAppointmentDao";
+import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByUser } from "@/database/daos/upcomingAppointmentDao";
 import { getMyServerSession } from "@/utils/next-auth";
 import { serialize } from "@/database/connection";
+import { getPsychologistById, getPsychologistByUser } from "@/database/daos/psychologistDao";
 
 interface Props {
   appointments: IAppointment[];
@@ -27,7 +28,9 @@ const AppointmentPage = async () => {
   //   session?.user._id!
   // );
   const session = await getMyServerSession();
-  const appointments = await getUpcomingAppointmentsByUser(session?.user._id!);
+  const appointments = session?.user.role === "Practicante" ? 
+  await getUpcomingAppointmentsByPsychologist(session?.psychologist?._id!) : 
+  await getUpcomingAppointmentsByUser(session?.user._id!);
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`)
   return (
     <PatientLayout title="Mis citas" pageDescription="Mis citas">
