@@ -38,7 +38,7 @@ interface state {
 export default function ConfigureSchedulePage() {
     function fetchSchedule() {
         console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?email=${session?.user.email}`).
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${session?.psychologist?._id}`).
         then((res) => res.json()).
         then((res) => {
             // console.log("Este es el resultado");
@@ -53,7 +53,7 @@ export default function ConfigureSchedulePage() {
         fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
             method: "POST",
             body: JSON.stringify({
-                email: session?.user.email,
+                psychologist: session?.psychologist?._id,
                 schedule: schedule
             })
         }).

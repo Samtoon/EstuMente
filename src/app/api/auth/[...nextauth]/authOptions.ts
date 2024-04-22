@@ -82,13 +82,16 @@ const authOptions: NextAuthOptions = {
             // console.log("El token es:" + JSON.stringify(token))
             else if (user) {
                 await connect();
-                token.user = await User.findOne({ email: user.email });
+                const dbUser = await User.findOne({ email: user.email });
+                token.user = dbUser;
+                token.psychologist = await Psychologist.findOne({ user: dbUser?._id })
             }
             return token;
         },
         session({ session, token, user }) {
             // console.log("llamando session");
-            session.user = token.user as any;
+            session.user = token.user as IUser;
+            session.psychologist = token.psychologist as IPsychologist;
             return session;
         }
     }

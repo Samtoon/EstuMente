@@ -4,7 +4,7 @@ export default interface IUser {
     lastName: string;
     email: string;
     password?: string;
-    role?: string;
+    role?: "Administrador" | "Consultante" | "Practicante" | "Tutor" | "Coordinador",
     phone?: string;
     profilePicture?: { public_id: string; url: string };
     accept?: boolean;

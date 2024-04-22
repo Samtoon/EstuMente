@@ -25,11 +25,14 @@ import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { IPsychologist } from "@/interfaces/IPsychologist";
 
 interface Props {
-  appointment: IUpcomingAppointment;
-  psychologist: IPsychologist;
+  appointment: IUpcomingAppointment,
+  psychologist?: IPsychologist,
+  fullName: string,
+  image: string,
+  role: string
 }
 
-export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
+export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName, image, role }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
@@ -48,8 +51,8 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
         >
           <CardMedia
             component="img"
-            image={psychologist.profilePicture}
-            alt={psychologist.fullName}
+            image={image}
+            alt={fullName}
             onLoad={() => setIsImageLoaded(true)}
             sx={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
           />
@@ -66,7 +69,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
               {`${appointment.typeService} con`}
             </Typography> */}
             <Typography color="text.secondary" component="div" variant="h5">
-              {psychologist.fullName}
+              {`${role}: ${fullName}`}
             </Typography>
 
             <Typography variant="h6" color="text.secondary" component="div">

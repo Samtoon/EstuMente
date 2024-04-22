@@ -15,6 +15,15 @@ export async function getScheduleByEmail(email: string) {
   return schedule;
 }
 
+export async function getScheduleByPsychologist(psychologist: string) {
+  const schedule = await Schedule.findOne({ psychologist: psychologist }).lean();
+  return schedule;
+}
+
+export async function updateScheduleByPsychologist(psychologist: string, schedule: IDay[]) {
+  await Schedule.updateOne({ psychologist: psychologist }, { days: schedule }, { upsert: true });
+}
+
 export async function setScheduleByEmail(email: string, schedule: IDay[]) {
   await connect();
   const user = await User.findOne({ email: email }, "_id").lean();

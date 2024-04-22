@@ -9,3 +9,8 @@ export async function getPsychologistById (id: string) {
     const psychologist = await Psychologist.findById(id).lean();
     return psychologist;
 }
+
+export async function getPsychologistByUser (user: string) {
+    const psychologist = await Psychologist.findOne({ user: user }).lean();
+    return psychologist;
+}
