@@ -1,4 +1,4 @@
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
 import { days } from "./constants";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";

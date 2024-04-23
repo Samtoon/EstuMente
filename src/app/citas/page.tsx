@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 // import { PatientLayout } from "../../../components/layout/PatientLayout";
 import PatientLayout from "@/components/layout/PatientLayout";
 // import { dbAppointment } from "../../../database";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { AppointmentList } from "@/components/appointments/AppointmentList";
 import { EmptyAppointment } from "@/components/appointments/EmptyAppointment";
 // import { getAppointmentsByPatient } from "@/database/dbAppointments";
@@ -19,7 +19,7 @@ import { serialize } from "@/database/connection";
 import { getPsychologistById, getPsychologistByUser } from "@/database/daos/psychologistDao";
 
 interface Props {
-  appointments: IAppointment[];
+  appointments: IPreviousAppointment[];
 }
 
 const AppointmentPage = async () => {

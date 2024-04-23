@@ -1,7 +1,9 @@
-import { IAppointment } from "./IAppointment";
+import { IPreviousAppointment } from "./IPreviousAppointment";
 
 export interface INote {
-  _id: string;
+  _id?: string;
   text: string;
-  appointment: IAppointment | string;
+  appointment: string;
+  patient: string;
+  createdAt: Date;
 }

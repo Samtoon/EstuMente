@@ -15,6 +15,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const prueba = "https://estumente.daily.co/prueba";
+
 // import { Box, Container, Typography } from "@mui/material";
 
 // import { IAppointment } from "../../../../interfaces";
@@ -48,13 +50,13 @@ const MeetPage: NextPage<Props> = ({
   // const [room, setRoom] = useState(
   //   appointment.dailyUrl ? appointment.dailyUrl : null
   // );
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState(prueba);
   const [callFrame, setCallFrame] = useState(null);
-
+  console.log("callFrame en page es: " + callFrame);
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
       <Box>
-        {/* appointment.endTime >= Date.now() / 1000 */false  ? (
+        {/* appointment.endTime >= Date.now() / 1000 */true  ? (
           /* appointment.startTime <= Date.now() / 1000 */true  ? (
             room !== null ? (
               <Call

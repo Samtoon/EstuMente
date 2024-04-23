@@ -1,5 +1,5 @@
 import mongoose, { Schema, model, Model } from "mongoose";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 
 const appointmentSchema = new Schema(
   {
@@ -120,7 +120,7 @@ const appointmentSchema = new Schema(
   { timestamps: true }
 );
 
-const Appointment: Model<IAppointment> =
+const Appointment: Model<IPreviousAppointment> =
   mongoose.models.Appointment || model("Appointment", appointmentSchema);
 
 export default Appointment;
