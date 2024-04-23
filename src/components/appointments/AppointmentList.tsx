@@ -40,7 +40,7 @@ export const AppointmentList: FC<Props> = async ({ appointments }) => {
               psychologist?.profilePicture!
               }
               key={appointment._id}
-              role={role!}
+              role={role === "Practicante" ? "Consultante" : "Practicante"}
             />
           );
         

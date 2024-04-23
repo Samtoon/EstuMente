@@ -1,14 +1,19 @@
+"use client"
 // import { useState } from "react";
 // import { GetServerSideProps, NextPage } from "next";
 // import { getSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 
+import { Calification } from "@/components/appointments/Calification";
+import { PsychologistDidNotAttend } from "@/components/appointments/PsychologistDidNotAttend";
 import PatientLayout from "@/components/layout/PatientLayout";
 import { Call } from "@/components/video/Call";
 import { EndCall } from "@/components/video/EndCall";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
-import { Box } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { NextPage } from "next";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 // import { Box, Container, Typography } from "@mui/material";
 
@@ -34,21 +39,23 @@ const MeetPage: NextPage<Props> = ({
   appointmentId,
 }) => {
   // const router = useRouter();
+  const router = useRouter();
 
-  // const refreshData = () => {
-  //   router.replace(router.asPath);
-  // };
+  const refreshData = () => {
+    router.refresh();
+  };
 
   // const [room, setRoom] = useState(
   //   appointment.dailyUrl ? appointment.dailyUrl : null
   // );
-  // const [callFrame, setCallFrame] = useState(null);
+  const [room, setRoom] = useState(null);
+  const [callFrame, setCallFrame] = useState(null);
 
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
       <Box>
-        {appointment.endTime >= Date.now() / 1000 ? (
-          appointment.startTime <= Date.now() / 1000 ? (
+        {/* appointment.endTime >= Date.now() / 1000 */false  ? (
+          /* appointment.startTime <= Date.now() / 1000 */true  ? (
             room !== null ? (
               <Call
                 room={room}
@@ -82,7 +89,7 @@ const MeetPage: NextPage<Props> = ({
             >
               La cita ha finalizado
             </Typography>
-            {appointment.checkinTimePsychologist ? (
+            {/* appointment.checkinTimePsychologist */true ? (
               <Calification appointmentId={appointmentId} />
             ) : (
               <PsychologistDidNotAttend appointmentId={appointmentId} />
@@ -90,7 +97,7 @@ const MeetPage: NextPage<Props> = ({
           </Container>
         )}
       </Box>
-    </VideoLayout>
+    </PatientLayout>
   );
 };
 

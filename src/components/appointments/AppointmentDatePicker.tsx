@@ -10,7 +10,7 @@ import { getAvailableHours, isDayAvailable, processAvailability } from "@/utils/
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { useReducer, useState } from "react";
 import React from "react";
-import { Button, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
 import Hour from "@/utils/hour";
 import { scheduleAppointment } from "@/utils/actions";
 import { useSession } from "next-auth/react";
@@ -35,7 +35,7 @@ function reducer(state: IState, action: IAction) {
     case "date":
       return {
         ...state,
-        date: action.body as Date, 
+        date: action.body as Date,
         availableHours: getAvailableHours(action.body as Date, state.appointments!, action.schedule!),
         hour: 0
       }
@@ -53,14 +53,14 @@ function reducer(state: IState, action: IAction) {
   }
 }
 
-export default function AppointmentDatePicker({ appointments, schedule } : { appointments: IUpcomingAppointment[], schedule: ISchedule }) {
+export default function AppointmentDatePicker({ appointments, schedule }: { appointments: IUpcomingAppointment[], schedule: ISchedule }) {
   // const [state, setState] = useState<IState>({});
-  
+
   const [state, dispatcher] = useReducer(reducer, {
-        date: undefined,
-        availableHours: undefined,
-        hour: 0,
-        appointments: appointments
+    date: undefined,
+    availableHours: undefined,
+    hour: 0,
+    appointments: appointments
   })
   console.log("hay " + state.appointments.length + "appointments");
   const { data: session } = useSession();
@@ -72,22 +72,22 @@ export default function AppointmentDatePicker({ appointments, schedule } : { app
   }
 
   return (
-    <LocalizationProvider 
-    dateAdapter={AdapterDateFns} 
-    adapterLocale={es}
-    localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
+    <LocalizationProvider
+      dateAdapter={AdapterDateFns}
+      adapterLocale={es}
+      localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
     >
       <StaticDatePicker
-      disablePast
-      views={['month', 'day']}
-      orientation="landscape"
-      shouldDisableDate={isDisabled}
-      onChange={(newValue) => newValue && dispatcher({
-        type: "date", 
-        schedule: schedule,
-        body: newValue
-      })}
-        // label="Selecciona una fecha"
+        disablePast
+        views={['month', 'day']}
+        orientation="landscape"
+        shouldDisableDate={isDisabled}
+        onChange={(newValue) => newValue && dispatcher({
+          type: "date",
+          schedule: schedule,
+          body: newValue
+        })}
+      // label="Selecciona una fecha"
       // onChange={(newValue: any) => {
       //   newValue && setDate(newValue);
       //   setHour("");
@@ -95,34 +95,39 @@ export default function AppointmentDatePicker({ appointments, schedule } : { app
       // }}
       // renderInput={(params: any) => <TextField {...params} />}
       />
-    <Stack spacing={2} justifyContent={"flex-start"} sx={{ height: "100%"}}>
-    <InputLabel id="hora">Hora:</InputLabel>
-      <Select
-        labelId="hora"
-        value={state.hour}
-        onChange={(e) => dispatcher({
-          type: "hour", 
-          schedule: schedule,
-          body: e.target.value as number
-        })}
-      >
-        {
-          state.availableHours?.map((hour, index) => 
-            hour && <MenuItem value={index}>{new Hour(index).getString()}</MenuItem>
-          )
-        }
-      </Select>
-    <Button 
-    size="large" 
-    color="secondary" 
-    disabled={state?.hour === undefined} 
-    onClick={async () => {
-      appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!, state.hour!);
-      dispatcher({type: "reset", appointments: appointments, schedule: schedule});
-    }}>
-      Programar ahora
-    </Button>
-    </Stack>
+      <Stack spacing={2} justifyContent={"flex-start"} sx={{ height: "100%" }}>
+        <FormControl>
+        <InputLabel id="hora-label">Hora:</InputLabel>
+        <Select
+          labelId="hora-label"
+          id="hora"
+          label="Hora"
+          value={state.hour ? state.hour : ''}
+          disabled={state.date ? false : true}
+          onChange={(e) => dispatcher({
+            type: "hour",
+            schedule: schedule,
+            body: e.target.value as number
+          })}
+        >
+          {
+            state.availableHours?.map((hour, index) =>
+              hour && <MenuItem value={index}>{new Hour(index).getString()}</MenuItem>
+            )
+          }
+        </Select>
+        </FormControl>
+        <Button
+          size="large"
+          color="secondary"
+          disabled={state?.hour === undefined}
+          onClick={async () => {
+            appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!, state.hour!);
+            dispatcher({ type: "reset", appointments: appointments, schedule: schedule });
+          }}>
+          Programar ahora
+        </Button>
+      </Stack>
     </LocalizationProvider>
   )
 }
