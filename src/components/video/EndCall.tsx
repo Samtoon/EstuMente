@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import { Typography, Box, Link, Button } from "@mui/material";
 import { VideocamOffOutlined } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 interface Props {
   message: string;
@@ -30,11 +30,11 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle }) => {
           </Typography>
           {url && (
             <NextLink href={url} passHref prefetch={false}>
-              <Link>
+              {/* <Link> */}
                 <Button color="secondary" className="card-btn">
                   {buttonTitle}
                 </Button>
-              </Link>
+              {/* </Link> */}
             </NextLink>
           )}
 
@@ -43,7 +43,7 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle }) => {
               color="secondary"
               className="card-btn"
               onClick={() => {
-                router.reload();
+                router.refresh();
               }}
             >
               {buttonTitle}
