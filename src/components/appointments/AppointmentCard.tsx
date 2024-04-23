@@ -1,7 +1,7 @@
 'use client'
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import {
   Box,
   Button,

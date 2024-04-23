@@ -4,7 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import { es } from "date-fns/locale/es";
 import { esES } from "@mui/x-date-pickers/locales";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
 import { getAvailableHours, isDayAvailable, processAvailability } from "@/utils/schedule";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";

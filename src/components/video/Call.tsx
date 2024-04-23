@@ -28,7 +28,18 @@ export const Call: FC<Props> = ({
 
   const callRef = useRef<any>(null);
 
-  const createAndJoinCall = useCallback(() => {
+  const createAndJoinCall = useCallback(async () => {
+    console.log("Creando nuevo objeto call");
+    try {
+      const oldCall = DailyIframe.getCallInstance();
+      if (oldCall) {
+        // console.log("Sí existe el bicho");
+        await oldCall.destroy();
+      }
+      
+    } catch (error) {
+      console.log("Hubo un error: " + error);
+    }
     const newCallFrame = DailyIframe.createFrame(callRef?.current, {
       iframeStyle: {
         height: "calc(100vh - 67px)",
@@ -55,14 +66,15 @@ export const Call: FC<Props> = ({
       showLeaveButton: true,
       showFullscreenButton: true,
     });
-
+    console.log("callFrame Creado, es: " + newCallFrame);
     setCallFrame(newCallFrame);
 
     newCallFrame.join({ url: room });
-
-    handleUpdateChecking();
+    console.log("Me uno");
+    // handleUpdateChecking();
 
     const leaveCall = () => {
+      console.log("Se llama leaveCall");
       setRoom(null);
       setCallFrame(null);
       refreshData();
@@ -70,14 +82,18 @@ export const Call: FC<Props> = ({
     };
 
     newCallFrame.on("left-meeting", leaveCall);
+    console.log("Termina el ciclo");
   }, [room, setCallFrame]);
 
   /**
    * Initiate Daily iframe creation on component render if it doesn't already exist
    */
   useEffect(() => {
+    console.log("callFrame es: " + callFrame);
     if (callFrame) return;
+    console.log("callFrame no existe: " + callFrame);
     createAndJoinCall();
+    console.log("Ya hice lo mío");
   }, [callFrame, createAndJoinCall]);
 
   return (

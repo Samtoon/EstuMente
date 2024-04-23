@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import React, { FC, Key } from "react";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { AppointmentCard } from "./AppointmentCard";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { getPsychologistById } from "@/database/daos/psychologistDao";

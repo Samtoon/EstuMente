@@ -1,8 +1,9 @@
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import UpcomingAppointment from "../models/UpcomingAppointment";
-import { serialize } from "../connection";
+import { connect, serialize } from "../connection";
 
 export async function getUpcomingAppointmentsByPsychologist( psychologist: string ) {
+    await connect();
     const appointments = await UpcomingAppointment.find({ psychologist: psychologist }).lean();
     console.log("Ejemplo");
     console.log(appointments[0])
@@ -10,6 +11,7 @@ export async function getUpcomingAppointmentsByPsychologist( psychologist: strin
 }
 
 export async function getUpcomingAppointmentsByUser( user: string ) {
+    await connect();
     const appointments = await UpcomingAppointment.find({ user: user }).lean();
     console.log("Ejemplo");
     console.log(appointments[0])
