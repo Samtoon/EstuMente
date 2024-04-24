@@ -12,6 +12,7 @@ import { EndCall } from "@/components/video/EndCall";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { Box, Container, Typography } from "@mui/material";
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -52,7 +53,7 @@ const MeetPage: NextPage<Props> = ({
   // );
   const [room, setRoom] = useState(prueba);
   const [callFrame, setCallFrame] = useState(null);
-  console.log("callFrame en page es: " + callFrame);
+  console.log("callFrame en page es: " + callFrame + " y room: " + room);
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
       <Box>
@@ -72,6 +73,8 @@ const MeetPage: NextPage<Props> = ({
               <EndCall
                 message="Has salido de la cita antes de finalizar el tiempo"
                 buttonTitle="Volver a ingresar"
+                setCallFrame={() => setCallFrame(null)}
+                setRoom={() => setRoom(prueba)}
               />
             )
           ) : (

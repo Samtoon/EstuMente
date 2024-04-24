@@ -8,9 +8,11 @@ interface Props {
   message: string;
   url?: string;
   buttonTitle: string;
+  setCallFrame?: () => void;
+  setRoom?: () => void;
 }
 
-export const EndCall: FC<Props> = ({ message, url, buttonTitle }) => {
+export const EndCall: FC<Props> = ({ message, url, buttonTitle, setCallFrame, setRoom }) => {
   const router = useRouter();
   return (
     <Box>
@@ -29,7 +31,7 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle }) => {
             {message}
           </Typography>
           {url && (
-            <NextLink href={url} passHref prefetch={false}>
+            <NextLink href={url}>
               {/* <Link> */}
                 <Button color="secondary" className="card-btn">
                   {buttonTitle}
@@ -43,7 +45,10 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle }) => {
               color="secondary"
               className="card-btn"
               onClick={() => {
-                router.refresh();
+                // setRoom!();
+                setCallFrame!();
+                setRoom!();
+                // router.refresh();
               }}
             >
               {buttonTitle}
