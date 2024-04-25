@@ -1,5 +1,6 @@
 "use server"
 
+import { createRoom, localHourToTimestamps } from "@/database/daos/roomDao";
 import { createUpcomingAppointment } from "@/database/daos/upcomingAppointmentDao";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 
@@ -16,5 +17,8 @@ export async function scheduleAppointment(user: string, psychologist: string, da
         hour: hour
     }
     console.log("Llamaron a la acción milagrosa");
+    const {startTimestamp: nbf, endTimestamp: exp} = localHourToTimestamps(hour);
+    await createRoom(nbf, exp);
     return await createUpcomingAppointment(appointment);
 }
+
