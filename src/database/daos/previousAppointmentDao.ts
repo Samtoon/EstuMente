@@ -12,5 +12,6 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
 }
 
 export async function createPreviousAppointment(appointment: IPreviousAppointment) {
-    await PreviousAppointment.create(appointment);
+    const result = await PreviousAppointment.create(appointment);
+    return result ? true : false;
 }
