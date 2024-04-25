@@ -7,7 +7,7 @@ export interface IPreviousAppointment {
   patient: string;
   psychologist: string;
   state?: string;
-  hour: string;
+  hour: number;
   date: Date;
   calification?: number;
   calificationComment?: string;

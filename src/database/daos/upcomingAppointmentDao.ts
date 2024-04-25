@@ -24,3 +24,8 @@ export async function createUpcomingAppointment( upcomingAppointment: IUpcomingA
     console.log(result);
     return serialize(await getUpcomingAppointmentsByPsychologist(upcomingAppointment.psychologist));
 }
+
+export async function deleteUpcomingAppointmentById( id: string ) {
+    const result = await UpcomingAppointment.deleteOne({ _id: id });
+    return result.deletedCount > 0;
+}
