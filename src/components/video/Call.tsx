@@ -9,7 +9,6 @@ interface Props {
   setRoom: any;
   callFrame: any;
   setCallFrame: any;
-  userName: string;
   appointmentId: string;
   refreshData: any;
 }
@@ -19,7 +18,6 @@ export const Call: FC<Props> = ({
   setRoom,
   callFrame,
   setCallFrame,
-  userName,
   appointmentId,
   refreshData,
 }) => {
@@ -94,7 +92,7 @@ export const Call: FC<Props> = ({
     createAndJoinCall();
     console.log("Ya hice lo mío");
     }
-  }, [callFrame, createAndJoinCall, userName]);
+  }, [callFrame, createAndJoinCall]);
 
   return (
     <Box>

@@ -4,4 +4,6 @@ export interface IUpcomingAppointment {
     psychologist: string,
     hour: number,
     date: Date
+    roomName: string,
+    roomURL: string
 }
