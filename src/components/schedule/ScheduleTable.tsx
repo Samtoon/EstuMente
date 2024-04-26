@@ -19,7 +19,7 @@ export default function ScheduleTable({ schedule } : { schedule: IDay[] }) {
             </TableHead>
             <TableBody>
                 {hours.map((hour) =>
-                    <TableRow>
+                    <TableRow key={`fila${hour}`}>
                         <TableCell>{hour.getString()}</TableCell>
                         {days.map((day, index) => <TableCell key={day + hour.getString()} sx={{
                             paddingTop: 0, 

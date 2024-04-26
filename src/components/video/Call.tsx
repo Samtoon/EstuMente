@@ -11,6 +11,7 @@ interface Props {
   setCallFrame: any;
   appointmentId: string;
   refreshData: any;
+  token: string;
 }
 
 export const Call: FC<Props> = ({
@@ -20,6 +21,7 @@ export const Call: FC<Props> = ({
   setCallFrame,
   appointmentId,
   refreshData,
+  token
 }) => {
   const handleUpdateChecking = async () => {
     // await psiApi.put("/appointments", { id: appointmentId });
@@ -27,7 +29,7 @@ export const Call: FC<Props> = ({
   const {data: session, status} = useSession();
   const callRef = useRef<any>(null);
 
-  const createAndJoinCall = async () => {
+  const createAndJoinCall = useCallback(async () => {
     const oldCall = DailyIframe.getCallInstance();
     if(!oldCall) {
       console.log("Creando nuevo objeto call");
@@ -60,15 +62,23 @@ export const Call: FC<Props> = ({
       console.log("callFrame Creado, es: " + newCallFrame);
       setCallFrame(newCallFrame);
   
-      newCallFrame.join({ url: room });
-      console.log("Me uno");
+      let participants;
+      try {
+        newCallFrame.join({ url: room, token: token })
+        .then((value) => console.log(value))
+        .catch((reason) => console.log(reason))
+        .catch((error) => console.log(error));
+      } catch (error) {
+        console.log("Falló esa mierda, esto dice:");
+        console.log(error);
+      }
       // handleUpdateChecking();
   
       const leaveCall = () => {
         console.log("Se llama leaveCall");
         setRoom(null);
         setCallFrame(undefined);
-        refreshData();
+        // refreshData();
         callFrame.destroy();
       };
   
@@ -79,7 +89,7 @@ export const Call: FC<Props> = ({
         await oldCall.destroy();
         console.log("Destruido");
     }
-  }
+  },[session, callFrame, room, token, setCallFrame, setRoom]);
 
   /**
    * Initiate Daily iframe creation on component render if it doesn't already exist
@@ -92,7 +102,7 @@ export const Call: FC<Props> = ({
     createAndJoinCall();
     console.log("Ya hice lo mío");
     }
-  }, [callFrame, createAndJoinCall]);
+  }, [callFrame, createAndJoinCall, session, status]);
 
   return (
     <Box>

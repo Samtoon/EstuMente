@@ -10,7 +10,7 @@ import Toolbar from "@mui/material/Toolbar/Toolbar";
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Stack from "@mui/material/Stack/Stack";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IDay } from "@/interfaces/schedule/IDay";
 import React from "react";
 import List from "@mui/material/List/List";
@@ -36,18 +36,18 @@ interface state {
 
 
 export default function ConfigureSchedulePage() {
-    function fetchSchedule() {
-        console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${session?.psychologist?._id}`).
-        then((res) => res.json()).
-        then((res) => {
-            // console.log("Este es el resultado");
-            // console.log(res.days);
-            res;
-            console.log("Me llegó algo");
-            if (res?.days) setSchedule([...res.days]);
-        })
-    }
+    // function fetchSchedule() {
+    //     console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
+    //     fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${session?.psychologist?._id}`).
+    //     then((res) => res.json()).
+    //     then((res) => {
+    //         // console.log("Este es el resultado");
+    //         // console.log(res.days);
+    //         res;
+    //         console.log("Me llegó algo");
+    //         if (res?.days) setSchedule([...res.days]);
+    //     })
+    // }
 
     function updateSchedule() {
         fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
@@ -71,9 +71,21 @@ export default function ConfigureSchedulePage() {
     //         result = res;
     //         //if (result?.days) setSchedule(result.days);
     //     })
+    const fetchSchedule = useCallback(() => {
+        console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${session?.psychologist?._id}`).
+        then((res) => res.json()).
+        then((res) => {
+            // console.log("Este es el resultado");
+            // console.log(res.days);
+            res;
+            console.log("Me llegó algo");
+            if (res?.days) setSchedule([...res.days]);
+        })
+    }, [session]);
     useEffect(() => {
         fetchSchedule();
-    }, [session])
+    }, [session, fetchSchedule])
     // console.log("Result days es: " + result?.days);
     const [schedule, setSchedule] = React.useState<IDay[]>(
         // result?.days ? [...result.days] : 
