@@ -23,6 +23,8 @@ import { CreditCardOffOutlined } from "@mui/icons-material";
 import { CancelModal } from "./CancelModal";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { IPsychologist } from "@/interfaces/IPsychologist";
+import { isAppointmentTime } from "@/utils/schedule";
+import { useRouter } from "next/navigation";
 
 interface Props {
   appointment: IUpcomingAppointment,
@@ -34,6 +36,7 @@ interface Props {
 
 export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName, image, role }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const router = useRouter();
 
   return (
     <Grid item xs={12}>
@@ -139,26 +142,28 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
                 justifyContent="center"
                 alignItems="center"
               >
-                {/* {appointment.isPaid ? (
-                  <NextLink
-                    href={`/app/citas/meet/${appointment._id}`}
-                    passHref
-                    prefetch={false}
-                  >
+                {/* appointment.isPaid */ true ? (
+                  // <NextLink
+                  //   href={`/app/citas/meet/${appointment._id}`}
+                  //   passHref
+                  //   prefetch={false}
+                  // >
                     <Button
                       size="small"
                       color="secondary"
                       fullWidth
                       disabled={
-                        appointment.startTime >= Date.now() / 1000 ||
-                        appointment.endTime <= Date.now() / 1000
+                        // appointment.startTime >= Date.now() / 1000 ||
+                        // appointment.endTime <= Date.now() / 1000
+                        !isAppointmentTime(appointment.date, appointment.hour)
                       }
+                      onClick={() => router.push(`/citas/meet/${appointment._id}`)}
                     >
-                      {appointment.endTime <= Date.now() / 1000
+                      {/* appointment.endTime <= Date.now() / 1000 */ false
                         ? "Videollamada finalizada"
                         : "Ingresar a mi cita"}
                     </Button>
-                  </NextLink>
+                  // </NextLink>
                 ) : (
                   <NextLink
                     href={`/app/citas/${appointment._id}`}
@@ -169,7 +174,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
                       Pagar cita
                     </Button>
                   </NextLink>
-                )} */}
+                )}
 
                 {/* {!appointment.isPaid && (
                   <CancelModal appointmentId={appointment._id} />

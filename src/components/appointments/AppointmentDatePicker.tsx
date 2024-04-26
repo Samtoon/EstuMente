@@ -112,7 +112,7 @@ export default function AppointmentDatePicker({ appointments, schedule }: { appo
         >
           {
             state.availableHours?.map((hour, index) =>
-              hour && <MenuItem value={index}>{new Hour(index).getString()}</MenuItem>
+              hour && <MenuItem value={index} key={`opcion${index}`}>{new Hour(index).getString()}</MenuItem>
             )
           }
         </Select>

@@ -1,3 +1,4 @@
+"use client"
 import { Box, Container, Typography } from "@mui/material";
 import { Calification } from "../appointments/Calification";
 import { PsychologistDidNotAttend } from "../appointments/PsychologistDidNotAttend";
@@ -6,7 +7,7 @@ import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { useState } from "react";
 import { Call } from "./Call";
 
-export default function CallDisplay({ appointment } : { appointment: IUpcomingAppointment }) {
+export default function CallDisplay({ appointment, token } : { appointment: IUpcomingAppointment, token: string }) {
     
     const [room, setRoom] = useState(appointment.roomURL);
     const [callFrame, setCallFrame] = useState(null);
@@ -22,6 +23,7 @@ export default function CallDisplay({ appointment } : { appointment: IUpcomingAp
                             callFrame={callFrame}
                             appointmentId={appointment._id!}
                             refreshData={null}
+                            token={token}
                         />
                     ) : (
                         <EndCall

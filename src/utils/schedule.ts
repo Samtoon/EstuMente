@@ -4,6 +4,7 @@ import { days } from "./constants";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { IDay } from "@/interfaces/schedule/IDay";
 import { isEqual } from "date-fns";
+import { getColombianHour } from "./hour";
 
 export function processAvailability(baseSchedule: ISchedule, appointments: IUpcomingAppointment[]) {
     const schedule: ISchedule = {...baseSchedule};
@@ -40,5 +41,14 @@ export function isDayAvailable(date: Date, appointments: IUpcomingAppointment[],
         if (hours[i]) return true;
     }
     return false;
+}
+
+export function isAppointmentTime(appointmentDate: Date, appointmentHour: number) {
+    const date1 = new Date(appointmentDate)
+    const date2 = new Date();
+    date1.setHours(0, 0, 0, 0);
+    date2.setHours(0, 0, 0, 0);
+    console.log(`la fecha 1 es ${date1} y la 2 ${date2}`);
+    return isEqual(date1, date2) && appointmentHour === getColombianHour();
 }
 
