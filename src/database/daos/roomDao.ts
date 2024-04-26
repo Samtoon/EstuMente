@@ -3,8 +3,8 @@ import { IRoom } from "@/interfaces/IRoom";
 import { dailyHeaders } from "@/utils/constants";
 import { DAILY_API_URL } from "@/utils/endpoints";
 
-export function localHourToTimestamps(hour: number) {
-    const date = new Date(new Date().toDateString());
+export function localHourToTimestamps(hour: number, ISODate: string) {
+    const date = new Date(ISODate);
     date.setHours(hour);
     const startTimestamp = date.getTime() / 1000;
     date.setHours(hour + 1);

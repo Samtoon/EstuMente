@@ -18,6 +18,12 @@ export async function getUpcomingAppointmentsByUser( user: string ) {
     return appointments;
 }
 
+export async function getUpcomingAppointmentById( id: string ) {
+    await connect();
+    const appointment = await UpcomingAppointment.findById(id).lean();
+    return appointment;
+}
+
 export async function createUpcomingAppointment( upcomingAppointment: IUpcomingAppointment ) {
     const result = await UpcomingAppointment.create(upcomingAppointment);
     console.log("La cita insertada es");
