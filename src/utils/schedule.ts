@@ -32,6 +32,10 @@ export function getAvailableHours(date: Date, appointments: IUpcomingAppointment
                 hours[appointment.hour] = false;
             }
         });
+    if (isSameDay(date, new Date())) {
+        hours.fill(false, 0, getColombianHour());
+    }
+
     return hours;
 }
 
@@ -50,5 +54,11 @@ export function isAppointmentTime(appointmentDate: Date, appointmentHour: number
     date2.setHours(0, 0, 0, 0);
     console.log(`la fecha 1 es ${date1} y la 2 ${date2}`);
     return isEqual(date1, date2) && appointmentHour === getColombianHour();
+}
+
+export function isSameDay(date1: Date, date2: Date) {
+    return date1.getUTCFullYear() === date2.getUTCFullYear() &&
+        date1.getUTCMonth() === date2.getUTCMonth() &&
+        date1.getUTCDate() === date2.getUTCDate();
 }
 
