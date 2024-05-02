@@ -25,6 +25,7 @@ import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { IPsychologist } from "@/interfaces/IPsychologist";
 import { isAppointmentTime } from "@/utils/schedule";
 import { useRouter } from "next/navigation";
+import GoogleImage from "../ui/GoogleImage";
 
 interface Props {
   appointment: IUpcomingAppointment,
@@ -53,11 +54,14 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
           }}
         >
           <CardMedia
-            component="img"
-            image={image}
-            alt={fullName}
-            onLoad={() => setIsImageLoaded(true)}
-            sx={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
+            component={GoogleImage}
+            // image={image}
+            // image={image}
+            compAlt={fullName}
+            compSrc={image}
+            // onLoad={() => setIsImageLoaded(true)}
+            compStyle={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
+            // slotProps={{img: {referrerPolicy:"no-referrer"}}}
           />
         </Box>
         <Box
