@@ -1,0 +1,27 @@
+#dialog-paper {
+    max-width: 400px;
+}
+
+#save-note-button {
+    margin: 10px;
+}
+
+.edit-note-panel {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+#swipeable-views {
+    min-height: inherit;
+}
+
+.react-swipeable-view-container {
+    min-height: 300px;
+}
+
+.ql-container {
+    max-height: 150px;
+    overflow: auto;
+}
