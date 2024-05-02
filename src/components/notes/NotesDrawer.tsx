@@ -7,6 +7,7 @@ import Draggable from "react-draggable";
 import SwipeableViews from "react-swipeable-views";
 import EditNotePanel from "./drawer panels/EditNotePanel";
 import ListNotesPanel from "./drawer panels/ListNotesPanel";
+import "@/styles/notes/notes-drawer.css"
 export default function NotesDrawer({ open, handleClose }: { open: boolean, handleClose: () => void }) {
     console.log("Me vuelvo a renderizar");
     const [value, setValue] = React.useState(0);
@@ -56,11 +57,12 @@ export default function NotesDrawer({ open, handleClose }: { open: boolean, hand
                     aria-label="basic tabs example"
                     value={value}
                     onChange={handleChange}
+                    variant="fullWidth"
                 >    
                     <Tab label="Nueva nota" value={0}/>
                     <Tab label="Notas guardadas" value={1}/>
                 </Tabs>
-                <SwipeableViews index={value}>
+                <SwipeableViews index={value} id="swipeable-views">
                     <EditNotePanel/>
                     <ListNotesPanel/>
                 </SwipeableViews>

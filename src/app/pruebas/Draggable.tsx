@@ -10,7 +10,7 @@ export default function PaperComponent(props: PaperProps) {
             cancel={'[class*="MuiDialogContent-root"]'}
             nodeRef={nodeRef}
         >
-            <Paper {...props} ref={nodeRef} />
+            <Paper {...props} ref={nodeRef} id="dialog-paper"/>
         </Draggable>
     );
 }
