@@ -13,6 +13,7 @@ import {
   ListItemButton
 } from "@mui/material";
 import {
+  Build,
   LoginOutlined,
   LogoutOutlined,
   SupervisedUserCircleOutlined,
@@ -24,6 +25,7 @@ import ListPatient from "./Lists/ListPatient";
 import ListAdmin from "./Lists/ListAdmin";
 import ListCoordinator from "./Lists/ListCoordinator";
 import ListTutor from "./Lists/ListTutor";
+import MenuItem from "./MenuItem";
 /*import { MenuItemPsychologist } from "./MenuItemPsychologist";
 import { ListPatient } from "./ListPatient";
 import { MenuItemAdmin } from "./MenuItemAdmin"; */
@@ -128,6 +130,9 @@ export const SideMenu = () => {
             </ListItem>
           </List>
         )}
+        <MenuItem label="Pruebas" path="/pruebas">
+          <Build color="secondary"/>
+        </MenuItem>
       </Box>
     </Drawer>
   );
