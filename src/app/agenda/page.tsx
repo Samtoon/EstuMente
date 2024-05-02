@@ -100,7 +100,6 @@ export default function ConfigureSchedulePage() {
         <PsychologistLayout title="configurar calendario" pageDescription="">
             
         <AddPeriodModal schedule={schedule} setSchedule={setSchedule} state={modalOpen} close={()=>setModalOpen(ModalStates.Closed)}/>
-        <Toolbar/>
         <Typography
           variant="h1"
           component="h1"

@@ -45,7 +45,6 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
             m: { xs: "5rem 0rem", sm: "1rem 0rem" },
           }}
         > */}
-        <Toolbar/>
           {children}
         {/* </Box> */}
       </main>
