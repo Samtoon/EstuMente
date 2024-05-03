@@ -9,6 +9,9 @@ import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { dailyHeaders } from "./constants";
 import { DAILY_API_URL } from "./endpoints";
+import { createNote, getNotesByPatient } from "@/database/daos/noteDao";
+import { serialize } from "@/database/connection";
+import { INote } from "@/interfaces/INote";
 
 export async function pruebaServerAction(formData: FormData) {
     console.log("Hola, te saludo desde el servidor. Si funciona, esto es impresionante...: " + formData.get("Celular"));
@@ -76,5 +79,14 @@ export async function requestToken(roomName: string) {
     const { token }: { token: string; } = await response.json();
     console.log("El token es: " + token);
     return token;
+}
+
+export async function fetchNotesByPatient(psychologist: string, patient: string) {
+    const notes = await getNotesByPatient(psychologist, patient);
+    return serialize(notes) as INote[];
+}
+
+export async function saveNote(note: INote) {
+    return await createNote(note);
 }
 
