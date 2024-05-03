@@ -2,13 +2,9 @@
     max-width: 400px;
 }
 
-#save-note-button {
-    margin: 10px;
-}
-
 .edit-note-panel {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-direction: column;
     height: 100%;
 }
@@ -18,10 +14,11 @@
 }
 
 .react-swipeable-view-container {
-    min-height: 300px;
+    min-height: 330px;
 }
 
 .ql-container {
-    max-height: 150px;
+    min-height: 120px;
+    max-height: 120px;
     overflow: auto;
 }
