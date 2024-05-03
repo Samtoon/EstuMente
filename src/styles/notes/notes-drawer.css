@@ -2,7 +2,7 @@
     max-width: 400px;
 }
 
-.edit-note-panel {
+#edit-note-panel {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
@@ -13,12 +13,18 @@
     min-height: inherit;
 }
 
-.react-swipeable-view-container {
-    min-height: 330px;
+#swipeable-views .react-swipeable-view-container {
+    height: 330px;
 }
 
-.ql-container {
+#swipeable-views .ql-container {
     min-height: 120px;
     max-height: 120px;
     overflow: auto;
+}
+
+#list-notes-panel {
+    margin: 0px;
+    height: 100%;
+    overflow: hidden;
 }

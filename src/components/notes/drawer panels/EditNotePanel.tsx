@@ -35,7 +35,7 @@ export default function EditNotePanel() {
   }
 
   return (
-    <div className="edit-note-panel">
+    <div id="edit-note-panel">
       <TextField label="Título" value={title} onChange={e => setTitle(e.target.value)}/>
       <ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} />
       <Button id="save-note-button" color="secondary" onClick={handleClick}>Guardar</Button>
