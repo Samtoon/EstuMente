@@ -1,7 +1,7 @@
 'use client'
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
-import { IAppointment } from "@/interfaces/IAppointment";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import {
   Box,
   Button,
@@ -21,14 +21,23 @@ import { es } from "date-fns/locale";
 import { CalificationModal } from "./CalificationModal";
 import { CreditCardOffOutlined } from "@mui/icons-material";
 import { CancelModal } from "./CancelModal";
+import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
+import { IPsychologist } from "@/interfaces/IPsychologist";
+import { isAppointmentTime } from "@/utils/schedule";
+import { useRouter } from "next/navigation";
+import GoogleImage from "../ui/GoogleImage";
 
 interface Props {
-  appointment: IAppointment;
-  psychologist: any;
+  appointment: IUpcomingAppointment,
+  psychologist?: IPsychologist,
+  fullName: string,
+  image: string,
+  role: string
 }
 
-export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
+export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName, image, role }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const router = useRouter();
 
   return (
     <Grid item xs={12}>
@@ -45,11 +54,14 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
           }}
         >
           <CardMedia
-            component="img"
-            image={psychologist.user.profilePicture.url}
-            alt={psychologist.fullName}
-            onLoad={() => setIsImageLoaded(true)}
-            sx={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
+            component={GoogleImage}
+            // image={image}
+            // image={image}
+            compAlt={fullName}
+            compSrc={image}
+            // onLoad={() => setIsImageLoaded(true)}
+            compStyle={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
+            // slotProps={{img: {referrerPolicy:"no-referrer"}}}
           />
         </Box>
         <Box
@@ -60,22 +72,22 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
           }}
         >
           <CardContent sx={{ flex: "1 0 auto" }}>
-            <Typography component="div" variant="subtitle1">
+            {/* <Typography component="div" variant="subtitle1">
               {`${appointment.typeService} con`}
-            </Typography>
+            </Typography> */}
             <Typography color="text.secondary" component="div" variant="h5">
-              {psychologist.fullName}
+              {`${role}: ${fullName}`}
             </Typography>
 
             <Typography variant="h6" color="text.secondary" component="div">
               {`Fecha: ${format(
-                new Date(appointment.startTime * 1000),
+                appointment.date,
                 "EEEE dd",
                 {
                   locale: es,
                 }
               )} de ${format(
-                new Date(appointment.startTime * 1000),
+                appointment.date,
                 "MMMM yyyy",
                 {
                   locale: es,
@@ -84,11 +96,11 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
             </Typography>
             <Typography variant="h6" color="text.secondary" component="div">
               {`Hora de inicio: ${format(
-                new Date(appointment.startTime * 1000 + 600000),
-                "hh:mm a"
+                new Date(appointment.date).setHours(appointment.hour),
+                "HH:mm a"
               )}`}
             </Typography>
-            <NextLink href={`/app/citas/${appointment._id}`} passHref>
+            {/* <NextLink href={`/app/citas/${appointment._id}`} passHref> */}
               <Link>
                 <Typography
                   variant="body1"
@@ -99,8 +111,8 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                   Ver información de la cita
                 </Typography>
               </Link>
-            </NextLink>
-            {!appointment.isPaid ? (
+            {/* </NextLink> */}
+            {/* {!appointment.isPaid ? (
               <Chip
                 label={`Pendiente de pago`}
                 color="error"
@@ -115,7 +127,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                 variant="outlined"
                 size="small"
               />
-            )}
+            )} */}
           </CardContent>
         </Box>
         <Box flex={1} />
@@ -134,26 +146,28 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {appointment.isPaid ? (
-                  <NextLink
-                    href={`/app/citas/meet/${appointment._id}`}
-                    passHref
-                    prefetch={false}
-                  >
+                {/* appointment.isPaid */ true ? (
+                  // <NextLink
+                  //   href={`/app/citas/meet/${appointment._id}`}
+                  //   passHref
+                  //   prefetch={false}
+                  // >
                     <Button
                       size="small"
                       color="secondary"
                       fullWidth
                       disabled={
-                        appointment.startTime >= Date.now() / 1000 ||
-                        appointment.endTime <= Date.now() / 1000
+                        // appointment.startTime >= Date.now() / 1000 ||
+                        // appointment.endTime <= Date.now() / 1000
+                        !isAppointmentTime(appointment.date, appointment.hour)
                       }
+                      onClick={() => router.push(`/citas/meet/${appointment._id}`)}
                     >
-                      {appointment.endTime <= Date.now() / 1000
+                      {/* appointment.endTime <= Date.now() / 1000 */ false
                         ? "Videollamada finalizada"
                         : "Ingresar a mi cita"}
                     </Button>
-                  </NextLink>
+                  // </NextLink>
                 ) : (
                   <NextLink
                     href={`/app/citas/${appointment._id}`}
@@ -166,17 +180,17 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                   </NextLink>
                 )}
 
-                {!appointment.isPaid && (
+                {/* {!appointment.isPaid && (
                   <CancelModal appointmentId={appointment._id} />
-                )}
+                )} */}
 
-                {appointment.checkinTimePsychologist &&
+                {/* {appointment.checkinTimePsychologist &&
                   appointment.endTime <= Date.now() / 1000 &&
                   appointment.calification === 0 && (
                     <CalificationModal appointmentId={appointment._id} />
-                  )}
+                  )} */}
 
-                {!appointment.checkinTimePsychologist &&
+                {/* {!appointment.checkinTimePsychologist &&
                   (appointment.endTime <= Date.now() / 1000 ||
                     Date.now() / 1000 <= appointment.startTime - 7200) &&
                   (appointment.state === "activa" ||
@@ -190,7 +204,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist }) => {
                         Reagendar cita
                       </Button>
                     </NextLink>
-                  )}
+                  )} */}
               </Stack>
             </Box>
           </CardActions>

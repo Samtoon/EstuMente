@@ -35,7 +35,6 @@ export const lightTheme = createTheme({
         root: {
           background:
             " linear-gradient(90deg, rgba(43,3,106,1) 0%, rgba(162,1,190,1) 100%)",
-          height: 60,
         },
       },
     },

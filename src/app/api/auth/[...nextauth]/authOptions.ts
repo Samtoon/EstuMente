@@ -6,6 +6,7 @@ import IUser from "@/interfaces/IUser";
 import NextAuth, { NextAuthOptions, Profile } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Google, { GoogleProfile } from "next-auth/providers/google";
+import slugify from "slugify";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!
@@ -44,12 +45,13 @@ const authOptions: NextAuthOptions = {
             if (user) {
                 await User.updateOne({ email: profile.email }, upsertUser);
                 if (user.role === "Practicante") {
+                    const fullName = user.firstName + " " + user.lastName;
                     const upsertPsychologist: IPsychologist = {
-                        fullName: user.firstName + " " + user.lastName,
+                        fullName: fullName,
                         gender: user.gender || "Indefinido",
                         profilePicture: user.profilePicture!.url,
                         user: user._id,
-                        slug: "slug",
+                        slug: slugify(fullName),
                         isPublic: true
                     }
                     const psychologist = await Psychologist.findOne({ user: user._id });
@@ -80,13 +82,16 @@ const authOptions: NextAuthOptions = {
             // console.log("El token es:" + JSON.stringify(token))
             else if (user) {
                 await connect();
-                token.user = await User.findOne({ email: user.email });
+                const dbUser = await User.findOne({ email: user.email });
+                token.user = dbUser;
+                token.psychologist = await Psychologist.findOne({ user: dbUser?._id })
             }
             return token;
         },
         session({ session, token, user }) {
             // console.log("llamando session");
-            session.user = token.user as any;
+            session.user = token.user as IUser;
+            session.psychologist = token.psychologist as IPsychologist;
             return session;
         }
     }
