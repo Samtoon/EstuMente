@@ -1,8 +1,9 @@
 #dialog-paper {
     max-width: 400px;
+    height: 485px;
 }
 
-#edit-note-panel {
+.notes-panel {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
@@ -14,7 +15,8 @@
 }
 
 #swipeable-views .react-swipeable-view-container {
-    height: 330px;
+    min-height: 330px;
+    max-height: 330px;
 }
 
 #swipeable-views .ql-container {
@@ -26,5 +28,14 @@
 #list-notes-panel {
     margin: 0px;
     height: 100%;
-    overflow: hidden;
+    
+}
+
+#notes-list {
+    height: 70%;
+    overflow: auto;
+}
+
+#pagination ul {
+    justify-content: center;
 }
