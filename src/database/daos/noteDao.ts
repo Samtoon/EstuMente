@@ -1,17 +1,21 @@
 import { INote } from "@/interfaces/INote";
 import Note from "../models/Note";
+import { connect } from "../connection";
 
 export async function getNotesByPatient(psychologist: string, patient: string) {
+    await connect();
     const notes = await Note.find({ psychologist: psychologist, patient: patient }).lean();
     return notes;
 }
 
 export async function createNote(note: INote) {
+    await connect();
     const result = await Note.create(note);
     return result ? true : false;
 }
 
 export async function getNotesByTitle(psychologist: string, patient: string, title: string) {
+    await connect();
     const notes = await Note.find({
         psychologist: psychologist, 
         patient: patient,
@@ -23,6 +27,7 @@ export async function getNotesByTitle(psychologist: string, patient: string, tit
 }
 
 export async function getNotesByDate(psychologist: string, patient: string, date: Date) {
+    await connect();
     const dayStart = new Date(date);
     const dayEnd = new Date(date);
     dayEnd.setDate(dayEnd.getDate() + 1);
@@ -36,6 +41,7 @@ export async function getNotesByDate(psychologist: string, patient: string, date
 }
 
 export async function updateNote(note: INote) {
+    await connect();
     const result = await Note.updateOne({ _id: note._id }, note);
     return Boolean(result.modifiedCount);
 }
