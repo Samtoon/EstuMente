@@ -8,11 +8,10 @@ interface Props {
   message: string;
   url?: string;
   buttonTitle: string;
-  setCallFrame?: () => void;
-  setRoom?: () => void;
+  trigger?: () => void;
 }
 
-export const EndCall: FC<Props> = ({ message, url, buttonTitle, setCallFrame, setRoom }) => {
+export const EndCall: FC<Props> = ({ message, url, buttonTitle, trigger }) => {
   const router = useRouter();
   return (
     <Box>
@@ -45,9 +44,8 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle, setCallFrame, se
               color="secondary"
               className="card-btn"
               onClick={() => {
-                // setRoom!();
-                setCallFrame!();
-                setRoom!();
+                console.log("Click!");
+                trigger!();
                 // router.refresh();
               }}
             >

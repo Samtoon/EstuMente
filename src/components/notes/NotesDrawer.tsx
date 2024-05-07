@@ -16,11 +16,9 @@ import { useSession } from "next-auth/react";
 
 
 export default function NotesDrawer({ open, handleClose }: { open: boolean, handleClose: () => void }) {
-    console.log("Me vuelvo a renderizar");
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const [value, setValue] = React.useState(0);
     const [shouldUpdate, setShouldUpdate] = useState(true);
-    console.log("shouldUpdate en el padre es:" + shouldUpdate);
     const [selectedNote, setSelectedNote] = useState<INote | undefined>(undefined);
     const styles = {
         slide: {
@@ -89,12 +87,12 @@ export default function NotesDrawer({ open, handleClose }: { open: boolean, hand
                 >
                     <Tab label="Nueva nota" value={0} />
                     <Tab label="Notas guardadas" value={1} />
-                    <Tab label="Ver nota" value={2} disabled/>
+                    <Tab label="Ver nota" value={2} disabled />
                 </Tabs>
                 <SwipeableViews index={value} id="swipeable-views">
-                    <EditNotePanel trigger={setShouldUpdate}/>
-                    <ListNotesPanel checkNote={checkNote} shouldUpdate={shouldUpdate} setShouldUpdate={setShouldUpdate}/>
-                    <EditNotePanel selectedNote={selectedNote} trigger={setShouldUpdate}/>
+                    <EditNotePanel trigger={setShouldUpdate} />
+                    <ListNotesPanel checkNote={checkNote} shouldUpdate={shouldUpdate} setShouldUpdate={setShouldUpdate} />
+                    <EditNotePanel selectedNote={selectedNote} trigger={setShouldUpdate} />
                 </SwipeableViews>
             </DialogContent>
         </Dialog>

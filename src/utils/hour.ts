@@ -15,6 +15,6 @@ export default class Hour {
 
 export function getColombianHour() {
     let colombianHour = new Date().getUTCHours() - 5;
-    if (colombianHour < 0) colombianHour = 24 - colombianHour;
+    if (colombianHour < 0) colombianHour = 24 + colombianHour;
     return colombianHour;
 }

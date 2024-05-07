@@ -52,7 +52,9 @@ export function isAppointmentTime(appointmentDate: Date, appointmentHour: number
     const date2 = new Date();
     date1.setHours(0, 0, 0, 0);
     date2.setHours(0, 0, 0, 0);
-    console.log(`la fecha 1 es ${date1} y la 2 ${date2}`);
+    console.log(`la fecha 1 es ${date1} y la 2 ${date2}.
+    Las horas ${appointmentHour} y ${getColombianHour()}
+    `);
     return isEqual(date1, date2) && appointmentHour === getColombianHour();
 }
 

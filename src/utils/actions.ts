@@ -14,6 +14,7 @@ import { serialize } from "@/database/connection";
 import { INote } from "@/interfaces/INote";
 import NoteFilters from "@/enums/NoteFilters";
 import { title } from "process";
+import { getColombianHour } from "./hour";
 
 export async function pruebaServerAction(formData: FormData) {
     console.log("Hola, te saludo desde el servidor. Si funciona, esto es impresionante...: " + formData.get("Celular"));
@@ -53,15 +54,13 @@ export async function moveAppointment(upcomingAppointment: IUpcomingAppointment)
 
 export async function compareDates() {
     const startDate = new Date();
-    let colombianHour = startDate.getUTCHours() - 5;
-    if (colombianHour < 0) colombianHour = 24 + colombianHour;
     startDate.setHours(0, 0, 0, 0);
     const endDate = new Date();
     endDate.setHours(23, 0, 0, 0);
-    console.log("Estoy buscando la hora: " + colombianHour + "entre las fechas: " + startDate + " y " + endDate);
+    console.log("Estoy buscando la hora: " + getColombianHour() + "entre las fechas: " + startDate + " y " + endDate);
     const appointments = await UpcomingAppointment.find({
         date: { $lte: endDate },
-        hour: { $lt: colombianHour }
+        hour: { $lt: getColombianHour() }
     }).lean();
     appointments.map(async (appointment) => await moveAppointment(appointment));
 }

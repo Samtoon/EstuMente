@@ -32,9 +32,17 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   console.log(session?.user);
   // console.log(`comparando los ids ${session?.user._id} y ${appointment?.user}, el resultado es ${session?.user._id == appointment?.user}
   // y sus tipos son ${typeof session?.user._id} y ${typeof appointment?.user}`);
-  const token = session?.user._id === appointment?.user.toString() ? 
-  await requestToken(appointment?.roomName!) :
-  "";
+  function canJoin() {
+    switch (session?.user.role) {
+      case "Consultante":
+        return session.user._id === appointment?.user.toString();
+      case "Practicante":
+        return session.psychologist?._id === appointment?.psychologist.toString();
+      default:
+        return true;
+    }
+  }
+  const token = canJoin() ? await requestToken(appointment?.roomName!) : "";
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
       <CallDisplay appointment={serialize(appointment!)} token={token!}/>

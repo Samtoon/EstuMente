@@ -10,13 +10,13 @@ import { useState } from "react";
 
 const sTextField = () => <TextField label="Fecha" size="small" variant="standard" />
 
-export default function SearchField({ 
+export default function SearchField({
     // searchNotes,
     setFilter,
     filterBy,
     setFilterBy,
     trigger
-} : { 
+}: {
     // searchNotes: (filterBy: string | Date, filterBy: NoteFilters) => void,
     setFilter: (filter: string | Date) => void,
     filterBy: NoteFilters,
@@ -32,12 +32,10 @@ export default function SearchField({
         fullWidth: true
     }
     function handleClick() {
-        console.log("title es:" + title);
         setFilter(filterBy === NoteFilters.Title ? title : date as Date);
         trigger(true);
         // searchNotes(filterBy === NoteFilters.Title ? title : date as Date, filterBy);
     }
-    console.log("filterBy es:" + filterBy);
     return (
         <Stack direction="row" spacing={2} justifyContent="center">
             <FormControl size="small" variant="standard" sx={{ minWidth: 70 }}>
@@ -53,18 +51,18 @@ export default function SearchField({
             </FormControl >
             {
                 filterBy === "title" ?
-                    <TextField 
-                    {...searchFieldProps} 
-                    sx={{maxWidth: 180}} 
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}/>
+                    <TextField
+                        {...searchFieldProps}
+                        sx={{ maxWidth: 180 }}
+                        value={title}
+                        onChange={e => setTitle(e.target.value)} />
                     :
                     <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={es}
                         localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
                     >
-                        <FormControl size="small" variant="standard" sx={{maxWidth: 180}}>
+                        <FormControl size="small" variant="standard" sx={{ maxWidth: 180 }}>
                             <DatePicker
                                 views={['year', 'month', 'day']}
                                 slotProps={{ textField: searchFieldProps }}

@@ -57,5 +57,13 @@
 
 .video {
   background-color: #1F1D36;
+  position: relative;
 }
+
+#button-notes {
+  position: absolute;
+  right: 10px;
+  bottom: 35%;
+}
+
 

@@ -5,6 +5,7 @@ import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { EventHandler, useEffect, useMemo, useRef, useState } from "react";
+import 'react-quill/dist/quill.snow.css';
 // import ReactQuill from "react-quill";
 
 const modules = {

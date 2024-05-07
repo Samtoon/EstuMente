@@ -10,7 +10,6 @@ import { Call } from "./Call";
 export default function CallDisplay({ appointment, token } : { appointment: IUpcomingAppointment, token: string }) {
     
     const [room, setRoom] = useState(appointment.roomURL);
-    const [callFrame, setCallFrame] = useState(null);
     return (
         <Box>
             {/* appointment.endTime >= Date.now() / 1000 */true ? (
@@ -19,8 +18,6 @@ export default function CallDisplay({ appointment, token } : { appointment: IUpc
                         <Call
                             room={room}
                             setRoom={setRoom}
-                            setCallFrame={setCallFrame}
-                            callFrame={callFrame}
                             appointmentId={appointment._id!}
                             refreshData={null}
                             token={token}
@@ -29,8 +26,7 @@ export default function CallDisplay({ appointment, token } : { appointment: IUpc
                         <EndCall
                             message="Has salido de la cita antes de finalizar el tiempo"
                             buttonTitle="Volver a ingresar"
-                            setCallFrame={() => setCallFrame(null)}
-                            setRoom={() => setRoom(room)}
+                            trigger={() => setRoom(appointment.roomURL)}
                         />
                     )
                 ) : (
