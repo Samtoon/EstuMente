@@ -5,9 +5,10 @@ import { DAILY_API_URL } from "@/utils/endpoints";
 
 export function localHourToTimestamps(hour: number, ISODate: string) {
     const date = new Date(ISODate);
-    date.setHours(hour);
+    const localHour = hour + 5 - date.getTimezoneOffset() / 60;
+    date.setHours(localHour);
     const startTimestamp = date.getTime() / 1000;
-    date.setHours(hour + 1);
+    date.setHours(localHour + 1);
     const endTimestamp = date.getTime() / 1000;
     return { startTimestamp: startTimestamp, endTimestamp: endTimestamp };
 }
