@@ -38,7 +38,7 @@ export default function ListNotesPanel({
                 setShouldUpdate(false);
             });
         }
-    }, [session, shouldUpdate]);
+    }, [session, shouldUpdate, filter, filterBy, setShouldUpdate]);
     return (
         <div className="notes-panel">
             <SearchField

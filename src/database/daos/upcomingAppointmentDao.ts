@@ -4,17 +4,21 @@ import { connect, serialize } from "../connection";
 
 export async function getUpcomingAppointmentsByPsychologist( psychologist: string ) {
     await connect();
+    console.log("Trayendo appointments desde el DAO");
     const appointments = await UpcomingAppointment.find({ psychologist: psychologist }).lean();
-    console.log("Ejemplo");
-    console.log(appointments[0])
+    // console.log("Ejemplo");
+    // console.log(appointments[0])
+    console.log("Encontrados " + appointments + " appointments. Saliendo del DAO...");
     return appointments;
 }
 
 export async function getUpcomingAppointmentsByUser( user: string ) {
     await connect();
+    console.log("Trayendo appointments desde el DAO");
     const appointments = await UpcomingAppointment.find({ user: user }).lean();
-    console.log("Ejemplo");
-    console.log(appointments[0])
+    // console.log("Ejemplo");
+    // console.log(appointments[0])
+    console.log("Encontrados " + appointments + " appointments. Saliendo del DAO...");
     return appointments;
 }
 

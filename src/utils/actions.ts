@@ -28,7 +28,7 @@ export async function scheduleAppointment(user: string, psychologist: string, da
     console.log("el room creado fue: ");
     const room = await createRoom(nbf, exp);
     console.log(room);
-    console.log(requestToken(room?.name!));
+    // console.log(requestToken(room?.name!));
     const appointment: IUpcomingAppointment = {
         user: user,
         psychologist: psychologist,
