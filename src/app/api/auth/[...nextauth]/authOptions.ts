@@ -1,11 +1,9 @@
-import { connect } from "@/database/connection"
-import Psychologist from "@/database/models/Psychologist";
-import User from "@/database/models/User";
+import { createPsychologist, getPsychologistByUser, updatePsychologistByUser } from "@/database/daos/psychologistDao";
+import { createUser, getUpdatedUserByEmail, getUserByEmail, updateUserByEmail } from "@/database/daos/userDao";
 import { IPsychologist } from "@/interfaces/IPsychologist";
 import IUser from "@/interfaces/IUser";
-import NextAuth, { NextAuthOptions, Profile } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
-import Google, { GoogleProfile } from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth"
+import Google from "next-auth/providers/google";
 import slugify from "slugify";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!
@@ -40,10 +38,12 @@ const authOptions: NextAuthOptions = {
                 email: profile.email,
                 profilePicture: { public_id: profile.picture, url: profile.picture }
             }
-            await connect();
-            const user = await User.findOne({ email: profile.email });
+            // await connect();
+            // const user = await User.findOne({ email: profile.email });
+            const user = await getUserByEmail(profile.email);
             if (user) {
-                await User.updateOne({ email: profile.email }, upsertUser);
+                // await User.updateOne({ email: profile.email }, upsertUser);
+                await updateUserByEmail(profile.email, upsertUser);
                 if (user.role === "Practicante") {
                     const fullName = user.firstName + " " + user.lastName;
                     const upsertPsychologist: IPsychologist = {
@@ -54,19 +54,23 @@ const authOptions: NextAuthOptions = {
                         slug: slugify(fullName),
                         isPublic: true
                     }
-                    const psychologist = await Psychologist.findOne({ user: user._id });
+                    // const psychologist = await Psychologist.findOne({ user: user._id });
+                    const psychologist = await getPsychologistByUser(user._id);
                     if (psychologist) {
                         console.log("Este psicólogo sí existe");
-                        await Psychologist.updateOne({ user: user._id }, upsertPsychologist)
+                        // await Psychologist.updateOne({ user: user._id }, upsertPsychologist)
+                        await updatePsychologistByUser(user._id, upsertPsychologist);
                     } else {
                         console.log("Este psicólogo no existe");
-                        await Psychologist.create(upsertPsychologist);
+                        // await Psychologist.create(upsertPsychologist);
+                        await createPsychologist(upsertPsychologist);
                     }
                 }
             } else {
                 upsertUser.state = "activo";
                 upsertUser.role = "Consultante";
-                await User.create(upsertUser);
+                // await User.create(upsertUser);
+                await createUser(upsertUser);
             }
             return true;
         },
@@ -74,17 +78,19 @@ const authOptions: NextAuthOptions = {
             if (trigger === "update") {
                 console.log("Session es: " + JSON.stringify(session));
                 console.log("Token es: " + JSON.stringify(token));
-                token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
+                // token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
+                token.user = await getUpdatedUserByEmail(session.email, session);
             }
             // console.log("llamando jwt");
             // console.log("El usuario es:" + JSON.stringify(token.user))
             // console.log("El perfil es:" + JSON.stringify(profile))
             // console.log("El token es:" + JSON.stringify(token))
             else if (user) {
-                await connect();
-                const dbUser = await User.findOne({ email: user.email });
+                // const dbUser = await User.findOne({ email: user.email });
+                const dbUser = await getUserByEmail(user.email as string);
                 token.user = dbUser;
-                token.psychologist = await Psychologist.findOne({ user: dbUser?._id })
+                // token.psychologist = await Psychologist.findOne({ user: dbUser?._id })
+                token.psychologist = await getPsychologistByUser(dbUser?._id!);
             }
             return token;
         },

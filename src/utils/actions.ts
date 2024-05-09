@@ -1,10 +1,9 @@
 "use server"
 
 import { createPreviousAppointment } from "@/database/daos/previousAppointmentDao";
-import { createRoom, localHourToTimestamps } from "@/database/daos/roomDao";
-import { createUpcomingAppointment, deleteUpcomingAppointmentById } from "@/database/daos/upcomingAppointmentDao";
-import Appointment from "@/database/models/Appointment";
-import UpcomingAppointment from "@/database/models/UpcomingAppointment";
+import { createRoom } from "@/database/daos/roomDao";
+import { localHourToTimestamps } from "./hour";
+import { createUpcomingAppointment, deleteUpcomingAppointmentById, getOverdueUpcomingAppointments } from "@/database/daos/upcomingAppointmentDao";
 import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { dailyHeaders } from "./constants";
@@ -13,8 +12,6 @@ import { createNote, getNotesByDate, getNotesByPatient, getNotesByTitle, updateN
 import { serialize } from "@/database/connection";
 import { INote } from "@/interfaces/INote";
 import NoteFilters from "@/enums/NoteFilters";
-import { title } from "process";
-import { getColombianHour } from "./hour";
 
 export async function pruebaServerAction(formData: FormData) {
     console.log("Hola, te saludo desde el servidor. Si funciona, esto es impresionante...: " + formData.get("Celular"));
@@ -53,17 +50,10 @@ export async function moveAppointment(upcomingAppointment: IUpcomingAppointment)
 }
 
 export async function compareDates() {
-    const startDate = new Date();
-    startDate.setHours(0, 0, 0, 0);
-    const endDate = new Date();
-    endDate.setHours(23, 0, 0, 0);
-    console.log("Estoy buscando la hora: " + getColombianHour() + "entre las fechas: " + startDate + " y " + endDate);
-    const appointments = await UpcomingAppointment.find({
-        date: { $lte: endDate },
-        hour: { $lt: getColombianHour() }
-    }).lean();
+    const appointments = await getOverdueUpcomingAppointments();
     appointments.map(async (appointment) => await moveAppointment(appointment));
 }
+
 export async function requestToken(roomName: string) {
     const body = {
         properties: {

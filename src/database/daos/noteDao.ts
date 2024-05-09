@@ -2,6 +2,8 @@ import { INote } from "@/interfaces/INote";
 import Note from "../models/Note";
 import { connect } from "../connection";
 
+console.log("Entro al DAO de Notas");
+
 export async function getNotesByPatient(psychologist: string, patient: string) {
     await connect();
     const notes = await Note.find({ psychologist: psychologist, patient: patient }).lean();

@@ -63,14 +63,6 @@ export default function ConfigureSchedulePage() {
     console.log("Carga la página");
     let result: ISchedule | null | undefined;
     const {data: session} = useSession();
-    // fetch(`http://localhost:3000/api/ejemplo?email=${session?.user.email}`).
-    //     then((res) => res.json()).
-    //     then((res) => {
-    //         console.log("Este es el resultado");
-    //         console.log(res.days);
-    //         result = res;
-    //         //if (result?.days) setSchedule(result.days);
-    //     })
     const fetchSchedule = useCallback(() => {
         console.log("voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES);
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${session?.psychologist?._id}`).
