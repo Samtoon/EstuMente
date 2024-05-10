@@ -18,10 +18,13 @@ export async function pruebaServerAction(formData: FormData) {
 
 }
 
-export async function scheduleAppointment(user: string, psychologist: string, date: Date, hour: number) {
+export async function scheduleAppointment(user: string, psychologist: string, date: Date) {
 
     console.log("Llamaron a la acción milagrosa");
-    const { startTimestamp: nbf, endTimestamp: exp } = localHourToTimestamps(hour, date.toISOString());
+    console.log("Me llega la fecha: " + date);
+    // const { startTimestamp: nbf, endTimestamp: exp } = localHourToTimestamps(hour, date.toISOString());
+    const nbf = date.getTime() / 1000;
+    const exp = new Date(date).setHours(date.getHours() + 1) / 1000;
     console.log("el room creado fue: ");
     const room = await createRoom(nbf, exp);
     console.log(room);
@@ -30,7 +33,6 @@ export async function scheduleAppointment(user: string, psychologist: string, da
         user: user,
         psychologist: psychologist,
         date: date,
-        hour: hour,
         roomName: room?.name!,
         roomURL: room?.url!
     }
@@ -40,7 +42,6 @@ export async function scheduleAppointment(user: string, psychologist: string, da
 export async function moveAppointment(upcomingAppointment: IUpcomingAppointment) {
     const previousAppointment: IPreviousAppointment = {
         date: upcomingAppointment.date,
-        hour: upcomingAppointment.hour,
         patient: upcomingAppointment.user,
         psychologist: upcomingAppointment.psychologist
     }

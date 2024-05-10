@@ -4,7 +4,6 @@ import mongoose, { Model, Schema, model } from "mongoose";
 const upcomingAppointmentSchema = new Schema({
     user: Schema.Types.ObjectId,
     psychologist: Schema.Types.ObjectId,
-    hour: Number,
     date: Date,
     roomName: String,
     roomURL: String

@@ -1,25 +1,22 @@
 "use client"
-import { DatePicker, StaticDatePicker } from "@mui/x-date-pickers";
+import { StaticDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import { es } from "date-fns/locale/es";
 import { esES } from "@mui/x-date-pickers/locales";
-import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { ISchedule } from "@/interfaces/schedule/ISchedule";
-import { getAvailableHours, isDayAvailable, processAvailability } from "@/utils/schedule";
+import { getAvailableHours, isDayAvailable } from "@/utils/schedule";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import React from "react";
-import { Button, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import Hour from "@/utils/hour";
 import { scheduleAppointment } from "@/utils/actions";
 import { useSession } from "next-auth/react";
-import Router from "next/router";
 
 interface IState {
   date?: Date,
   availableHours?: boolean[],
-  hour?: number,
   appointments: IUpcomingAppointment[]
 }
 
@@ -30,19 +27,23 @@ interface IAction {
   body?: Date | number
 }
 
-function reducer(state: IState, action: IAction) {
+function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
     case "date":
+      (action.body as Date).setHours(0);
+      console.log("La fecha es: " + action.body);
+      const availableHours = getAvailableHours(action.body as Date, state.appointments!, action.schedule!);
+      console.log("Las horas son:");
+      console.log(availableHours);
       return {
         ...state,
         date: action.body as Date,
-        availableHours: getAvailableHours(action.body as Date, state.appointments!, action.schedule!),
-        hour: 0
+        availableHours: availableHours,
       }
     case "hour":
+      state.date?.setHours(action.body as number);
       return {
         ...state,
-        hour: action.body as number
       }
     default:
       return {
@@ -55,14 +56,13 @@ function reducer(state: IState, action: IAction) {
 
 export default function AppointmentDatePicker({ appointments, schedule }: { appointments: IUpcomingAppointment[], schedule: ISchedule }) {
   // const [state, setState] = useState<IState>({});
-
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0)
   const [state, dispatcher] = useReducer(reducer, {
-    date: undefined,
-    availableHours: undefined,
-    hour: 0,
+    date: currentDate,
+    availableHours: getAvailableHours(currentDate, appointments, schedule),
     appointments: appointments
   })
-  console.log("hay " + state.appointments.length + "appointments");
   const { data: session } = useSession();
   // const router = useRouter();
   let hour: number;
@@ -102,7 +102,7 @@ export default function AppointmentDatePicker({ appointments, schedule }: { appo
           labelId="hora-label"
           id="hora"
           label="Hora"
-          value={state.hour ? state.hour : ''}
+          value={state.date?.getHours()}
           disabled={state.date ? false : true}
           onChange={(e) => dispatcher({
             type: "hour",
@@ -120,9 +120,10 @@ export default function AppointmentDatePicker({ appointments, schedule }: { appo
         <Button
           size="large"
           color="secondary"
-          disabled={state?.hour === undefined}
+          disabled={!state.availableHours![state.date?.getHours()!]}
           onClick={async () => {
-            appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!, state.hour!);
+            console.log(`Mandando la fecha: ${state.date}`);
+            appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!);
             dispatcher({ type: "reset", appointments: appointments, schedule: schedule });
           }}>
           Programar ahora

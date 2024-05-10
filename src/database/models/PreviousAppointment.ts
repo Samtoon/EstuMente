@@ -10,7 +10,6 @@ const previousAppointmentSchema = new Schema<IPreviousAppointment>({
             values: ["Finalizada", "Cancelada", "Consultante no asistió", "Psicólogo no asistió"]
         }
     },
-    hour: Number,
     date: Date,
     calification: Number,
     calificationComment: String,

@@ -1,7 +1,6 @@
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import UpcomingAppointment from "../models/UpcomingAppointment";
 import { connect, serialize } from "../connection";
-import { getColombianHour } from "@/utils/hour";
 
 console.log("Entro al DAO de citas");
 
@@ -48,10 +47,9 @@ export async function deleteUpcomingAppointmentById( id: string ) {
 export async function getOverdueUpcomingAppointments() {
     await connect();
     const date = new Date();
-    date.setHours(23, 0, 0, 0);
+    date.setMinutes(0, 0, 0);
     const appointments = await UpcomingAppointment.find({
-        date: { $lte: date },
-        hour: { $lt: getColombianHour() }
+        date: { $lt: date }
     }).lean();
     return appointments;
 }

@@ -1,10 +1,8 @@
 import { Grid } from "@mui/material";
-import React, { FC, Key } from "react";
-import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
+import React, { FC } from "react";
 import { AppointmentCard } from "./AppointmentCard";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { getPsychologistById } from "@/database/daos/psychologistDao";
-import { serialize } from "@/database/connection";
 import { compareAsc } from "date-fns";
 import { getMyServerSession } from "@/utils/next-auth";
 import { getUserById } from "@/database/daos/userDao";
@@ -15,8 +13,8 @@ interface Props {
 
 export const AppointmentList: FC<Props> = async ({ appointments }) => {
   function helper(appointmentLeft: IUpcomingAppointment, appointmentRight: IUpcomingAppointment) {
-    const a = new Date(appointmentLeft.date).setHours(appointmentLeft.hour);
-    const b = new Date(appointmentRight.date).setHours(appointmentRight.hour);
+    const a = new Date(appointmentLeft.date);
+    const b = new Date(appointmentRight.date);
     return compareAsc(a, b)
   }
   const session = await getMyServerSession();

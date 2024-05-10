@@ -1,7 +1,6 @@
 'use client'
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
-import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import {
   Box,
   Button,
@@ -9,7 +8,6 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Chip,
   Link,
   Grid,
   Stack,
@@ -18,9 +16,6 @@ import {
 import "date-fns";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { CalificationModal } from "./CalificationModal";
-import { CreditCardOffOutlined } from "@mui/icons-material";
-import { CancelModal } from "./CancelModal";
 import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { IPsychologist } from "@/interfaces/IPsychologist";
 import { isAppointmentTime } from "@/utils/schedule";
@@ -96,7 +91,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
             </Typography>
             <Typography variant="h6" color="text.secondary" component="div">
               {`Hora de inicio: ${format(
-                new Date(appointment.date).setHours(appointment.hour),
+                appointment.date,
                 "HH:mm a"
               )}`}
             </Typography>
@@ -159,7 +154,7 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
                       disabled={
                         // appointment.startTime >= Date.now() / 1000 ||
                         // appointment.endTime <= Date.now() / 1000
-                        !isAppointmentTime(appointment.date, appointment.hour)
+                        !isAppointmentTime(appointment.date)
                       }
                       onClick={() => router.push(`/citas/meet/${appointment._id}`)}
                     >

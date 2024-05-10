@@ -1,26 +1,15 @@
-import type { NextPage } from "next";
-import { getSession } from "next-auth/react";
-import { GetServerSideProps } from "next";
 // import { Typography, Box } from "@mui/material";
 // import { PatientLayout } from "../../../components/layout/PatientLayout";
 import PatientLayout from "@/components/layout/PatientLayout";
 // import { dbAppointment } from "../../../database";
-import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 import { AppointmentList } from "@/components/appointments/AppointmentList";
 import { EmptyAppointment } from "@/components/appointments/EmptyAppointment";
 // import { getAppointmentsByPatient } from "@/database/dbAppointments";
-import { getServerSession } from "next-auth";
-import authOptions from "../api/auth/[...nextauth]/authOptions";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByUser } from "@/database/daos/upcomingAppointmentDao";
 import { getMyServerSession } from "@/utils/next-auth";
 import { serialize } from "@/database/connection";
-import { getPsychologistById, getPsychologistByUser } from "@/database/daos/psychologistDao";
-
-interface Props {
-  appointments: IPreviousAppointment[];
-}
 
 const AppointmentPage = async () => {
   // const session = await getServerSession(authOptions)

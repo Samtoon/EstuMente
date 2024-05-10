@@ -1,20 +1,11 @@
 import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
-import { Calification } from "@/components/appointments/Calification";
-import { PsychologistDidNotAttend } from "@/components/appointments/PsychologistDidNotAttend";
 import PatientLayout from "@/components/layout/PatientLayout";
-import { Call } from "@/components/video/Call";
 import CallDisplay from "@/components/video/CallDisplay";
-import { EndCall } from "@/components/video/EndCall";
 import { serialize } from "@/database/connection";
 import { getUpcomingAppointmentById } from "@/database/daos/upcomingAppointmentDao";
-import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import { requestToken } from "@/utils/actions";
-import { Box, Container, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const prueba = "https://estumente.daily.co/prueba";
 

@@ -45,10 +45,6 @@ const appointmentSchema = new Schema(
         required: true,
       },
     },
-    hour: {
-      type: String,
-      required: true,
-    },
     date: {
       type: String,
       required: true,
