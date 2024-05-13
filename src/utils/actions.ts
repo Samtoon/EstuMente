@@ -53,6 +53,7 @@ export async function moveAppointment(upcomingAppointment: IUpcomingAppointment)
 export async function compareDates() {
     const appointments = await getOverdueUpcomingAppointments();
     appointments.map(async (appointment) => await moveAppointment(appointment));
+    return appointments.length
 }
 
 export async function requestToken(roomName: string) {
