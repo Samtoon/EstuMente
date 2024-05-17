@@ -7,7 +7,7 @@ import { EmptyAppointment } from "@/components/appointments/EmptyAppointment";
 // import { getAppointmentsByPatient } from "@/database/dbAppointments";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByUser } from "@/database/daos/upcomingAppointmentDao";
+import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByPatient } from "@/database/daos/upcomingAppointmentDao";
 import { getMyServerSession } from "@/utils/next-auth";
 import { serialize } from "@/database/connection";
 
@@ -19,7 +19,7 @@ const AppointmentPage = async () => {
   const session = await getMyServerSession();
   const appointments = session?.user.role === "Practicante" ? 
   await getUpcomingAppointmentsByPsychologist(session?.psychologist?._id!) : 
-  await getUpcomingAppointmentsByUser(session?.user._id!);
+  await getUpcomingAppointmentsByPatient(session?.user._id!);
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`)
   return (
     <PatientLayout title="Mis citas" pageDescription="Mis citas">
@@ -36,7 +36,7 @@ const AppointmentPage = async () => {
         {appointments.length === 0 ? (
           <EmptyAppointment message={"No tienes citas activas"} />
         ) : (
-          <AppointmentList appointments={serialize(appointments)} />
+          <AppointmentList appointments={serialize(appointments)} history={false} />
         )}
       </Box>
     </PatientLayout>

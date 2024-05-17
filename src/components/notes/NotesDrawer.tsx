@@ -10,7 +10,7 @@ import ListNotesPanel from "./drawer panels/ListNotesPanel";
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import "@/styles/notes/notes-drawer.css"
 import { INote } from "@/interfaces/INote";
-import { fetchNotesByPatient } from "@/utils/actions";
+import { fetchNotesByPatient } from "@/utils/server actions/note";
 import { useSession } from "next-auth/react";
 
 

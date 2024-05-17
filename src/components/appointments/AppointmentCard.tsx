@@ -21,9 +21,10 @@ import { IPsychologist } from "@/interfaces/IPsychologist";
 import { isAppointmentTime } from "@/utils/schedule";
 import { useRouter } from "next/navigation";
 import GoogleImage from "../ui/GoogleImage";
+import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
 
 interface Props {
-  appointment: IUpcomingAppointment,
+  appointment: IUpcomingAppointment | IPreviousAppointment,
   psychologist?: IPsychologist,
   fullName: string,
   image: string,

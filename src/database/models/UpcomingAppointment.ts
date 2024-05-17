@@ -2,7 +2,7 @@ import { IUpcomingAppointment } from "@/interfaces/IUpcomingAppointment";
 import mongoose, { Model, Schema, model } from "mongoose";
 
 const upcomingAppointmentSchema = new Schema({
-    user: Schema.Types.ObjectId,
+    patient: Schema.Types.ObjectId,
     psychologist: Schema.Types.ObjectId,
     date: Date,
     roomName: String,

@@ -11,8 +11,10 @@ import { useReducer } from "react";
 import React from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import Hour from "@/utils/hour";
-import { scheduleAppointment } from "@/utils/actions";
+import { scheduleAppointment } from "@/utils/server actions/appointment";
 import { useSession } from "next-auth/react";
+import { IPsychologist } from "@/interfaces/IPsychologist";
+import { sendNotification } from "@/utils/server actions/notification";
 
 interface IState {
   date?: Date,
@@ -54,7 +56,8 @@ function reducer(state: IState, action: IAction): IState {
   }
 }
 
-export default function AppointmentDatePicker({ appointments, schedule }: { appointments: IUpcomingAppointment[], schedule: ISchedule }) {
+export default function AppointmentDatePicker({ appointments, schedule, psychologist }: 
+  { appointments: IUpcomingAppointment[], schedule: ISchedule, psychologist: IPsychologist }) {
   // const [state, setState] = useState<IState>({});
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0)
@@ -122,8 +125,14 @@ export default function AppointmentDatePicker({ appointments, schedule }: { appo
           color="secondary"
           disabled={!state.availableHours![state.date?.getHours()!]}
           onClick={async () => {
+            const user = session?.user!;
             console.log(`Mandando la fecha: ${state.date}`);
-            appointments = await scheduleAppointment(session?.user._id!, schedule.psychologist as string, state.date!);
+            appointments = await scheduleAppointment(user._id!, schedule.psychologist as string, state.date!);
+            await sendNotification(
+              psychologist.user as string, 
+              `Tienes una nueva cita con ${user.firstName} ${user.lastName}`, 
+              user.profilePicture?.url
+            );
             dispatcher({ type: "reset", appointments: appointments, schedule: schedule });
           }}>
           Programar ahora

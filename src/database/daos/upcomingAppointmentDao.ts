@@ -14,10 +14,10 @@ export async function getUpcomingAppointmentsByPsychologist( psychologist: strin
     return appointments;
 }
 
-export async function getUpcomingAppointmentsByUser( user: string ) {
+export async function getUpcomingAppointmentsByPatient( patient: string ) {
     await connect();
     console.log("Trayendo appointments desde el DAO");
-    const appointments = await UpcomingAppointment.find({ user: user }).lean();
+    const appointments = await UpcomingAppointment.find({ patient: patient }).lean();
     // console.log("Ejemplo");
     // console.log(appointments[0])
     console.log("Encontrados " + appointments + " appointments. Saliendo del DAO...");

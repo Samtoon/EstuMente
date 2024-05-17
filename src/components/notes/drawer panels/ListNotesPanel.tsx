@@ -1,5 +1,5 @@
 import { INote } from "@/interfaces/INote";
-import { fetchNotesByPatient, filterNotes } from "@/utils/actions";
+import { fetchNotesByPatient, filterNotes } from "@/utils/server actions/note";
 import { Divider, List, ListItem, ListItemButton, ListItemText, Pagination, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

@@ -22,9 +22,8 @@ export default async function PsychologistDisplay({ psychologist } : { psycholog
     const date = new Date(2014, 4, 18);
     const appointments = await getUpcomingAppointmentsByPsychologist(psychologist._id!);
     const schedule = await getScheduleById(psychologist._id!);
-    console.log("psychologist es:")
+    console.log("psychologist es:");
     console.log(psychologist);
-    const handleChangeService = () => {}
     return(
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -79,7 +78,7 @@ export default async function PsychologistDisplay({ psychologist } : { psycholog
               sx={{ alignItems: "stretch", justifyContent: "center" }}
               mb={2}
             >
-              <AppointmentDatePicker appointments={serialize(appointments)} schedule={serialize(schedule)}/>
+              <AppointmentDatePicker appointments={serialize(appointments)} schedule={serialize(schedule)} psychologist={serialize(psychologist)}/>
             </Box>
           </Grid>
         </Grid>

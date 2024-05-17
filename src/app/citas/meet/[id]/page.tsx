@@ -3,7 +3,7 @@ import PatientLayout from "@/components/layout/PatientLayout";
 import CallDisplay from "@/components/video/CallDisplay";
 import { serialize } from "@/database/connection";
 import { getUpcomingAppointmentById } from "@/database/daos/upcomingAppointmentDao";
-import { requestToken } from "@/utils/actions";
+import { requestToken } from "@/utils/server actions/other";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
 
@@ -26,7 +26,7 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   function canJoin() {
     switch (session?.user.role) {
       case "Consultante":
-        return session.user._id === appointment?.user.toString();
+        return session.user._id === appointment?.patient.toString();
       case "Practicante":
         return session.psychologist?._id === appointment?.psychologist.toString();
       default:

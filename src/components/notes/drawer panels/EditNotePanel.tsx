@@ -1,5 +1,5 @@
 import { INote } from "@/interfaces/INote";
-import { saveNote } from "@/utils/actions";
+import { saveNote } from "@/utils/server actions/note";
 import { stripTags } from "@/utils/html";
 import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";

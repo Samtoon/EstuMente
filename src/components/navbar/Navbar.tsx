@@ -6,6 +6,7 @@ import NextLink from "next/link";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"
 import { NotificationsNoneOutlined } from "@mui/icons-material";
+import NotificationsButton from "./notifications/NotificationsButton";
 
 
 const Navbar = () => {
@@ -56,15 +57,9 @@ const Navbar = () => {
           {middleButton()}
           <Box flex={1} />
           {session ? (
-            <NextLink href="/psicologo/notificaciones/vacio" passHref>
-              {/* <Link> */}
-              <IconButton color="info">
-                <Badge badgeContent={2} color="secondary" sx={{ m: 1 }}>
-                  <NotificationsNoneOutlined />
-                </Badge>
-              </IconButton>
-              {/* </Link> */}
-            </NextLink>
+
+            <NotificationsButton />
+
           ) : (
             <Box sx={{ display: { xs: "none", sm: "block" }, m: 1 }}>
               <Button variant="contained" color="secondary" className="hero-btn" onClick={() => signIn("google")}>

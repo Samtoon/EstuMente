@@ -27,7 +27,7 @@ export default function ListPsychologist() {
       <MenuItem label="Citas pendientes" path="/citas">
         <DateRangeOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Historial de citas" path="/psicologo/sesiones">
+      <MenuItem label="Historial de citas" path="/citas/historial">
         <HistoryOutlined color="secondary" />
       </MenuItem>
       <MenuItem label="Mis pacientes" path="/psicologo/pacientes">

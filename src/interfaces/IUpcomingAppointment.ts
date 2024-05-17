@@ -1,6 +1,6 @@
 export interface IUpcomingAppointment {
     _id?: string,
-    user: string,
+    patient: string,
     psychologist: string,
     date: Date
     roomName: string,
