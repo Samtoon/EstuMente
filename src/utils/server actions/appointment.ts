@@ -44,7 +44,7 @@ export async function moveAppointment(upcomingAppointment: IUpcomingAppointment)
 export async function compareDates() {
     const appointments = await getOverdueUpcomingAppointments();
     console.log(`Intentando mover ${appointments.length} citas`);
-    appointments.map(async (appointment) => await moveAppointment(appointment));
+    await Promise.all(appointments.map(async (appointment) => await moveAppointment(appointment)));
     return appointments.length;
 }
 
