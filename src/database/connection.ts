@@ -14,7 +14,7 @@ async function connect() {
       console.log(error);
     }
   } else {
-    console.log("Ya existe una conexión");
+    // console.log("Ya existe una conexión");
   }
 }
 
