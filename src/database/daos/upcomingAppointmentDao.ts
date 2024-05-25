@@ -40,6 +40,7 @@ export async function createUpcomingAppointment( upcomingAppointment: IUpcomingA
 
 export async function deleteUpcomingAppointmentById( id: string ) {
     await connect();
+    console.log("Borrando la cita: " + id);
     const result = await UpcomingAppointment.deleteOne({ _id: id });
     return result.deletedCount > 0;
 }
@@ -51,5 +52,6 @@ export async function getOverdueUpcomingAppointments() {
     const appointments = await UpcomingAppointment.find({
         date: { $lt: date }
     }).lean();
+    console.log("Hay " + appointments.length + " citas atrasadas");
     return appointments;
 }

@@ -25,7 +25,9 @@ export async function scheduleAppointment(user: string, psychologist: string, da
         roomURL: (room?.url)!
     };
     return await createUpcomingAppointment(appointment);
-}export async function moveAppointment(upcomingAppointment: IUpcomingAppointment) {
+}
+
+export async function moveAppointment(upcomingAppointment: IUpcomingAppointment) {
     const previousAppointment: IPreviousAppointment = {
         _id: upcomingAppointment._id,
         date: upcomingAppointment.date,
@@ -33,12 +35,15 @@ export async function scheduleAppointment(user: string, psychologist: string, da
         psychologist: upcomingAppointment.psychologist
     };
     const result1 = await createPreviousAppointment(previousAppointment);
+    console.log(`Cita ${upcomingAppointment._id} movida: ${result1}`);
     const result2 = await deleteUpcomingAppointmentById(upcomingAppointment._id!);
+    console.log(`Cita ${upcomingAppointment._id} eliminada: ${result2}`);
     return result1 && result2;
 }
 
 export async function compareDates() {
     const appointments = await getOverdueUpcomingAppointments();
+    console.log(`Intentando mover ${appointments.length} citas`);
     appointments.map(async (appointment) => await moveAppointment(appointment));
     return appointments.length;
 }

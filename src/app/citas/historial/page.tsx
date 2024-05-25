@@ -15,6 +15,7 @@ import { getPreviousAppointmentsByPatient, getPreviousAppointmentsByPsychologist
 import { AppointmentList } from "@/components/appointments/AppointmentList";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import { serialize } from "@/database/connection";
 
 interface Props {
 }
@@ -43,7 +44,7 @@ const HistoryAppointmentPage: NextPage<Props> = async () => {
         {appointments.length === 0 ? (
           <EmptyAppointment message={"Aún no tienes citas en tu historial"} />
         ) : (
-          <AppointmentList appointments={appointments} history={true} />
+          <AppointmentList appointments={serialize(appointments)} history={true} />
         )}
       </Box>
     </PatientLayout>
