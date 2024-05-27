@@ -6,6 +6,7 @@ import { INotification } from "@/interfaces/INotification";
 import { useSession } from "next-auth/react";
 import { clearNotificationById, fetchNotificationsByUser } from "@/utils/server actions/notification";
 import { deleteNotificationById } from "@/database/daos/notificationDao";
+import { pusherClient } from "@/lib/pusher";
 
 export default function NotificationsButton() {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -19,13 +20,27 @@ export default function NotificationsButton() {
     };
     function handleClear(id: string) {
         clearNotificationById(id)
-        .then(() => fetchNotificationsByUser(session?.user._id!))
-        .then((notifications) => setNotifications(notifications));
+            .then(() => fetchNotificationsByUser(session?.user._id!))
+            .then((notifications) => setNotifications(notifications));
     }
     const open = Boolean(anchorEl);
     useEffect(() => {
-        fetchNotificationsByUser(session?.user._id!)
-        .then((notifications) => setNotifications(notifications));
+        if (session) {
+            console.log("Se llama el useEffect");
+            pusherClient.subscribe(session?.user._id!);
+            pusherClient.bind("event", (notification: INotification) => {
+                console.log("Ocurrió un cambio en el WebSocket, me llegó esto");
+                console.log(notification);
+                setNotifications((prev) => [...prev, notification]);
+            });
+            fetchNotificationsByUser(session?.user._id!)
+                .then((notifications) => setNotifications(notifications));
+            return () => {
+                console.log("Me desuscribo")
+                pusherClient.unbind();
+                pusherClient.unsubscribe(session?.user._id!);
+            }
+        }
     }, [session]);
     return (
         <>
@@ -35,15 +50,15 @@ export default function NotificationsButton() {
                 </Badge>
             </IconButton>
             <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
             >
-                <NotificationsList notifications={notifications} handleClear={handleClear}/>
+                <NotificationsList notifications={notifications} handleClear={handleClear} />
             </Popover>
         </>
     );

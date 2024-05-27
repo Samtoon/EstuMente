@@ -12,7 +12,7 @@ export async function getNotificationsByUser(user: string) {
 export async function createNotification(notification: INotification) {
     await connect();
     const result = await Notification.create(notification);
-    return Boolean(result);
+    return result;
 }
 
 export async function deleteNotificationById(id: string) {
