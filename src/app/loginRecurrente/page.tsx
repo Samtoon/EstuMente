@@ -1,6 +1,6 @@
 "use client"
 
-import { AuthLayout } from "@/components/layout/AuthLayout"
+import { AuthLayout } from "@/app/_components/layout/AuthLayout"
 import Box from "@mui/material/Box/Box"
 import Button from "@mui/material/Button/Button"
 import { getSession, signIn } from "next-auth/react"

@@ -8,13 +8,13 @@ import { NextPage } from "next";
 // import { usePsychologist } from "../../hooks";
 // import { FullScreenLoading } from "../../components/ui";
 
-import PsiLayout from "@/components/layout/PsiLayout";
-import { Search } from "@/components/psychologists/Search";
+import PsiLayout from "@/app/_components/layout/PsiLayout";
+import { Search } from "@/app/_components/psychologists/Search";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { fetchPsychologists } from "@/database/connection";
-import { IPsychologist } from "@/interfaces/IPsychologist";
-import { PsychologistList } from "@/components/psychologists/PsychologistList";
+import { fetchPsychologists } from "@/app/_database/connection";
+import { IPsychologist } from "@/app/_interfaces/IPsychologist";
+import { PsychologistList } from "@/app/_components/psychologists/PsychologistList";
 
 const SearchPage: NextPage = () => {
   // const [query, setQuery] = useState("");

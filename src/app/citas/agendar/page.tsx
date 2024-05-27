@@ -1,6 +1,6 @@
 "use client"
 
-import { IPsychologist } from "@/interfaces/IPsychologist";
+import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { NextPage } from "next";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +32,7 @@ import {
   TableCell,
   CircularProgress,
 } from "@mui/material";
-import PatientLayout from "@/components/layout/PatientLayout";
+import PatientLayout from "@/app/_components/layout/PatientLayout";
 // import { PatientLayout } from "../../../../components/layout";
 // import { IPsychologist, IService } from "../../../../interfaces";
 // import { dbPsychologists, dbServices } from "../../../../database";

@@ -1,5 +1,5 @@
-import { getScheduleById, getScheduleByPsychologist, updateScheduleByPsychologist } from "@/database/daos/scheduleDao";
-import { IDay } from "@/interfaces/schedule/IDay";
+import { getScheduleById, getScheduleByPsychologist, updateScheduleByPsychologist } from "@/app/_database/daos/scheduleDao";
+import { IDay } from "@/app/_interfaces/schedule/IDay";
 
 export async function GET(req: Request) {
     const {searchParams} = new URL(req.url)

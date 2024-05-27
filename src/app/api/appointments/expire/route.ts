@@ -1,4 +1,4 @@
-import { compareDates } from "@/utils/server actions/appointment";
+import { compareDates } from "@/app/_utils/server actions/appointment";
 
 export async function POST() {
     const noMovedAppointments = await compareDates();

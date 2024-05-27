@@ -1,7 +1,7 @@
-import { createPsychologist, getPsychologistByUser, updatePsychologistByUser } from "@/database/daos/psychologistDao";
-import { createUser, getUpdatedUserByEmail, getUserByEmail, updateUserByEmail } from "@/database/daos/userDao";
-import { IPsychologist } from "@/interfaces/IPsychologist";
-import IUser from "@/interfaces/IUser";
+import { createPsychologist, getPsychologistByUser, updatePsychologistByUser } from "@/app/_database/daos/psychologistDao";
+import { createUser, getUpdatedUserByEmail, getUserByEmail, updateUserByEmail } from "@/app/_database/daos/userDao";
+import { IPsychologist } from "@/app/_interfaces/IPsychologist";
+import IUser from "@/app/_interfaces/IUser";
 import { NextAuthOptions } from "next-auth"
 import Google from "next-auth/providers/google";
 import slugify from "slugify";
@@ -79,7 +79,7 @@ const authOptions: NextAuthOptions = {
                 console.log("Session es: " + JSON.stringify(session));
                 console.log("Token es: " + JSON.stringify(token));
                 // token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
-                token.user = await getUpdatedUserByEmail(session.email, session);
+                token.user = await getUpdatedUserByEmail(token.email!, session);
             }
             // console.log("llamando jwt");
             // console.log("El usuario es:" + JSON.stringify(token.user))

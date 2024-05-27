@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 // import { useForm } from "react-hook-form";
-import { AuthLayout } from "../../components/layout/AuthLayout";
+import { AuthLayout } from "../_components/layout/AuthLayout";
 // import { validations } from "../../utils";
 import { toast } from "react-toastify";
 

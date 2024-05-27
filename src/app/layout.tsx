@@ -1,7 +1,7 @@
-import "../styles/globals.css"
+import "@/app/_styles/globals.css";
 import CssBaseline from "@mui/material/CssBaseline"
-import Providers from "@/providers/Providers";
-import Navbar from "@/components/navbar/Navbar";
+import Providers from "@/app/_providers/Providers";
+import Navbar from "@/app/_components/navbar/Navbar";
 
 export const metadata = {
   title: 'Next.js',

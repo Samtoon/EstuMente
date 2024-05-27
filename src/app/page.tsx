@@ -1,18 +1,18 @@
 'use client'
 //import Navbar from "@/components/navbar/Navbar";
-import PsiLayout from "@/components/layout/PsiLayout";
-import Navbar from "../components/navbar/Navbar";
+import PsiLayout from "@/app/_components/layout/PsiLayout";
+import Navbar from "./_components/navbar/Navbar";
 import Button from "@mui/material/Button/Button";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { Hero } from "@/components/ui/Hero";
+import { Hero } from "@/app/_components/ui/Hero";
 // import { fetchServices, fetchUsers } from "../database/connection"
-import { currentModels } from "@/database/models/Service";
+import { currentModels } from "@/app/_database/models/Service";
 import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import router from "next/router";
 import { useRouter } from "next/navigation";
-import { homepagePath } from "@/utils/redirect";
+import { homepagePath } from "@/app/_utils/redirect";
 // import Button from "@mui/material";
 
 /* async function Services() {

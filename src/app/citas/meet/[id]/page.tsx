@@ -1,9 +1,9 @@
 import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
-import PatientLayout from "@/components/layout/PatientLayout";
-import CallDisplay from "@/components/video/CallDisplay";
-import { serialize } from "@/database/connection";
-import { getUpcomingAppointmentById } from "@/database/daos/upcomingAppointmentDao";
-import { requestToken } from "@/utils/server actions/other";
+import PatientLayout from "@/app/_components/layout/PatientLayout";
+import CallDisplay from "@/app/_components/video/CallDisplay";
+import { serialize } from "@/app/_database/connection";
+import { getUpcomingAppointmentById } from "@/app/_database/daos/upcomingAppointmentDao";
+import { requestToken } from "@/app/_utils/server actions/other";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
 

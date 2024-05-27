@@ -7,15 +7,15 @@ import type { NextPage } from "next";
 // import { AppointmentHistoryList } from "../../../components/appointment";
 // import { EmptyAppointment } from "../../../components/ui";
 
-import { IPreviousAppointment } from "@/interfaces/IPreviousAppointment";
-import PatientLayout from "@/components/layout/PatientLayout";
-import { EmptyAppointment } from "@/components/appointments/EmptyAppointment";
-import { getMyServerSession } from "@/utils/next-auth";
-import { getPreviousAppointmentsByPatient, getPreviousAppointmentsByPsychologist } from "@/database/daos/previousAppointmentDao";
-import { AppointmentList } from "@/components/appointments/AppointmentList";
+import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
+import PatientLayout from "@/app/_components/layout/PatientLayout";
+import { EmptyAppointment } from "@/app/_components/appointments/EmptyAppointment";
+import { getMyServerSession } from "@/app/_utils/next-auth";
+import { getPreviousAppointmentsByPatient, getPreviousAppointmentsByPsychologist } from "@/app/_database/daos/previousAppointmentDao";
+import { AppointmentList } from "@/app/_components/appointments/AppointmentList";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { serialize } from "@/database/connection";
+import { serialize } from "@/app/_database/connection";
 
 interface Props {
 }

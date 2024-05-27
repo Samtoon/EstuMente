@@ -1,6 +1,6 @@
 "use client"
-import { PsychologistLayout } from "@/components/layout/PsychologistLayout";
-import NotesDrawer from "@/components/notes/NotesDrawer";
+import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
+import NotesDrawer from "@/app/_components/notes/NotesDrawer";
 import 'react-quill/dist/quill.snow.css';
 import { Button } from "@mui/material";
 import { useState } from "react";

@@ -11,21 +11,21 @@ import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Stack from "@mui/material/Stack/Stack";
 import { useCallback, useEffect, useState } from "react";
-import { IDay } from "@/interfaces/schedule/IDay";
+import { IDay } from "@/app/_interfaces/schedule/IDay";
 import React from "react";
 import List from "@mui/material/List/List";
 import { Dialog, Divider, InputLabel, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Modal, Select, ThemeProvider, Typography } from "@mui/material";
 import { AddBox, Circle, DisabledByDefault, ExpandLess, ExpandMore } from "@mui/icons-material";
-import Hour from "@/utils/hour";
+import Hour from "@/app/_utils/hour";
 import { useSession } from "next-auth/react";
-import { ISchedule } from "@/interfaces/schedule/ISchedule";
-import { PsychologistLayout } from "@/components/layout/PsychologistLayout";
-import { scheduleTheme } from "@/themes/schedule-theme";
-import { days, hours } from "@/utils/constants";
-import ModalStates from "@/enums/PeriodModalStates";
-import AddPeriodModal from "@/components/schedule/AddPeriodModal";
-import ScheduleTable from "@/components/schedule/ScheduleTable";
-import { SCHEDULES } from "@/utils/endpoints";
+import { ISchedule } from "@/app/_interfaces/schedule/ISchedule";
+import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
+import { scheduleTheme } from "@/app/_themes/schedule-theme";
+import { days, hours } from "@/app/_utils/constants";
+import ModalStates from "@/app/_enums/PeriodModalStates";
+import AddPeriodModal from "@/app/_components/schedule/AddPeriodModal";
+import ScheduleTable from "@/app/_components/schedule/ScheduleTable";
+import { SCHEDULES } from "@/app/_utils/endpoints";
 
 interface state {
     day: IDay["day"],

@@ -15,7 +15,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 // import { PsychologistLayout } from "../../../components/layout";
-import { PsychologistLayout } from "@/components/layout/PsychologistLayout";
+import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
 import { EventAvailable } from "@mui/icons-material";
 // import AdapterDateFns from "@mui/lab/AdapterDateFns";
 // import { DatePicker, LocalizationProvider } from "@mui/lab";

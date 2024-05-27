@@ -1,15 +1,15 @@
 // import { Typography, Box } from "@mui/material";
 // import { PatientLayout } from "../../../components/layout/PatientLayout";
-import PatientLayout from "@/components/layout/PatientLayout";
+import PatientLayout from "@/app/_components/layout/PatientLayout";
 // import { dbAppointment } from "../../../database";
-import { AppointmentList } from "@/components/appointments/AppointmentList";
-import { EmptyAppointment } from "@/components/appointments/EmptyAppointment";
+import { AppointmentList } from "@/app/_components/appointments/AppointmentList";
+import { EmptyAppointment } from "@/app/_components/appointments/EmptyAppointment";
 // import { getAppointmentsByPatient } from "@/database/dbAppointments";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByPatient } from "@/database/daos/upcomingAppointmentDao";
-import { getMyServerSession } from "@/utils/next-auth";
-import { serialize } from "@/database/connection";
+import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByPatient } from "@/app/_database/daos/upcomingAppointmentDao";
+import { getMyServerSession } from "@/app/_utils/next-auth";
+import { serialize } from "@/app/_database/connection";
 
 const AppointmentPage = async () => {
   // const session = await getServerSession(authOptions)
