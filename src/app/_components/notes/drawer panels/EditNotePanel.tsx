@@ -4,6 +4,7 @@ import { stripTags } from "@/app/_utils/html";
 import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import styles from "@/app/_styles/notes/notesTest.module.css"
 import { EventHandler, useEffect, useMemo, useRef, useState } from "react";
 import 'react-quill/dist/quill.snow.css';
 // import ReactQuill from "react-quill";
@@ -31,7 +32,8 @@ export default function EditNotePanel({ selectedNote, trigger }: { selectedNote?
           title: title,
           content: content,
           psychologist: session?.psychologist?._id!,
-          patient: session?.user._id!
+          patient: session?.appointmentPatientId!,
+          patientName: session?.appointmentPatientName!
         }
         setContent("");
         setTitle("");
@@ -48,7 +50,7 @@ export default function EditNotePanel({ selectedNote, trigger }: { selectedNote?
   }, [selectedNote])
 
   return (
-    <div className="notes-panel">
+    <div className={styles["notes-panel"]}>
       <TextField label="Título" value={title} onChange={e => setTitle(e.target.value)} />
       <ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} />
       <Button id="save-note-button" color="secondary" onClick={handleClick}>{

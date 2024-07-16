@@ -17,6 +17,7 @@ import {
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { useRouter } from "next/navigation";
 import GoogleImage from "../ui/GoogleImage";
+import Roles from "@/app/_enums/Roles";
 // import { IPsychologist } from "../../interfaces";
 
 interface Props {
@@ -41,7 +42,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
           <CardMedia
             component={GoogleImage}
             compSrc={psychologist.profilePicture}
-            compAlt="Practicante"
+            compAlt={Roles.Practicante}
             compStyle={{ width: 120, height: 120, mt: 3, borderRadius: "50%" }}
             //component="img"
             //image={psychologist.profilePicture}

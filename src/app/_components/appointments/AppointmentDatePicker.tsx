@@ -15,6 +15,7 @@ import { scheduleAppointment } from "@/app/_utils/server actions/appointment";
 import { useSession } from "next-auth/react";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { sendNotification } from "@/app/_utils/server actions/notification";
+import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 
 interface IState {
   date?: Date,
@@ -129,8 +130,9 @@ export default function AppointmentDatePicker({ appointments, schedule, psycholo
             console.log(`Mandando la fecha: ${state.date}`);
             appointments = await scheduleAppointment(user._id!, schedule.psychologist as string, state.date!);
             await sendNotification(
-              psychologist.user as string, 
-              `Tienes una nueva cita con ${user.firstName} ${user.lastName}`, 
+              {type: ReceiverTypes.User, id: user._id!},
+              `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
+              true,
               user.profilePicture?.url
             );
             dispatcher({ type: "reset", appointments: appointments, schedule: schedule });

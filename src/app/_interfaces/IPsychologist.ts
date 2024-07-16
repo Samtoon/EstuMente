@@ -11,7 +11,8 @@ export interface IPsychologist {
   calification?: number;
   specialties?: string[];
   services?: string[];
-  isPublic: true;
+  isPublic: boolean;
+  state?: "Activo" | "Inactivo" | "Pendiente";
 
   createAt?: string;
   updatedAt?: string;

@@ -29,7 +29,7 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
         console.log("cambio estado")
         toggleSideMenu(!isMenuOpen)}}}> */}
       {/* <Navbar/> */}
-      <SideMenu />
+      {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
       
 

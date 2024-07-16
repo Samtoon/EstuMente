@@ -10,6 +10,7 @@ import {
   TextField,
   MenuItem,
 } from "@mui/material";
+import NextLink from "next/link";
 //import { useForm } from "react-hook-form";
 import IUser from "@/app/_interfaces/IUser";
 //import { FormInputDropdown } from "../ui";
@@ -17,6 +18,7 @@ import IUser from "@/app/_interfaces/IUser";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import RegisterModal from "../register/RegisterModal";
 // import { pruebaServerAction } from "@/utils/actions";
 //import { validations } from "../../utils";
 
@@ -29,26 +31,29 @@ import { useSession } from "next-auth/react";
 // };
 
 interface Props {
-  user: IUser;
+  user: IUser,
+  pendingRequest: boolean
 }
 
-export const PersonalInfo: FC<Props> = ({ user }) => {
-  
+export const PersonalInfo: FC<Props> = ({ user, pendingRequest }) => {
+
   function ProfileField({
     type,
     label,
     defaultValue,
     disabled,
-    children
+    children,
+    xs
   }: {
     type: string,
     label: string,
     defaultValue: string | undefined,
     disabled: boolean,
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    xs?: number
   }) {
     return (
-      <Grid item xs={12}>
+      <Grid item xs={xs || 12}>
         <TextField
           type={type}
           label={label}
@@ -82,12 +87,13 @@ export const PersonalInfo: FC<Props> = ({ user }) => {
   const { data: session, status, update } = useSession();
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
 
   console.log("El género de este usuario es: " + session?.user.gender);
   console.log("El número del usuario es: " + session?.user.phone);
   function handleSubmit(formData: FormData) {
-    update({ phone: formData.get("Celular"), gender: formData.get("gender")});
+    update({ phone: formData.get("Celular"), gender: formData.get("gender") });
   }
   /* const {
     register,
@@ -220,37 +226,37 @@ export const PersonalInfo: FC<Props> = ({ user }) => {
         disabled={updating}
       />
       <Grid item xs={12}>
-      <form id="profileForm" action={handleSubmit}>
-        <Grid container spacing={2}>
-          <ProfileField
-            type="tel"
-            label="Celular"
-            defaultValue={session?.user.phone}
-            disabled={false}
-          />
-          <Grid item xs={12}>
-            <TextField
-              select
-              name="gender"
-              label="Género"
-              defaultValue={session?.user.gender ? session.user.gender : options[0].value}
-              fullWidth
-              InputProps={{ readOnly: !updating }}
-            >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          {/* <Grid item xs={12}>
+        <form id="profileForm" action={handleSubmit}>
+          <Grid container spacing={2}>
+            <ProfileField
+              type="tel"
+              label="Celular"
+              defaultValue={session?.user.phone}
+              disabled={false}
+            />
+            <Grid item xs={12}>
+              <TextField
+                select
+                name="gender"
+                label="Género"
+                defaultValue={session?.user.gender ? session.user.gender : options[0].value}
+                fullWidth
+                InputProps={{ readOnly: !updating }}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            {/* <Grid item xs={12}>
             <Button type="submit">Guardar</Button>
           </Grid> */}
-        </Grid>
-      </form>
+          </Grid>
+        </form>
       </Grid>
-      
+
       <ProfileField
         type="email"
         label="Correo"
@@ -262,9 +268,22 @@ export const PersonalInfo: FC<Props> = ({ user }) => {
         label="Rol"
         defaultValue={session?.user.role}
         disabled={updating}
+        xs={8}
       />
-      
+      <Grid item xs={4}>
+          <Button 
+          fullWidth 
+          color="secondary" 
+          sx={{ height: "100%" }} 
+          onClick={() => setModalOpen(true)}
+          disabled={pendingRequest}
+          >
+            Solicitar cambio de rol
+          </Button>
+      </Grid>
+      <RegisterModal open={modalOpen} handleClose={() => setModalOpen(false)}/>
     </Grid>
+    
     // </form>
   );
 };

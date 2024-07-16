@@ -6,6 +6,7 @@ import { getUpcomingAppointmentById } from "@/app/_database/daos/upcomingAppoint
 import { requestToken } from "@/app/_utils/server actions/other";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
+import Roles from "@/app/_enums/Roles";
 
 const prueba = "https://estumente.daily.co/prueba";
 
@@ -25,9 +26,9 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   // y sus tipos son ${typeof session?.user._id} y ${typeof appointment?.user}`);
   function canJoin() {
     switch (session?.user.role) {
-      case "Consultante":
+      case Roles.Consultante:
         return session.user._id === appointment?.patient.toString();
-      case "Practicante":
+      case Roles.Practicante:
         return session.psychologist?._id === appointment?.psychologist.toString();
       default:
         return true;

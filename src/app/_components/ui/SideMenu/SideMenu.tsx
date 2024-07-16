@@ -26,6 +26,7 @@ import ListAdmin from "./Lists/ListAdmin";
 import ListCoordinator from "./Lists/ListCoordinator";
 import ListTutor from "./Lists/ListTutor";
 import MenuItem from "./MenuItem";
+import Roles from "@/app/_enums/Roles";
 /*import { MenuItemPsychologist } from "./MenuItemPsychologist";
 import { ListPatient } from "./ListPatient";
 import { MenuItemAdmin } from "./MenuItemAdmin"; */
@@ -66,27 +67,27 @@ export const SideMenu = () => {
           </div>
         )}
 
-        {role === "Consultante" && (
+        {role === Roles.Consultante && (
           /* Paciente */
           <ListPatient />
         )}
 
-        {role === "Practicante" && (
+        {role === Roles.Practicante && (
           /* Psicólogo */
           <ListPsychologist />
         )}
 
-        {role === "Tutor" && (
+        {role === Roles.Tutor && (
           /* Tutor */
           <ListTutor />
         )}
 
-        {role === "Coordinador" && (
+        {role === Roles.Coordinador && (
           /* Coordinador */
           <ListCoordinator />
         )}
 
-        {role === "Administrador" && (
+        {role === Roles.Administrador && (
           /* Administrador */
           <ListAdmin />
         )}
@@ -104,17 +105,10 @@ export const SideMenu = () => {
               </ListItemButton>
             </List>
           </div>
-
-
         ) : (
           <List>
-
             <ListItemButton
-
               onClick={() => signIn("google")}
-            /* onClick={() =>
-              navigateTo(`/autenticacion/login?p=${router.asPath}`)
-            } */
             >
               <ListItemIcon>
                 <LoginOutlined color="secondary" />

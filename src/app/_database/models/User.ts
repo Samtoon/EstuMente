@@ -1,5 +1,6 @@
 import mongoose, { Schema, model, Model } from "mongoose";
 import IUser from "../../_interfaces/IUser";
+import Roles from "@/app/_enums/Roles";
 
 const userSchema = new Schema(
   {
@@ -12,6 +13,7 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
+    fullName: String,
     email: {
       type: String,
       required: true,
@@ -25,7 +27,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: {
-        values: ["Administrador", "Consultante", "Practicante", "Tutor", "Coordinador"],
+        values: Object.values(Roles),
         message: "{VALUES} no es un role válido",
         default: "patient",
         required: true,

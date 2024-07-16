@@ -2,24 +2,32 @@
 import { serialize } from "@/app/_database/connection"
 import { createNotification, deleteNotificationById, getNotificationsByUser } from "@/app/_database/daos/notificationDao"
 import Notification from "@/app/_database/models/Notification"
+import Roles from "@/app/_enums/Roles"
 import { INotification } from "@/app/_interfaces/INotification"
 import { pusherServer } from "@/app/_lib/pusher"
+import { notificationChecker } from "../notifications"
 
-export async function sendNotification(user: string, body: string, image?: string, ) {
-    const notification: INotification = {
-        image: image,
-        user: user,
-        body: body
-    }
+export async function sendNotification(
+    receiver: INotification["receiver"],
+    body: string, 
+    simpleClear: boolean, 
+    image?: string,
+    condition?: INotification["condition"]
+) {
+    const notification: INotification = { image, body, receiver, simpleClear, condition }
     const dbNotification = await createNotification(notification);
     console.log("Hago el trigger");
-    pusherServer.trigger(user, "event", serialize(dbNotification));
+    pusherServer.trigger(receiver.id.toString(), "event", serialize(dbNotification));
     return Boolean(dbNotification);
 }
 
-export async function fetchNotificationsByUser(user: string) {
-    const notifications = await getNotificationsByUser(user);
-    return serialize(notifications) as INotification[];
+export async function fetchNotificationsByUser(user: string, role: Roles) {
+    console.log("Fetcheando las notificaciones de un usuario con rol: ",role);
+    const notifications = await getNotificationsByUser(user, role);
+    const results = await Promise.all(notifications.map(notificationChecker));
+    const checkedNotifications = notifications.filter((_v, index) => results[index]);
+    console.log("Resultados filtro", checkedNotifications.length);
+    return serialize(checkedNotifications) as INotification[];
 }
 
 export async function clearNotificationById(id: string) {

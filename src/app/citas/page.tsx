@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography/Typography";
 import { getUpcomingAppointmentsByPsychologist, getUpcomingAppointmentsByPatient } from "@/app/_database/daos/upcomingAppointmentDao";
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import { serialize } from "@/app/_database/connection";
+import Roles from "../_enums/Roles";
+import PageHeader from "../_components/PageHeader";
 
 const AppointmentPage = async () => {
   // const session = await getServerSession(authOptions)
@@ -17,22 +19,14 @@ const AppointmentPage = async () => {
   //   session?.user._id!
   // );
   const session = await getMyServerSession();
-  const appointments = session?.user.role === "Practicante" ? 
+  const appointments = session?.user.role === Roles.Practicante ? 
   await getUpcomingAppointmentsByPsychologist(session?.psychologist?._id!) : 
   await getUpcomingAppointmentsByPatient(session?.user._id!);
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`)
   return (
     <PatientLayout title="Mis citas" pageDescription="Mis citas">
-      <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          gutterBottom
-          sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
-        >
-          Mis citas
-        </Typography>
-
+      <Box>
+        <PageHeader header="Mis Citas"/>
         {appointments.length === 0 ? (
           <EmptyAppointment message={"No tienes citas activas"} />
         ) : (

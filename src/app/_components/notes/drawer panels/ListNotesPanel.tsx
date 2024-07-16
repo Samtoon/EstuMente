@@ -5,15 +5,20 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import SearchField from "./SearchField";
 import NoteFilters from "@/app/_enums/NoteFilters";
+import styles from '@/app/_styles/notes/notesTest.module.css'
+import IUser from "@/app/_interfaces/IUser";
+import { fetchUserById } from "@/app/_utils/server actions/user";
 
 export default function ListNotesPanel({
     checkNote,
     shouldUpdate,
-    setShouldUpdate
+    setShouldUpdate,
+    filterPatient
 }: {
     checkNote: (note: INote) => void,
     shouldUpdate: boolean,
     setShouldUpdate: (shouldUpdate: boolean) => void
+    filterPatient?: boolean
 }) {
     const { data: session, status } = useSession();
     const [notes, setNotes] = useState([] as INote[]);
@@ -30,38 +35,48 @@ export default function ListNotesPanel({
     useEffect(() => {
         console.log("shouldUpdate es: " + shouldUpdate);
         if (shouldUpdate && session) {
-            const updatePromise = filter === "" ?
-            fetchNotesByPatient(session?.psychologist?._id!, session?.user._id!) :
-            filterNotes(session?.psychologist?._id!, session?.user._id!, filter, filterBy);
+            const updatePromise = 
+            filterNotes(
+                session.psychologist?._id!, 
+                filter, 
+                filterBy, 
+                filterPatient ? session.appointmentPatientId : undefined
+            );
             updatePromise.then(notes => {
                 setNotes(notes);
                 setShouldUpdate(false);
             });
         }
-    }, [session, shouldUpdate, filter, filterBy, setShouldUpdate]);
+    }, [session, shouldUpdate, filter, filterBy, setShouldUpdate, filterPatient]);
     return (
-        <div className="notes-panel">
+        <div className={styles["notes-panel"]}>
             <SearchField
                 // searchNotes={searchNotes}
                 setFilter={setFilter}
                 filterBy={filterBy}
                 setFilterBy={setFilterBy}
                 trigger={setShouldUpdate}
+                filterPatient
             />
             <Divider />
-            <List id="notes-list">
+            <List id={styles["notes-list"]}>
                 {notes.map((note) =>
                     <ListItem disablePadding key={`list-item-${note._id!}`}>
                         <ListItemButton onClick={() => checkNote({ ...note })}>
                             <ListItemText primary={note.title} secondary={
-                                `Fecha: ${new Date(note.createdAt!).toLocaleString()}`
+                                <>
+                                {`Consultante: ${note.patientName}`}
+                                <br/>
+                                {`Fecha: ${new Date(note.createdAt!).toLocaleString()}`}
+                                </>
+                                
                             } />
                         </ListItemButton>
                     </ListItem>
                 )}
             </List>
             <Divider />
-            <Pagination id="pagination" count={1} color="secondary" />
+            <Pagination id={styles["pagination"]} count={1} color="secondary" />
         </div>
     )
 }

@@ -7,6 +7,8 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"
 import { NotificationsNoneOutlined } from "@mui/icons-material";
 import NotificationsButton from "./notifications/NotificationsButton";
+import Roles from "@/app/_enums/Roles";
+import { SideMenu } from "../ui/SideMenu/SideMenu";
 
 
 const Navbar = () => {
@@ -17,13 +19,13 @@ const Navbar = () => {
   function middleButton(): JSX.Element {
     switch (session?.user.role) {
       case undefined:
-      case "Consultante":
+      case Roles.Consultante:
         return (
           <NextLink href="/psicologos" passHref>
             <Button variant="text">Psicólogos</Button>
           </NextLink>
         );
-      case "Practicante":
+      case Roles.Practicante:
         return (
           <NextLink href="/psicologo/pacientes" passHref>
             <Button variant="text">Mis pacientes</Button>
@@ -73,6 +75,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
       <Toolbar />
+      <SideMenu/>
     </>
 
   )

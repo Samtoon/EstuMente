@@ -12,35 +12,20 @@ import "@/app/_styles/notes/notes-drawer.css";
 import { INote } from "@/app/_interfaces/INote";
 import { fetchNotesByPatient } from "@/app/_utils/server actions/note";
 import { useSession } from "next-auth/react";
+import styles from '@/app/_styles/notes/notesTest.module.css'
 
 
 
 export default function NotesDrawer({ open, handleClose }: { open: boolean, handleClose: () => void }) {
     const { data: session } = useSession();
-    const [value, setValue] = React.useState(0);
+    const [tabIndex, setTabIndex] = React.useState(0);
     const [shouldUpdate, setShouldUpdate] = useState(true);
     const [selectedNote, setSelectedNote] = useState<INote | undefined>(undefined);
-    const styles = {
-        slide: {
-            padding: 15,
-            minHeight: 100,
-            color: '#fff',
-        },
-        slide1: {
-            background: '#FEA900',
-        },
-        slide2: {
-            background: '#B3DC4A',
-        },
-        slide3: {
-            background: '#6AC0FF',
-        },
-    };
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        setTabIndex(newValue);
     };
     function checkNote(note: INote) {
-        setValue(2);
+        setTabIndex(2);
         setSelectedNote(note);
     }
     return (
@@ -81,7 +66,7 @@ export default function NotesDrawer({ open, handleClose }: { open: boolean, hand
                     textColor="secondary"
                     indicatorColor="secondary"
                     aria-label="basic tabs example"
-                    value={value}
+                    value={tabIndex}
                     onChange={handleChange}
                     variant="fullWidth"
                 >
@@ -89,7 +74,7 @@ export default function NotesDrawer({ open, handleClose }: { open: boolean, hand
                     <Tab label="Notas guardadas" value={1} />
                     <Tab label="Ver nota" value={2} disabled />
                 </Tabs>
-                <SwipeableViews index={value} id="swipeable-views">
+                <SwipeableViews index={tabIndex} id={styles["swipeable-views"]}>
                     <EditNotePanel trigger={setShouldUpdate} />
                     <ListNotesPanel checkNote={checkNote} shouldUpdate={shouldUpdate} setShouldUpdate={setShouldUpdate} />
                     <EditNotePanel selectedNote={selectedNote} trigger={setShouldUpdate} />

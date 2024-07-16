@@ -1,6 +1,6 @@
 "use server"
 import { serialize } from "@/app/_database/connection";
-import { createNote, getNotesByDate, getNotesByPatient, getNotesByTitle, updateNote } from "@/app/_database/daos/noteDao";
+import { createNote, getFilteredNotes, getNotesByDate, getNotesByPatient, getNotesByTitle, updateNote } from "@/app/_database/daos/noteDao";
 import NoteFilters from "@/app/_enums/NoteFilters";
 import { INote } from "@/app/_interfaces/INote";
 
@@ -21,23 +21,38 @@ export async function saveNote(note: INote) {
 
 export async function filterNotes(
     psychologist: string,
-    patient: string,
     filter: string | Date,
-    filterBy: NoteFilters
+    filterBy: NoteFilters,
+    patient?: string,
 ) {
     console.log("Filter es: " + filter);
-    let notes: INote[] = [];
+    let patientName;
+    let title;
+    let date;
     switch (filterBy) {
         case NoteFilters.Title:
-            notes = (filter as string).length === 0 ?
-                await getNotesByPatient(psychologist, patient) :
-                await getNotesByTitle(psychologist, patient, filter as string);
+            // notes = (filter as string).length === 0 ?
+            //     await getNotesByPatient(psychologist, patient) :
+            //     await getNotesByTitle(psychologist, patient, filter as string);
+            // break;
+            title = filter as string;
             break;
         case NoteFilters.Date:
-            notes = await getNotesByDate(psychologist, patient, filter as Date);
+            // notes = await getNotesByDate(psychologist, patient, filter as Date);
+            // break;
+            date = filter as Date;
             break;
-        // case NoteFilters.Patient:
+        case NoteFilters.Patient:
+            patientName = filter as string;
+            break;
     }
+    const notes = await getFilteredNotes(
+        psychologist,
+        patient,
+        patientName,
+        title,
+        date
+    )
     console.log("voy a mandar:" + notes);
     return serialize(notes) as INote[];
 }

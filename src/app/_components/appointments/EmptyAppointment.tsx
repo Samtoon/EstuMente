@@ -7,6 +7,7 @@ import Link from "@mui/material/Link/Link";
 import Button from "@mui/material/Button/Button";
 import { EventBusy } from "@mui/icons-material";
 import { getMyServerSession } from "@/app/_utils/next-auth";
+import Roles from "@/app/_enums/Roles";
 
 interface Props {
   message: string;
@@ -29,7 +30,7 @@ export const EmptyAppointment: FC<Props> = async ({ message }) => {
           <Typography align="center" gutterBottom>
             {message}
           </Typography>
-          {session?.user.role === "Consultante" &&
+          {session?.user.role === Roles.Consultante &&
             (<NextLink href={`/psicologos`} passHref prefetch={false}>
               {/* <Link> */}
               <Button color="secondary" className="card-btn">

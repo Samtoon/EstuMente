@@ -7,6 +7,7 @@ import { compareAsc } from "date-fns";
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import { getUserById } from "@/app/_database/daos/userDao";
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
+import Roles from "@/app/_enums/Roles";
 
 interface Props {
   appointments: IUpcomingAppointment[] | IPreviousAppointment[];
@@ -34,16 +35,16 @@ export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
           return (
             <AppointmentCard
               appointment={appointment}
-              fullName={role === "Practicante" ? 
+              fullName={role === Roles.Practicante ? 
               `${user?.firstName} ${user?.lastName}` : 
               psychologist?.fullName!
             }
-              image={role === "Practicante" ? 
+              image={role === Roles.Practicante ? 
               user?.profilePicture?.url! :
               psychologist?.profilePicture!
               }
               key={appointment._id}
-              role={role === "Practicante" ? "Consultante" : "Practicante"}
+              role={role === Roles.Practicante ? Roles.Consultante : Roles.Practicante}
             />
           );
         

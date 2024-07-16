@@ -9,5 +9,6 @@ export interface INote {
   appointment?: IPreviousAppointment | string;
   psychologist: IPsychologist | string;
   patient: IUser | string;
+  patientName: string;
   createdAt?: Date;
 }

@@ -5,6 +5,7 @@ import PatientLayout from "../_components/layout/PatientLayout";
 import TestLayout from "@/app/_components/layout/TestLayout";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import Roles from "../_enums/Roles";
 
 interface Props {}
 
@@ -32,7 +33,7 @@ const HomePagePatient: NextPage = () => {
           Sanando Juntos
         </Typography>
       </Box>
-      <TestLayout title="consultante"/>
+      <TestLayout title={Roles.Consultante}/>
     </PatientLayout>
   );
 };

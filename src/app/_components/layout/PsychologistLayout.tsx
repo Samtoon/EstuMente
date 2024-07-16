@@ -31,7 +31,7 @@ export const PsychologistLayout: FC<Props> = ({
       {/* <NavbarPsychologist /> */}
       
 
-      <SideMenu />
+      {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
 
       <main>

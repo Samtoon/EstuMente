@@ -14,9 +14,15 @@ export async function getUserByEmail(email: string) {
     return user;
 }
 
-export async function updateUserByEmail(email: string, user: IUser) {
+export async function updateUserByEmail(email: string, user: Partial<IUser>) {
     await connect();
     const result = await User.updateOne({email: email}, user);
+    return Boolean(result.modifiedCount);
+}
+
+export async function updateUserById(id: string, user: Partial<IUser>) {
+    await connect();
+    const result = await User.updateOne({_id: id}, user);
     return Boolean(result.modifiedCount);
 }
 

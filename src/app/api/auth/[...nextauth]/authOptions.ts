@@ -1,5 +1,6 @@
 import { createPsychologist, getPsychologistByUser, updatePsychologistByUser } from "@/app/_database/daos/psychologistDao";
-import { createUser, getUpdatedUserByEmail, getUserByEmail, updateUserByEmail } from "@/app/_database/daos/userDao";
+import { createUser, getUpdatedUserByEmail, getUserByEmail, getUserById, updateUserByEmail } from "@/app/_database/daos/userDao";
+import Roles from "@/app/_enums/Roles";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import IUser from "@/app/_interfaces/IUser";
 import { NextAuthOptions } from "next-auth"
@@ -32,9 +33,10 @@ const authOptions: NextAuthOptions = {
             if (!profile?.email) {
                 throw new Error('No profile');
             }
-            const upsertUser: IUser = {
+            const upsertUser: Partial<IUser> = {
                 firstName: profile.given_name,
                 lastName: profile.family_name,
+                fullName: profile.name,
                 email: profile.email,
                 profilePicture: { public_id: profile.picture, url: profile.picture }
             }
@@ -44,14 +46,13 @@ const authOptions: NextAuthOptions = {
             if (user) {
                 // await User.updateOne({ email: profile.email }, upsertUser);
                 await updateUserByEmail(profile.email, upsertUser);
-                if (user.role === "Practicante") {
-                    const fullName = user.firstName + " " + user.lastName;
+                if (user.role === Roles.Practicante) {
                     const upsertPsychologist: IPsychologist = {
-                        fullName: fullName,
+                        fullName: profile.name!,
                         gender: user.gender || "Indefinido",
                         profilePicture: user.profilePicture!.url,
                         user: user._id,
-                        slug: slugify(fullName),
+                        slug: slugify(profile.name!),
                         isPublic: true
                     }
                     // const psychologist = await Psychologist.findOne({ user: user._id });
@@ -68,18 +69,30 @@ const authOptions: NextAuthOptions = {
                 }
             } else {
                 upsertUser.state = "activo";
-                upsertUser.role = "Consultante";
+                upsertUser.role = Roles.Consultante;
                 // await User.create(upsertUser);
-                await createUser(upsertUser);
+                await createUser(upsertUser as IUser);
             }
             return true;
         },
         async jwt({ token, user, profile, trigger, session }) {
             if (trigger === "update") {
-                console.log("Session es: " + JSON.stringify(session));
-                console.log("Token es: " + JSON.stringify(token));
-                // token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
-                token.user = await getUpdatedUserByEmail(token.email!, session);
+                if (session) {
+                    if (session.appointmentPatientId) {
+                        token.appointmentPatientId = session.appointmentPatientId as string;
+                        token.appointmentPatientName = (await getUserById(session.appointmentPatientId as string))?.fullName;
+                    }
+                    else {
+                        console.log("Session es: " + JSON.stringify(session));
+                        console.log("Token es: " + JSON.stringify(token));
+                        // token.user = await User.findOneAndUpdate({ email: token.email }, session, {new: true});
+                        token.user = await getUpdatedUserByEmail(token.email!, session);
+                    }
+                }
+                else {
+                    token.appointmentPatientId = undefined;
+                    token.appointmentPatientName = undefined;
+                }
             }
             // console.log("llamando jwt");
             // console.log("El usuario es:" + JSON.stringify(token.user))
@@ -98,6 +111,8 @@ const authOptions: NextAuthOptions = {
             // console.log("llamando session");
             session.user = token.user as IUser;
             session.psychologist = token.psychologist as IPsychologist;
+            session.appointmentPatientId = token.appointmentPatientId as string;
+            session.appointmentPatientName = token.appointmentPatientName as string;
             return session;
         }
     }

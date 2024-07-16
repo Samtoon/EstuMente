@@ -9,7 +9,9 @@ declare module "next-auth" {
    */
   interface Session {
     user: IUser,
-    psychologist?: IPsychologist
+    psychologist?: IPsychologist,
+    appointmentPatientId?: string,
+    appointmentPatientName?: string
   }
   interface Profile extends GoogleProfile {}
 }

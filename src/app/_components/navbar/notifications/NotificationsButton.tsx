@@ -18,27 +18,32 @@ export default function NotificationsButton() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    function handleClear(id: string) {
-        clearNotificationById(id)
-            .then(() => fetchNotificationsByUser(session?.user._id!))
-            .then((notifications) => setNotifications(notifications));
+    function handleClear(id: string, index: number, simpleClear: boolean) {
+        // clearNotificationById(id)
+        //     .then(() => fetchNotificationsByUser(session?.user._id!, session?.user.role!))
+        //     .then((notifications) => setNotifications(notifications));
+        notifications.splice(index, 1);
+        if (simpleClear) clearNotificationById(id);
+        setNotifications([...notifications]);
     }
     const open = Boolean(anchorEl);
     useEffect(() => {
         if (session) {
             console.log("Se llama el useEffect");
             pusherClient.subscribe(session?.user._id!);
+            pusherClient.subscribe(session?.user.role!);
             pusherClient.bind("event", (notification: INotification) => {
                 console.log("Ocurrió un cambio en el WebSocket, me llegó esto");
                 console.log(notification);
                 setNotifications((prev) => [...prev, notification]);
             });
-            fetchNotificationsByUser(session?.user._id!)
+            fetchNotificationsByUser(session?.user._id!, session?.user.role)
                 .then((notifications) => setNotifications(notifications));
             return () => {
                 console.log("Me desuscribo")
                 pusherClient.unbind();
                 pusherClient.unsubscribe(session?.user._id!);
+                pusherClient.unsubscribe(session?.user.role!);
             }
         }
     }, [session]);

@@ -31,7 +31,7 @@ const PatientLayout: FC<Props> = ({
         {/* <NavbarPatient /> */}
       
 
-      <SideMenu />
+      {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
 
       <main>

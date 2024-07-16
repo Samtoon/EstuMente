@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import { PsychologistCard } from "./PsychologistCard";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { fetchPsychologists } from "@/app/_database/connection";
+import { getPsychologists } from "@/app/_database/daos/psychologistDao";
 
 interface Props {
   psychologists: IPsychologist[];
@@ -11,7 +12,7 @@ interface Props {
 
 export const PsychologistList = async () => {
   console.log("Hola, soy la lista");
-  const psychologists= await fetchPsychologists();
+  const psychologists = await getPsychologists(); 
   return (
     <Grid container spacing={4}>
       {psychologists.map((psychologist) => (

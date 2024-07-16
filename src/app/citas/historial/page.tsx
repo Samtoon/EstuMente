@@ -16,13 +16,14 @@ import { AppointmentList } from "@/app/_components/appointments/AppointmentList"
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import { serialize } from "@/app/_database/connection";
+import Roles from "@/app/_enums/Roles";
 
 interface Props {
 }
 
 const HistoryAppointmentPage: NextPage<Props> = async () => {
     const session = await getMyServerSession();
-    const appointments = session?.user.role === "Practicante" ? 
+    const appointments = session?.user.role === Roles.Practicante ? 
     await getPreviousAppointmentsByPsychologist(session?.psychologist?._id!) : 
     await getPreviousAppointmentsByPatient(session?.user._id!);
     console.log(`El tipo de las fechas es:${typeof appointments[0]}`)

@@ -4,12 +4,19 @@ import { Calification } from "../appointments/Calification";
 import { PsychologistDidNotAttend } from "../appointments/PsychologistDidNotAttend";
 import { EndCall } from "./EndCall";
 import { IUpcomingAppointment } from "@/app/_interfaces/IUpcomingAppointment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Call } from "./Call";
+import { useSession } from "next-auth/react";
 
 export default function CallDisplay({ appointment, token } : { appointment: IUpcomingAppointment, token: string }) {
-    
     const [room, setRoom] = useState(appointment.roomURL);
+    const {data: session, update} = useSession();
+    useEffect(() => {
+        console.log("use Effect malvado");
+        if (session?.appointmentPatientId !== appointment.patient) {
+            update({appointmentPatientId: appointment.patient});
+        }
+    }, [session, appointment, update])
     return (
         <Box>
             {/* appointment.endTime >= Date.now() / 1000 */true ? (

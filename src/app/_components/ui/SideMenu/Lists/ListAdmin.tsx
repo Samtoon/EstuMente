@@ -8,7 +8,7 @@ export default function ListAdmin() {
             <MenuItem label="Perfil" path="/perfil">
                 <AccountCircleOutlined color="secondary" />
             </MenuItem>
-            <MenuItem label="Dar Aval" path="">
+            <MenuItem label="Dar Aval" path="/solicitudes">
                 <ThumbUpOutlined color="secondary" />
             </MenuItem>
             <MenuItem label="Coordinadores" path="">

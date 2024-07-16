@@ -24,7 +24,7 @@ export default function PsiLayout ({ children, title }:Props) {
       {/* <Navbar /> */}
     
 
-    <SideMenu />
+    {/* <SideMenu /> */}
     {/* </UiContext.Provider> */}
     <main>
       <ToastContainer />

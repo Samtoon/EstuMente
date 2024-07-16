@@ -15,24 +15,35 @@ export default function SearchField({
     setFilter,
     filterBy,
     setFilterBy,
-    trigger
+    trigger,
+    filterPatient
 }: {
     // searchNotes: (filterBy: string | Date, filterBy: NoteFilters) => void,
     setFilter: (filter: string | Date) => void,
     filterBy: NoteFilters,
     setFilterBy: (filterBy: NoteFilters) => void,
-    trigger: (value: boolean) => void
+    trigger: (value: boolean) => void,
+    filterPatient?: boolean
 }) {
     const [title, setTitle] = useState("");
     const [date, setDate] = useState<Date | null>(null);
     const searchFieldProps: TextFieldProps = {
         size: "small",
         variant: "standard",
-        label: filterBy === NoteFilters.Title ? "Título" : "Fecha",
         fullWidth: true
     }
+    switch (filterBy) {
+        case NoteFilters.Title:
+            searchFieldProps.label = "Título";
+            break;
+        case NoteFilters.Date:
+            searchFieldProps.label = "Fecha";
+            break;
+        case NoteFilters.Patient:
+            searchFieldProps.label = "Paciente";
+    }
     function handleClick() {
-        setFilter(filterBy === NoteFilters.Title ? title : date as Date);
+        setFilter(filterBy !== NoteFilters.Date ? title : date as Date);
         trigger(true);
         // searchNotes(filterBy === NoteFilters.Title ? title : date as Date, filterBy);
     }
@@ -47,10 +58,11 @@ export default function SearchField({
                 >
                     <MenuItem value={NoteFilters.Title}>Título</MenuItem>
                     <MenuItem value={NoteFilters.Date}>Fecha</MenuItem>
+                    {filterPatient && <MenuItem value={NoteFilters.Patient}>Paciente</MenuItem>}
                 </Select>
             </FormControl >
             {
-                filterBy === "title" ?
+                filterBy !== NoteFilters.Date ?
                     <TextField
                         {...searchFieldProps}
                         sx={{ maxWidth: 180 }}

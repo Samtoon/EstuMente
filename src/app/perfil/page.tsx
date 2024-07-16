@@ -7,6 +7,8 @@ import PatientLayout from "@/app/_components/layout/PatientLayout";
 import IUser from "@/app/_interfaces/IUser";
 import { UploadProfilePicture } from "@/app/_components/profile/UploadProfilePicture";
 import { PersonalInfo } from "@/app/_components/profile/PersonalInfo";
+import { hasPendingRequests } from "../_utils/server actions/request";
+import { useEffect, useState } from "react";
 // import { dbPatients } from "../../../database";
 // import {
 //   PersonalInfo,
@@ -15,6 +17,13 @@ import { PersonalInfo } from "@/app/_components/profile/PersonalInfo";
 
 const ProfilePage = () => {
   const {data:session, status} = useSession();
+  const [pendingRequests, setPendingRequests] = useState(true);
+  useEffect(() => {
+    if (session) {
+      hasPendingRequests(session.user._id!)
+      .then((value) => setPendingRequests(value));
+    }
+  },[session, setPendingRequests]);
   return (
     <PatientLayout
       title="Mi perfil"
@@ -25,7 +34,7 @@ const ProfilePage = () => {
           <UploadProfilePicture url={session?.user.profilePicture?.url!} />
           <Grid container spacing={2}>
             <Grid item>
-              <PersonalInfo user={session?.user!} />
+              <PersonalInfo user={session?.user!} pendingRequest={pendingRequests} />
             </Grid>
           </Grid>
         </Container>

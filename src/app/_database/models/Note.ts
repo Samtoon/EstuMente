@@ -6,7 +6,8 @@ const noteSchema = new Schema<INote>({
     content: String,
     appointment: Schema.Types.ObjectId,
     patient: { type: Schema.Types.ObjectId, required: true },
-    psychologist: { type: Schema.Types.ObjectId, required: true }
+    psychologist: { type: Schema.Types.ObjectId, required: true },
+    patientName: String,
 }, { timestamps: true }
 );
 
