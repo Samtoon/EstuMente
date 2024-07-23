@@ -31,7 +31,7 @@ const ProfilePage = () => {
     >
       <Box sx={{ margin: "80px auto", padding: "0px 10px" }}>
         <Container component="main" maxWidth="sm">
-          <UploadProfilePicture url={session?.user.profilePicture?.url!} />
+          <UploadProfilePicture url={session?.user.profilePicture!} />
           <Grid container spacing={2}>
             <Grid item>
               <PersonalInfo user={session?.user!} pendingRequest={pendingRequests} />

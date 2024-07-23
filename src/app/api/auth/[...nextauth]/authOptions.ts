@@ -33,34 +33,34 @@ const authOptions: NextAuthOptions = {
             if (!profile?.email) {
                 throw new Error('No profile');
             }
-            const upsertUser: Partial<IUser> = {
+            const newUser: Partial<IUser> = {
                 firstName: profile.given_name,
                 lastName: profile.family_name,
                 fullName: profile.name,
                 email: profile.email,
-                profilePicture: { public_id: profile.picture, url: profile.picture }
+                profilePicture: profile.picture
             }
             // await connect();
             // const user = await User.findOne({ email: profile.email });
             const user = await getUserByEmail(profile.email);
             if (user) {
                 // await User.updateOne({ email: profile.email }, upsertUser);
-                await updateUserByEmail(profile.email, upsertUser);
+                await updateUserByEmail(profile.email, {profilePicture: profile.picture});
                 if (user.role === Roles.Practicante) {
                     const upsertPsychologist: IPsychologist = {
-                        fullName: profile.name!,
+                        fullName: user.fullName,
                         gender: user.gender || "Indefinido",
-                        profilePicture: user.profilePicture!.url,
-                        user: user._id,
+                        profilePicture: user.profilePicture!,
+                        user: user._id!,
                         slug: slugify(profile.name!),
                         isPublic: true
                     }
                     // const psychologist = await Psychologist.findOne({ user: user._id });
-                    const psychologist = await getPsychologistByUser(user._id);
+                    const psychologist = await getPsychologistByUser(user._id!);
                     if (psychologist) {
                         console.log("Este psicólogo sí existe");
                         // await Psychologist.updateOne({ user: user._id }, upsertPsychologist)
-                        await updatePsychologistByUser(user._id, upsertPsychologist);
+                        await updatePsychologistByUser(user._id!, upsertPsychologist);
                     } else {
                         console.log("Este psicólogo no existe");
                         // await Psychologist.create(upsertPsychologist);
@@ -68,14 +68,15 @@ const authOptions: NextAuthOptions = {
                     }
                 }
             } else {
-                upsertUser.state = "activo";
-                upsertUser.role = Roles.Consultante;
+                newUser.state = "activo";
+                newUser.role = Roles.Consultante;
                 // await User.create(upsertUser);
-                await createUser(upsertUser as IUser);
+                await createUser(newUser as IUser);
             }
             return true;
         },
         async jwt({ token, user, profile, trigger, session }) {
+            console.log("JWT");
             if (trigger === "update") {
                 if (session) {
                     if (session.appointmentPatientId) {
@@ -102,6 +103,7 @@ const authOptions: NextAuthOptions = {
                 // const dbUser = await User.findOne({ email: user.email });
                 const dbUser = await getUserByEmail(user.email as string);
                 token.user = dbUser;
+                console.log("El usuario es:" + JSON.stringify(token.user))
                 // token.psychologist = await Psychologist.findOne({ user: dbUser?._id })
                 token.psychologist = await getPsychologistByUser(dbUser?._id!);
             }

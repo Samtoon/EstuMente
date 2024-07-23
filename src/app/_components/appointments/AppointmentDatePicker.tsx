@@ -133,7 +133,7 @@ export default function AppointmentDatePicker({ appointments, schedule, psycholo
               {type: ReceiverTypes.User, id: user._id!},
               `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
               true,
-              user.profilePicture?.url
+              user.profilePicture
             );
             dispatcher({ type: "reset", appointments: appointments, schedule: schedule });
           }}>

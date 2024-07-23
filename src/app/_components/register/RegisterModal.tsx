@@ -32,7 +32,7 @@ export default function RegisterModal({
                         {type: ReceiverTypes.Role, id: role},
                         `${user.firstName} ${user.lastName} está solicitando un cambio de rol a ${selectedRole}`,
                         false,
-                        user.profilePicture?.url,
+                        user.profilePicture,
                         {notificationType: NotificationTypes.Request, clues: [request._id!]}
                     );
                 })

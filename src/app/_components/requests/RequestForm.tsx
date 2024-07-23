@@ -28,7 +28,7 @@ export default async function RequestForm({ request }:{request: IRequest}) {
         <>
                         <RequestField field="Foto de perfil:" value={
                     <Avatar
-                        src={user?.profilePicture?.url}
+                        src={user?.profilePicture}
                         slotProps={{img: {referrerPolicy:"no-referrer"}}}
                         sx={{ width: 90, height: 90 }}
                         variant="square"

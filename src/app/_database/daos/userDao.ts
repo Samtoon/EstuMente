@@ -1,17 +1,20 @@
 import IUser from "@/app/_interfaces/IUser";
 import { connect } from "../connection";
-import User from "../models/User";
+import User, { agePipeline } from "../models/User";
+import { Aggregate } from "mongoose";
 
 export async function getUserById(id: string) {
     await connect();
-    const user = await User.findById(id).lean();
-    return user;
+    const user: IUser[] = await User.aggregate(agePipeline).match({_id: id});
+    return user[0];
 }
 
 export async function getUserByEmail(email: string) {
     await connect();
-    const user = await User.findOne({ email: email }).lean();
-    return user;
+    // const user = await User.findOne({ email: email }).lean();
+    const user: IUser[] = await User.aggregate(agePipeline).match({email});
+    console.log(user[0]);
+    return user[0];
 }
 
 export async function updateUserByEmail(email: string, user: Partial<IUser>) {
@@ -34,7 +37,8 @@ export async function createUser(user: IUser) {
 
 export async function getUpdatedUserByEmail(email: string, user: IUser) {
     await connect();
-    const updatedUser = await User.findOneAndUpdate({ email: email }, user, {new: true}).lean();
+    await updateUserByEmail(email, user);
+    const updatedUser = await getUserByEmail(email);
     return updatedUser;
 }
 

@@ -40,7 +40,7 @@ export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
               psychologist?.fullName!
             }
               image={role === Roles.Practicante ? 
-              user?.profilePicture?.url! :
+              user?.profilePicture! :
               psychologist?.profilePicture!
               }
               key={appointment._id}

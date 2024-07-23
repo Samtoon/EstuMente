@@ -59,7 +59,7 @@ export async function answerRequest(request: IRequest, state: RequestStates, req
                 const upsertPsychologist: IPsychologist = {
                     fullName: fullName,
                     gender: requestingUser.gender || "Indefinido",
-                    profilePicture: requestingUser.profilePicture!.url,
+                    profilePicture: requestingUser.profilePicture!,
                     user: requestingUser._id!,
                     slug: slugify(fullName),
                     isPublic: true
@@ -74,6 +74,6 @@ export async function answerRequest(request: IRequest, state: RequestStates, req
         `El ${session.user.role} ${session.user.firstName} ${session.user.lastName} ha ${state.toLowerCase()} tu solicitud,
         ${state === RequestStates.Aprobado ? "inicia sesión de nuevo para ver los cambios" : `estos fueron sus comentarios:\n${comment}`}`,
         true,
-        session.user.profilePicture!.url
+        session.user.profilePicture!
     );
 }

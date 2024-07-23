@@ -59,7 +59,7 @@ export const SideMenu = () => {
               <ListItem>
                 <ListItemText primary={"Hola, " + session.user.firstName} />
                 <ListItemAvatar>
-                  <Avatar src={session.user.profilePicture?.url!} slotProps={{img: {referrerPolicy:"no-referrer"}}}/>
+                  <Avatar src={session.user.profilePicture} slotProps={{img: {referrerPolicy:"no-referrer"}}}/>
                 </ListItemAvatar>
               </ListItem>
             </List>

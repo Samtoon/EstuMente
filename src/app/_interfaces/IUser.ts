@@ -9,11 +9,15 @@ export default interface IUser {
     password?: string;
     role: Roles,
     phone?: string;
-    profilePicture?: { public_id: string; url: string };
+    profilePicture?: string;
     accept?: boolean;
     state?: string;
     gender?: string;
     supportingDocumentId?: string,
-    createAt?: string;
+    createdAt?: string;
     updatedAt?: string;
+    dateOfBirth?: Date;
+    career?: string;
+    semester?: number;
+    age?: number;
 }

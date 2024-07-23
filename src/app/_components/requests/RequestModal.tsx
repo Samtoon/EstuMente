@@ -80,7 +80,7 @@ export default function RequestModal({ open, handleClose, requestList, index }: 
             <Grid container px={3} spacing={1} columns={12} pb={3}>
                 <RequestField field="Foto de perfil:" value={
                     <Avatar
-                        src={user?.profilePicture?.url}
+                        src={user?.profilePicture}
                         slotProps={{ img: { referrerPolicy: "no-referrer" } }}
                         sx={{ width: 90, height: 90 }}
                         variant="square"

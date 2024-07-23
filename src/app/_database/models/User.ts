@@ -1,8 +1,8 @@
-import mongoose, { Schema, model, Model } from "mongoose";
+import mongoose, { Schema, model, Model, PipelineStage } from "mongoose";
 import IUser from "../../_interfaces/IUser";
 import Roles from "@/app/_enums/Roles";
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     firstName: {
       type: String,
@@ -26,26 +26,12 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: {
-        values: Object.values(Roles),
-        message: "{VALUES} no es un role válido",
-        default: "patient",
-        required: true,
-      },
+      enum: Object.values(Roles)
     },
     phone: {
       type: String
     },
-    profilePicture: {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
+    profilePicture: String,
     accept: {
       type: Boolean
     },
@@ -62,6 +48,9 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
+    career: String,
+    dateOfBirth: Date,
+    semester: Number
   },
   { timestamps: true }
 );
@@ -69,5 +58,23 @@ const userSchema = new Schema(
 userSchema.index({ firstName: "text", lastName: "text" });
 
 const User: Model<IUser> = mongoose.models.User || model("User", userSchema);
+
+export const agePipeline: PipelineStage[] = [{
+  $addFields: {
+    age: {
+      $floor: {
+        $divide: [
+          {
+            $subtract: [
+              new Date(),
+              "$dateOfBirth"
+            ]
+          },
+          (365 * 24 * 60 * 60 * 1000)
+        ]
+      }
+    }
+  }
+}]
 
 export default User;
