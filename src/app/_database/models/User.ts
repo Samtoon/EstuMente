@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Model, PipelineStage } from "mongoose";
+import mongoose, { Schema, model, Model } from "mongoose";
 import IUser from "../../_interfaces/IUser";
 import Roles from "@/app/_enums/Roles";
 
@@ -58,23 +58,5 @@ const userSchema = new Schema<IUser>(
 userSchema.index({ firstName: "text", lastName: "text" });
 
 const User: Model<IUser> = mongoose.models.User || model("User", userSchema);
-
-export const agePipeline: PipelineStage[] = [{
-  $addFields: {
-    age: {
-      $floor: {
-        $divide: [
-          {
-            $subtract: [
-              new Date(),
-              "$dateOfBirth"
-            ]
-          },
-          (365 * 24 * 60 * 60 * 1000)
-        ]
-      }
-    }
-  }
-}]
 
 export default User;
