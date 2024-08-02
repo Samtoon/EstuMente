@@ -26,6 +26,12 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
   return appointments;
 }
 
+export async function getPreviousAppointmentById(id: string) {
+  await connect();
+  const appointment = await PreviousAppointment.findById(id).lean();
+  return appointment;
+}
+
 export async function createPreviousAppointment(
   appointment: IPreviousAppointment
 ) {

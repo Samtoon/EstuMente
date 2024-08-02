@@ -21,7 +21,7 @@ export default function DownloadButton({
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 5;
+      const imgY = 0;
       pdf.addImage(
         imgData,
         "PNG",
@@ -35,7 +35,7 @@ export default function DownloadButton({
       });
       pdf.setFontSize(9);
       pdf.text("Generado el día " + date, pdfWidth - 90, 10);
-      pdf.save("invoice.pdf");
+      pdf.save(`Reporte Estumente ${format(new Date(), "dd/MM/yyyy")}.pdf`);
     });
     // const pdf = new jsPDF();
     // const element = pdfRef.current || "";

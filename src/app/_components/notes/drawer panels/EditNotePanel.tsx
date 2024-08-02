@@ -4,24 +4,41 @@ import { stripTags } from "@/app/_utils/html";
 import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
-import styles from "@/app/_styles/notes/notesTest.module.css"
+import styles from "@/app/_styles/notes/notesTest.module.css";
 import { EventHandler, useEffect, useMemo, useRef, useState } from "react";
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
+import { useParams } from "next/navigation";
 // import ReactQuill from "react-quill";
 
 const modules = {
   toolbar: [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-    ['link']
+    ["bold", "italic", "underline", "strike"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link"],
   ],
-}
+};
 
-export default function EditNotePanel({ selectedNote, trigger }: { selectedNote?: INote, trigger: (value: boolean) => void }) {
+export default function EditNotePanel({
+  selectedNote,
+  trigger,
+}: {
+  selectedNote?: INote;
+  trigger: (value: boolean) => void;
+}) {
   const { data: session } = useSession();
-  const [content, setContent] = useState("<ol><li>Dijeron los espartanos</li><li>Luego, todos murieron</li></ol><ul><li>Debe mejorar</li><li>alñskd</li></ul><p><br></p>");
+  const params = useParams<{ id?: string }>();
+  const appointmentId = params.id;
+  const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+  const ReactQuill = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
   async function handleClick() {
     if (title !== "" && stripTags(content) !== "") {
       let note: INote;
@@ -33,8 +50,9 @@ export default function EditNotePanel({ selectedNote, trigger }: { selectedNote?
           content: content,
           psychologist: session?.psychologist?._id!,
           patient: session?.appointmentPatientId!,
-          patientName: session?.appointmentPatientName!
-        }
+          patientName: session?.appointmentPatientName!,
+          appointment: appointmentId,
+        };
         setContent("");
         setTitle("");
       }
@@ -47,17 +65,24 @@ export default function EditNotePanel({ selectedNote, trigger }: { selectedNote?
       setTitle(selectedNote.title);
       setContent(selectedNote.content);
     }
-  }, [selectedNote])
+  }, [selectedNote]);
 
   return (
     <div className={styles["notes-panel"]}>
-      <TextField label="Título" value={title} onChange={e => setTitle(e.target.value)} />
-      <ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} />
-      <Button id="save-note-button" color="secondary" onClick={handleClick}>{
-        selectedNote ?
-          "Editar" :
-          "Guardar"
-      }</Button>
+      <TextField
+        label="Título"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <ReactQuill
+        theme="snow"
+        value={content}
+        onChange={setContent}
+        modules={modules}
+      />
+      <Button id="save-note-button" color="secondary" onClick={handleClick}>
+        {selectedNote ? "Editar" : "Guardar"}
+      </Button>
     </div>
   );
 }

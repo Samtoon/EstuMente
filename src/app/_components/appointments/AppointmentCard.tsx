@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
 import {
@@ -24,14 +24,20 @@ import GoogleImage from "../ui/GoogleImage";
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 
 interface Props {
-  appointment: IUpcomingAppointment | IPreviousAppointment,
-  psychologist?: IPsychologist,
-  fullName: string,
-  image: string,
-  role: string
+  appointment: IUpcomingAppointment | IPreviousAppointment;
+  psychologist?: IPsychologist;
+  fullName: string;
+  image: string;
+  role: string;
 }
 
-export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName, image, role }) => {
+export const AppointmentCard: FC<Props> = ({
+  appointment,
+  psychologist,
+  fullName,
+  image,
+  role,
+}) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const router = useRouter();
 
@@ -76,38 +82,27 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
             </Typography>
 
             <Typography variant="h6" color="text.secondary" component="div">
-              {`Fecha: ${format(
-                appointment.date,
-                "EEEE dd",
-                {
-                  locale: es,
-                }
-              )} de ${format(
-                appointment.date,
-                "MMMM yyyy",
-                {
-                  locale: es,
-                }
-              )}`}
+              {`Fecha: ${format(appointment.date, "EEEE dd", {
+                locale: es,
+              })} de ${format(appointment.date, "MMMM yyyy", {
+                locale: es,
+              })}`}
             </Typography>
             <Typography variant="h6" color="text.secondary" component="div">
-              {`Hora de inicio: ${format(
-                appointment.date,
-                "HH:mm a"
-              )}`}
+              {`Hora de inicio: ${format(appointment.date, "HH:mm a")}`}
             </Typography>
-            {/* <NextLink href={`/app/citas/${appointment._id}`} passHref> */}
-              <Link>
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                  component="div"
-                  gutterBottom
-                >
-                  Ver información de la cita
-                </Typography>
-              </Link>
-            {/* </NextLink> */}
+            <NextLink href={`/citas/historial/${appointment._id}`} passHref>
+              {/* <Link> */}
+              <Typography
+                variant="body1"
+                color="secondary"
+                component="div"
+                gutterBottom
+              >
+                Ver información de la cita
+              </Typography>
+              {/* </Link> */}
+            </NextLink>
             {/* {!appointment.isPaid ? (
               <Chip
                 label={`Pendiente de pago`}
@@ -142,12 +137,13 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
                 justifyContent="center"
                 alignItems="center"
               >
-                {/* appointment.isPaid */ true ? (
-                  // <NextLink
-                  //   href={`/app/citas/meet/${appointment._id}`}
-                  //   passHref
-                  //   prefetch={false}
-                  // >
+                {
+                  /* appointment.isPaid */ true ? (
+                    // <NextLink
+                    //   href={`/app/citas/meet/${appointment._id}`}
+                    //   passHref
+                    //   prefetch={false}
+                    // >
                     <Button
                       size="small"
                       color="secondary"
@@ -157,24 +153,29 @@ export const AppointmentCard: FC<Props> = ({ appointment, psychologist, fullName
                         // appointment.endTime <= Date.now() / 1000
                         !isAppointmentTime(appointment.date)
                       }
-                      onClick={() => router.push(`/citas/meet/${appointment._id}`)}
+                      onClick={() =>
+                        router.push(`/citas/meet/${appointment._id}`)
+                      }
                     >
-                      {/* appointment.endTime <= Date.now() / 1000 */ false
-                        ? "Videollamada finalizada"
-                        : "Ingresar a mi cita"}
+                      {
+                        /* appointment.endTime <= Date.now() / 1000 */ false
+                          ? "Videollamada finalizada"
+                          : "Ingresar a mi cita"
+                      }
                     </Button>
-                  // </NextLink>
-                ) : (
-                  <NextLink
-                    href={`/app/citas/${appointment._id}`}
-                    passHref
-                    prefetch={false}
-                  >
-                    <Button size="small" color="secondary" fullWidth>
-                      Pagar cita
-                    </Button>
-                  </NextLink>
-                )}
+                  ) : (
+                    // </NextLink>
+                    <NextLink
+                      href={`/app/citas/${appointment._id}`}
+                      passHref
+                      prefetch={false}
+                    >
+                      <Button size="small" color="secondary" fullWidth>
+                        Pagar cita
+                      </Button>
+                    </NextLink>
+                  )
+                }
 
                 {/* {!appointment.isPaid && (
                   <CancelModal appointmentId={appointment._id} />

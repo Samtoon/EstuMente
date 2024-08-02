@@ -6,75 +6,105 @@ import { FilterQuery } from "mongoose";
 console.log("Entro al DAO de Notas");
 
 export async function getNotesByPatient(psychologist: string, patient: string) {
-    await connect();
-    const notes = await Note.find({ psychologist: psychologist, patient: patient }).lean();
-    return notes;
+  await connect();
+  const notes = await Note.find({
+    psychologist: psychologist,
+    patient: patient,
+  }).lean();
+  return notes;
 }
 
 export async function createNote(note: INote) {
-    await connect();
-    const result = await Note.create(note);
-    return result ? true : false;
+  await connect();
+  const result = await Note.create(note);
+  return result ? true : false;
 }
 
-export async function getFilteredNotes(psychologist: string, patient?: string, patientName?: string, title?: string, date?: Date) {
-    await connect();
-    let dateExp: any = date;
-    if (date) {
-        const dayStart = new Date(date);
-        const dayEnd = new Date(date);
-        dayEnd.setDate(dayEnd.getDate() + 1);
-        dateExp = { $gte: dayStart, $lt: dayEnd }
-    }
-    console.log("El título es", title);
-    const prueba: FilterQuery<INote> = {
-        psychologist,
-        patient,
-        title: title ? { $regex: new RegExp(title, "i") } : title,
-        patientName: patientName ? { $regex: new RegExp(patientName, "i") } : patientName,
-        createdAt: dateExp
-    }
-    for (let key in prueba) {
-        if (!prueba[key]) {
-            delete prueba[key];
-        }
-    }
-    const sortBy = patientName ? "patientName" : date ? "date" : "title"; 
-    console.log("el query es:");
-    console.log(prueba);
-    const notes = await Note.find(prueba).sort(sortBy);
-    return notes;
-}
-
-export async function getNotesByTitle(psychologist: string, patient: string, title: string) {
-    await connect();
-    const notes = await Note.find({
-        psychologist: psychologist,
-        patient: patient,
-        title: { $regex: new RegExp(title, "i") }
-    }).lean();
-    console.log(`filtrando por ${title} encontré...`);
-    console.log(notes)
-    return notes;
-}
-
-export async function getNotesByDate(psychologist: string, patient: string, date: Date) {
-    await connect();
+export async function getFilteredNotes(
+  psychologist: string,
+  patient?: string,
+  patientName?: string,
+  title?: string,
+  date?: Date
+) {
+  await connect();
+  let dateExp: any = date;
+  if (date) {
     const dayStart = new Date(date);
     const dayEnd = new Date(date);
     dayEnd.setDate(dayEnd.getDate() + 1);
-    console.log(`comparando entre ${dayStart} y ${dayEnd}`)
-    const notes = await Note.find({
-        psychologist: psychologist,
-        patient: patient,
-        createdAt: { $gte: dayStart, $lt: dayEnd }
-    }).lean();
-    return notes;
+    dateExp = { $gte: dayStart, $lt: dayEnd };
+  }
+  console.log("El título es", title);
+  const prueba: FilterQuery<INote> = {
+    psychologist,
+    patient,
+    title: title ? { $regex: new RegExp(title, "i") } : title,
+    patientName: patientName
+      ? { $regex: new RegExp(patientName, "i") }
+      : patientName,
+    createdAt: dateExp,
+  };
+  for (let key in prueba) {
+    if (!prueba[key]) {
+      delete prueba[key];
+    }
+  }
+  const sortBy = patientName ? "patientName" : date ? "date" : "title";
+  console.log("el query es:");
+  console.log(prueba);
+  const notes = await Note.find(prueba).sort(sortBy);
+  return notes;
+}
+
+export async function getNotesByTitle(
+  psychologist: string,
+  patient: string,
+  title: string
+) {
+  await connect();
+  const notes = await Note.find({
+    psychologist: psychologist,
+    patient: patient,
+    title: { $regex: new RegExp(title, "i") },
+  }).lean();
+  console.log(`filtrando por ${title} encontré...`);
+  console.log(notes);
+  return notes;
+}
+
+export async function getNotesByDate(
+  psychologist: string,
+  patient: string,
+  date: Date
+) {
+  await connect();
+  const dayStart = new Date(date);
+  const dayEnd = new Date(date);
+  dayEnd.setDate(dayEnd.getDate() + 1);
+  console.log(`comparando entre ${dayStart} y ${dayEnd}`);
+  const notes = await Note.find({
+    psychologist: psychologist,
+    patient: patient,
+    createdAt: { $gte: dayStart, $lt: dayEnd },
+  }).lean();
+  return notes;
+}
+
+export async function getNotesByAppointment(appointment: string) {
+  await connect();
+  const notes = await Note.find({ appointment: appointment }).lean();
+  return notes;
 }
 
 export async function updateNote(note: Partial<INote>) {
-    await connect();
-    const result = await Note.updateOne({ _id: note._id }, note);
-    return Boolean(result.modifiedCount);
+  await connect();
+  const result = await Note.updateOne({ _id: note._id }, note);
+  return Boolean(result.modifiedCount);
 }
 
+export async function getNoteById(id: string) {
+  await connect();
+  const note = await Note.findById(id).lean();
+  return note;
+}

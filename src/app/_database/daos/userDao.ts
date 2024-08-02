@@ -5,14 +5,17 @@ import {
   addAgePipeline,
   filterUsersByRolePipeline,
 } from "../aggregation pipelines/user";
-import { Aggregate } from "mongoose";
+import mongoose, { Aggregate } from "mongoose";
 import PsychologistFilters from "@/app/_enums/reports/PsychologistFilters";
 import Roles from "@/app/_enums/Roles";
 import { IReportResult } from "@/app/_interfaces/IReportResult";
 
 export async function getUserById(id: string) {
   await connect();
-  const user: IUser[] = await User.aggregate(addAgePipeline).match({ _id: id });
+  console.log(id);
+  const user: IUser[] = await User.aggregate(addAgePipeline).match({
+    _id: new mongoose.Types.ObjectId(id),
+  });
   return user[0];
 }
 
