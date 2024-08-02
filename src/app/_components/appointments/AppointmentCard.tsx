@@ -62,7 +62,12 @@ export const AppointmentCard: FC<Props> = ({
             compAlt={fullName}
             compSrc={image}
             // onLoad={() => setIsImageLoaded(true)}
-            compStyle={{ width: 120, height: 120, m: 1, borderRadius: "50%" }}
+            compStyle={{
+              width: 120,
+              height: 120,
+              margin: 1,
+              borderRadius: "50%",
+            }}
             // slotProps={{img: {referrerPolicy:"no-referrer"}}}
           />
         </Box>

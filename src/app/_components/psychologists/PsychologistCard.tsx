@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { FC, useState } from "react";
 import NextLink from "next/link";
 // import { ListSpecialties } from "../../components/psychologists";
@@ -43,14 +43,19 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
             component={GoogleImage}
             compSrc={psychologist.profilePicture}
             compAlt={Roles.Practicante}
-            compStyle={{ width: 120, height: 120, mt: 3, borderRadius: "50%" }}
+            compStyle={{
+              width: 120,
+              height: 120,
+              marginTop: 3,
+              borderRadius: "50%",
+            }}
             //component="img"
             //image={psychologist.profilePicture}
             //alt="Practicante"
             // onLoad={() => setIsImageLoaded(true)}
             //sx={{ width: 120, height: 120, mt: 3, borderRadius: "50%" }}
           />
-           {/* {!isImageLoaded && (<div> Loading... </div>)} */}
+          {/* {!isImageLoaded && (<div> Loading... </div>)} */}
           {/* <Avatar
             alt="Psychologist"
             src={psychologist.url}
@@ -58,10 +63,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
           /> */}
         </Box>
         <CardContent>
-          <Box
-            sx={{ display: "block" }}
-            className="fadeIn"
-          >
+          <Box sx={{ display: "block" }} className="fadeIn">
             <Typography
               fontWeight={700}
               color="inherit"
@@ -95,22 +97,24 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
                 passHref
                 prefetch={false}
               > */}
-                <Link>
-                  <Button
-                    size="small"
-                    color="secondary"
-                    className="card-btn"
-                    sx={{ mb: 2 }}
-                    onClick={() => {router.push(`/citas/agendar/${psychologist.slug}`)}}
-                  >
-                    Pedir cita
-                  </Button>
-                </Link>
+              <Link>
+                <Button
+                  size="small"
+                  color="secondary"
+                  className="card-btn"
+                  sx={{ mb: 2 }}
+                  onClick={() => {
+                    router.push(`/citas/agendar/${psychologist.slug}`);
+                  }}
+                >
+                  Pedir cita
+                </Button>
+              </Link>
               {/* </NextLink> */}
               {/* <NextLink href={`/psicologos/${psychologist.slug}`} passHref> */}
-                <Link>
-                  <Button size="small">Ver mas información</Button>
-                </Link>
+              <Link>
+                <Button size="small">Ver mas información</Button>
+              </Link>
               {/* </NextLink> */}
             </Box>
           </Box>

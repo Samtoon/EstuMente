@@ -92,8 +92,14 @@ export default async function AppointmentPage({
                     duration: 10,
                   }}
                 />
-                <Divider sx={{ my: 1 }} />
-                <NotesCard notes={notes} />
+                <Divider sx={{ my: 3 }} />
+                {notes.length > 0 ? (
+                  <NotesCard notes={notes} />
+                ) : (
+                  <Typography variant="h2">
+                    No se tomaron notas durante esta sesión
+                  </Typography>
+                )}
                 {/* <Box sx={{ mt: 3 }} display="flex" flexDirection="column">
                   {appointment.isPaid && (
                     <NextLink

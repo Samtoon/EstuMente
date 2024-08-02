@@ -1,13 +1,20 @@
+import { CSSProperties } from "react";
+
 export default function GoogleImage({
-    compAlt,
-    compSrc,
-    compStyle
+  compAlt,
+  compSrc,
+  compStyle,
 }: {
-    compAlt?: string,
-    compSrc: string,
-    compStyle?: any
+  compAlt?: string;
+  compSrc: string;
+  compStyle?: CSSProperties;
 }) {
-    return (
-        <img referrerPolicy="no-referrer" alt={compAlt} src={compSrc} style={compStyle} />
-    )
+  return (
+    <img
+      referrerPolicy="no-referrer"
+      alt={compAlt}
+      src={compSrc}
+      style={compStyle}
+    />
+  );
 }

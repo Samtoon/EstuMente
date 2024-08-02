@@ -1,7 +1,7 @@
 import PatientFilters from "@/app/_enums/reports/PatientFilters";
 import PsychologistFilters from "@/app/_enums/reports/PsychologistFilters";
 import Roles from "@/app/_enums/Roles";
-import { PipelineStage } from "mongoose";
+import mongoose, { PipelineStage } from "mongoose";
 
 export const addAgePipeline: PipelineStage[] = [
   {
@@ -40,5 +40,35 @@ export function filterUsersByRolePipeline(
   if (filter === PsychologistFilters.Age) {
     pipeline.splice(1, 0, ...addAgePipeline);
   }
+  return pipeline;
+}
+
+export function getPatientsByPsychologistPipeline(psychologist: string) {
+  const pipeline: PipelineStage[] = [
+    {
+      $match: {
+        role: Roles.Consultante,
+      },
+    },
+    {
+      $lookup: {
+        from: "previousappointments",
+        localField: "_id",
+        foreignField: "patient",
+        as: "appointments",
+      },
+    },
+    {
+      $match: {
+        "appointments.psychologist": new mongoose.Types.ObjectId(psychologist),
+      },
+    },
+    {
+      $project: {
+        appointments: 0,
+      },
+    },
+    ...addAgePipeline,
+  ];
   return pipeline;
 }

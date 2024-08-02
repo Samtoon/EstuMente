@@ -18,7 +18,7 @@ export default function NotesCard({ notes }: { notes: INote[] }) {
   return (
     // <Card className="summary-card">
     //   <CardContent>
-    <Box mt={3}>
+    <Box>
       <Typography variant="h2">Notas de la sesión</Typography>
       <Divider />
       <List>

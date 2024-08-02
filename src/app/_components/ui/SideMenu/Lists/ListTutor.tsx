@@ -13,7 +13,7 @@ export default function ListTutor() {
       <MenuItem label="Perfil" path="/perfil">
         <AccountCircleOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Dar Aval" path="">
+      <MenuItem label="Dar Aval" path="/solicitudes">
         <ThumbUpOutlined color="secondary" />
       </MenuItem>
       <MenuItem label="Mis Practicantes" path="/psicologos">

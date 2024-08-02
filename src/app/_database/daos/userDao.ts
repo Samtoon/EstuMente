@@ -4,6 +4,7 @@ import User from "../models/User";
 import {
   addAgePipeline,
   filterUsersByRolePipeline,
+  getPatientsByPsychologistPipeline,
 } from "../aggregation pipelines/user";
 import mongoose, { Aggregate } from "mongoose";
 import PsychologistFilters from "@/app/_enums/reports/PsychologistFilters";
@@ -61,4 +62,13 @@ export async function filterUsersByRole(
     filterUsersByRolePipeline(filter, role)
   );
   return results;
+}
+
+export async function getPatientsByPsychologist(psychologist: string) {
+  console.log("el psicólogo es:", psychologist);
+  const users: IUser[] = await User.aggregate(
+    getPatientsByPsychologistPipeline(psychologist)
+  );
+  console.log(`Resultado: ${users}`);
+  return users;
 }

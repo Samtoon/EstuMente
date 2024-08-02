@@ -1,15 +1,22 @@
-'use client'
-import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
+"use client";
+import {
+  AppBar,
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { UiContext } from "@/app/_contexts/ui/UiContext";
 import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { NotificationsNoneOutlined } from "@mui/icons-material";
 import NotificationsButton from "./notifications/NotificationsButton";
 import Roles from "@/app/_enums/Roles";
 import { SideMenu } from "../ui/SideMenu/SideMenu";
-
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
@@ -27,19 +34,16 @@ const Navbar = () => {
         );
       case Roles.Practicante:
         return (
-          <NextLink href="/psicologo/pacientes" passHref>
+          <NextLink href="/consultantes" passHref>
             <Button variant="text">Mis pacientes</Button>
           </NextLink>
         );
       default:
-        return (
-          <Button variant="text">Caso default en middleButton</Button>
-        )
+        return <Button variant="text">Caso default en middleButton</Button>;
     }
   }
 
   return (
-
     <>
       <AppBar>
         <Toolbar>
@@ -59,12 +63,15 @@ const Navbar = () => {
           {middleButton()}
           <Box flex={1} />
           {session ? (
-
             <NotificationsButton />
-
           ) : (
             <Box sx={{ display: { xs: "none", sm: "block" }, m: 1 }}>
-              <Button variant="contained" color="secondary" className="hero-btn" onClick={() => signIn("google")}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className="hero-btn"
+                onClick={() => signIn("google")}
+              >
                 Iniciar sesión
               </Button>
             </Box>
@@ -75,10 +82,9 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <SideMenu/>
+      <SideMenu />
     </>
-
-  )
-}
+  );
+};
 
 export default Navbar;
