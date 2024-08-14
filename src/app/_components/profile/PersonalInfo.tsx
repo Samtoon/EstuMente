@@ -26,9 +26,14 @@ import ProfileFieldContext from "@/app/_contexts/ProfileFieldContext";
 interface Props {
   user: IUser;
   pendingRequest: boolean;
+  setPendingRequest: (value: boolean) => void;
 }
 
-export const PersonalInfo: FC<Props> = ({ user, pendingRequest }) => {
+export const PersonalInfo: FC<Props> = ({
+  user,
+  pendingRequest,
+  setPendingRequest,
+}) => {
   const router = useRouter();
   const { data: session, status, update } = useSession();
   const [loading, setLoading] = useState(false);
@@ -41,7 +46,7 @@ export const PersonalInfo: FC<Props> = ({ user, pendingRequest }) => {
   return (
     // <form /* onSubmit={handleSubmit(onUpdateUser)} */ noValidate>
     <ProfileFieldContext.Provider
-      value={{ updating, pendingRequest, setModalOpen }}
+      value={{ updating, pendingRequest, setPendingRequest, setModalOpen }}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

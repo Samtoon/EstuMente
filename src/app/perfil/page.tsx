@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { Box, Container, Grid } from "@mui/material";
@@ -16,14 +16,15 @@ import { useEffect, useState } from "react";
 // } from "../../../components/profile";
 
 const ProfilePage = () => {
-  const {data:session, status} = useSession();
+  const { data: session, status } = useSession();
   const [pendingRequests, setPendingRequests] = useState(true);
   useEffect(() => {
     if (session) {
-      hasPendingRequests(session.user._id!)
-      .then((value) => setPendingRequests(value));
+      hasPendingRequests(session.user._id!).then((value) =>
+        setPendingRequests(value)
+      );
     }
-  },[session, setPendingRequests]);
+  }, [session, setPendingRequests]);
   return (
     <PatientLayout
       title="Mi perfil"
@@ -34,7 +35,11 @@ const ProfilePage = () => {
           <UploadProfilePicture url={session?.user.profilePicture!} />
           <Grid container spacing={2}>
             <Grid item>
-              <PersonalInfo user={session?.user!} pendingRequest={pendingRequests} />
+              <PersonalInfo
+                user={session?.user!}
+                pendingRequest={pendingRequests}
+                setPendingRequest={setPendingRequests}
+              />
             </Grid>
           </Grid>
         </Container>

@@ -26,14 +26,14 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: Object.values(Roles)
+      enum: Object.values(Roles),
     },
     phone: {
-      type: String
+      type: String,
     },
     profilePicture: String,
     accept: {
-      type: Boolean
+      type: Boolean,
     },
     state: {
       type: String,
@@ -50,7 +50,8 @@ const userSchema = new Schema<IUser>(
     },
     career: String,
     dateOfBirth: Date,
-    semester: Number
+    semester: Number,
+    responsibleUser: Schema.Types.ObjectId,
   },
   { timestamps: true }
 );

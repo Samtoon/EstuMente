@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { rateAppointment } from "@/app/_utils/server actions/appointment";
 
 interface Props {
   appointmentId: string;
@@ -35,28 +36,24 @@ export const Calification: FC<Props> = ({ appointmentId }) => {
   };
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
-    // setIsPosting(true);
+    event.preventDefault();
+    setIsPosting(true);
 
-    // if (calification === 0 || calification === null) {
-    //   setIsPosting(false);
-    //   setCalification(0);
-    //   return;
-    // }
+    if (calification === 0 || calification === null) {
+      setIsPosting(false);
+      setCalification(0);
+      return;
+    }
 
-    // try {
-    //   await psiApi.put("/appointments/calification", {
-    //     id: appointmentId,
-    //     calification,
-    //     calificationComment,
-    //   });
-    //   router.replace(`/app/citas`);
-    // } catch (error) {
-    //   setIsPosting(false);
-    //   toast.error("No fue posible calificar la cita, vuelve a intentarlo", {
-    //     position: toast.POSITION.BOTTOM_CENTER,
-    //   });
-    // }
+    try {
+      await rateAppointment(appointmentId, calification, calificationComment);
+      router.replace(`/citas`);
+    } catch (error) {
+      setIsPosting(false);
+      toast.error("No fue posible calificar la cita, vuelve a intentarlo", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
   };
 
   return (

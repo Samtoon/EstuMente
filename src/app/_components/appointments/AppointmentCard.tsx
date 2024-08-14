@@ -12,6 +12,11 @@ import {
   Grid,
   Stack,
   Typography,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
 } from "@mui/material";
 import "date-fns";
 import { format } from "date-fns";
@@ -22,13 +27,20 @@ import { isAppointmentTime } from "@/app/_utils/schedule";
 import { useRouter } from "next/navigation";
 import GoogleImage from "../ui/GoogleImage";
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
+import { cancelAppointment } from "@/app/_utils/server actions/appointment";
+import { sendNotification } from "@/app/_utils/server actions/notification";
+import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
+import Roles from "@/app/_enums/Roles";
+import { useSession } from "next-auth/react";
+import IUser from "@/app/_interfaces/IUser";
 
 interface Props {
   appointment: IUpcomingAppointment | IPreviousAppointment;
   psychologist?: IPsychologist;
   fullName: string;
   image: string;
-  role: string;
+  role: Roles;
+  psychologistUserId?: string;
 }
 
 export const AppointmentCard: FC<Props> = ({
@@ -37,9 +49,12 @@ export const AppointmentCard: FC<Props> = ({
   fullName,
   image,
   role,
+  psychologistUserId,
 }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const { data: session } = useSession();
 
   return (
     <Grid item xs={12}>
@@ -96,18 +111,20 @@ export const AppointmentCard: FC<Props> = ({
             <Typography variant="h6" color="text.secondary" component="div">
               {`Hora de inicio: ${format(appointment.date, "HH:mm a")}`}
             </Typography>
-            <NextLink href={`/citas/historial/${appointment._id}`} passHref>
-              {/* <Link> */}
-              <Typography
-                variant="body1"
-                color="secondary"
-                component="div"
-                gutterBottom
-              >
-                Ver información de la cita
-              </Typography>
-              {/* </Link> */}
-            </NextLink>
+            {!(appointment as IUpcomingAppointment).roomURL && (
+              <NextLink href={`/citas/historial/${appointment._id}`} passHref>
+                {/* <Link> */}
+                <Typography
+                  variant="body1"
+                  color="secondary"
+                  component="div"
+                  gutterBottom
+                >
+                  Ver información de la cita
+                </Typography>
+                {/* </Link> */}
+              </NextLink>
+            )}
             {/* {!appointment.isPaid ? (
               <Chip
                 label={`Pendiente de pago`}
@@ -142,45 +159,77 @@ export const AppointmentCard: FC<Props> = ({
                 justifyContent="center"
                 alignItems="center"
               >
-                {
-                  /* appointment.isPaid */ true ? (
-                    // <NextLink
-                    //   href={`/app/citas/meet/${appointment._id}`}
-                    //   passHref
-                    //   prefetch={false}
-                    // >
+                {(appointment as IUpcomingAppointment).roomURL && (
+                  <>
                     <Button
                       size="small"
                       color="secondary"
                       fullWidth
-                      disabled={
-                        // appointment.startTime >= Date.now() / 1000 ||
-                        // appointment.endTime <= Date.now() / 1000
-                        !isAppointmentTime(appointment.date)
-                      }
+                      disabled={!isAppointmentTime(appointment.date)}
                       onClick={() =>
                         router.push(`/citas/meet/${appointment._id}`)
                       }
                     >
-                      {
-                        /* appointment.endTime <= Date.now() / 1000 */ false
-                          ? "Videollamada finalizada"
-                          : "Ingresar a mi cita"
-                      }
+                      Ingresar a mi cita
                     </Button>
-                  ) : (
-                    // </NextLink>
-                    <NextLink
-                      href={`/app/citas/${appointment._id}`}
-                      passHref
-                      prefetch={false}
+                    <Button
+                      size="small"
+                      color="error"
+                      fullWidth
+                      disabled={isAppointmentTime(appointment.date)}
+                      onClick={() => setOpen(true)}
                     >
-                      <Button size="small" color="secondary" fullWidth>
-                        Pagar cita
-                      </Button>
-                    </NextLink>
-                  )
-                }
+                      Cancelar cita
+                    </Button>
+                    <Dialog open={open} onClose={() => setOpen(false)}>
+                      <DialogContent>
+                        <DialogContentText>
+                          ¿Estás seguro de cancelar esta cita? Si lo deseas,
+                          puedes escribir el motivo:
+                        </DialogContentText>
+                      </DialogContent>
+                      <TextField
+                        value={cancelReason}
+                        onChange={(e) => setCancelReason(e.target.value)}
+                      />
+                      <DialogActions>
+                        <Button onClick={() => setOpen(false)}>
+                          No, volver
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            cancelAppointment(
+                              appointment as IUpcomingAppointment,
+                              cancelReason
+                            ).then((success) => {
+                              if (success)
+                                sendNotification(
+                                  {
+                                    type: ReceiverTypes.User,
+                                    id: psychologistUserId!,
+                                  },
+                                  `El usuario ${session?.user.fullName} ha cancelado la cita que tenían para el día ` +
+                                    format(
+                                      new Date(appointment.date),
+                                      "dd 'de' MMMM 'a las' hh:mm aa"
+                                    ) +
+                                    (cancelReason.length > 0
+                                      ? `, con esta justificación: ${cancelReason}`
+                                      : ""),
+                                  true,
+                                  session?.user.profilePicture
+                                );
+                            });
+                            setOpen(false);
+                          }}
+                          color="error"
+                        >
+                          Sí, estoy seguro
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                )}
 
                 {/* {!appointment.isPaid && (
                   <CancelModal appointmentId={appointment._id} />

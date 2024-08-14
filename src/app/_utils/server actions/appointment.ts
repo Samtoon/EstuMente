@@ -1,11 +1,16 @@
 "use server";
-import { createPreviousAppointment } from "@/app/_database/daos/previousAppointmentDao";
-import { createRoom } from "@/app/_database/daos/roomDao";
+import {
+  createPreviousAppointment,
+  updatePreviousAppointment,
+} from "@/app/_database/daos/previousAppointmentDao";
+import { createRoom, deleteRoom } from "@/app/_database/daos/roomDao";
 import {
   createUpcomingAppointment,
   deleteUpcomingAppointmentById,
   getOverdueUpcomingAppointments,
+  updateUpcomingAppointment,
 } from "@/app/_database/daos/upcomingAppointmentDao";
+import { PreviousAppointmentStates } from "@/app/_enums/PreviousAppointmentStates";
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import { IUpcomingAppointment } from "@/app/_interfaces/IUpcomingAppointment";
 
@@ -41,6 +46,8 @@ export async function moveAppointment(
     date: upcomingAppointment.date,
     patient: upcomingAppointment.patient,
     psychologist: upcomingAppointment.psychologist,
+    calification: upcomingAppointment.calification,
+    calificationComment: upcomingAppointment.calificationComment,
   };
   const result1 = await createPreviousAppointment(previousAppointment);
   console.log(`Cita ${upcomingAppointment._id} movida: ${result1}`);
@@ -56,4 +63,41 @@ export async function compareDates() {
     appointments.map(async (appointment) => await moveAppointment(appointment))
   );
   return appointments.length;
+}
+
+export async function cancelAppointment(
+  upcomingAppointment: IUpcomingAppointment,
+  cancelReason?: string
+) {
+  const previousAppointment: IPreviousAppointment = {
+    _id: upcomingAppointment._id,
+    date: upcomingAppointment.date,
+    patient: upcomingAppointment.patient,
+    psychologist: upcomingAppointment.psychologist,
+    cancelReason,
+    state: PreviousAppointmentStates.Cancelled,
+  };
+  const result = await deleteUpcomingAppointmentById(upcomingAppointment._id!)
+    .then(() => deleteRoom(upcomingAppointment.roomName))
+    .then(() => createPreviousAppointment(previousAppointment));
+  return result;
+}
+
+export async function rateAppointment(
+  appointmentId: string,
+  calification: number,
+  calificationComment?: string
+) {
+  let result = await updateUpcomingAppointment({
+    _id: appointmentId,
+    calification,
+    calificationComment,
+  });
+  return result
+    ? result
+    : updatePreviousAppointment({
+        _id: appointmentId,
+        calification,
+        calificationComment,
+      });
 }

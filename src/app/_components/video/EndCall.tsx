@@ -1,17 +1,15 @@
 import React, { FC } from "react";
 import NextLink from "next/link";
-import { Typography, Box, Link, Button } from "@mui/material";
+import { Typography, Box, Link, Button, Stack } from "@mui/material";
 import { VideocamOffOutlined } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  message: string;
-  url?: string;
-  buttonTitle: string;
-  trigger?: () => void;
+  joinTrigger: () => void;
+  leaveTrigger: () => void;
 }
 
-export const EndCall: FC<Props> = ({ message, url, buttonTitle, trigger }) => {
+export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
   const router = useRouter();
   return (
     <Box>
@@ -25,34 +23,34 @@ export const EndCall: FC<Props> = ({ message, url, buttonTitle, trigger }) => {
         className="fadeIn"
       >
         <VideocamOffOutlined sx={{ fontSize: 100 }} />
-        <Box display="flex" flexDirection="column" alignItems="center">
+        <Stack spacing={2}>
           <Typography align="center" gutterBottom>
-            {message}
+            Has salido de la cita antes de finalizar el tiempo
           </Typography>
-          {url && (
-            <NextLink href={url}>
-              {/* <Link> */}
-                <Button color="secondary" className="card-btn">
-                  {buttonTitle}
-                </Button>
-              {/* </Link> */}
-            </NextLink>
-          )}
 
-          {!url && (
-            <Button
-              color="secondary"
-              className="card-btn"
-              onClick={() => {
-                console.log("Click!");
-                trigger!();
-                // router.refresh();
-              }}
-            >
-              {buttonTitle}
-            </Button>
-          )}
-        </Box>
+          <Button
+            color="secondary"
+            className="card-btn"
+            onClick={() => {
+              console.log("Click!");
+              joinTrigger!();
+              // router.refresh();
+            }}
+          >
+            Volver a ingresar
+          </Button>
+          <Button
+            color="secondary"
+            className="card-btn"
+            onClick={() => {
+              console.log("Click!");
+              leaveTrigger();
+              // router.refresh();
+            }}
+          >
+            Calificar la cita y salir
+          </Button>
+        </Stack>
       </Box>
     </Box>
   );

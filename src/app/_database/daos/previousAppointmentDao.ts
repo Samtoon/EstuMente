@@ -7,6 +7,7 @@ import {
 } from "../aggregation pipelines/previousAppointment";
 import PatientFilters from "@/app/_enums/reports/PatientFilters";
 import { IReportResult } from "@/app/_interfaces/IReportResult";
+import mongoose from "mongoose";
 
 export async function getPreviousAppointmentsByPsychologist(
   psychologist: string
@@ -38,6 +39,18 @@ export async function createPreviousAppointment(
   await connect();
   const result = await PreviousAppointment.create(appointment);
   return result ? true : false;
+}
+
+export async function updatePreviousAppointment(
+  appointment: Partial<IPreviousAppointment>
+) {
+  await connect();
+  const result = await PreviousAppointment.updateOne(
+    { _id: new mongoose.Types.ObjectId(appointment._id) },
+    appointment
+  );
+  console.log("Se actualizaron", result.modifiedCount, "citas");
+  return Boolean(result.modifiedCount);
 }
 
 export async function filterYearlyActivePatients(

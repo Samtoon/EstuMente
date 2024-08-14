@@ -11,6 +11,12 @@ import PsychologistFilters from "@/app/_enums/reports/PsychologistFilters";
 import Roles from "@/app/_enums/Roles";
 import { IReportResult } from "@/app/_interfaces/IReportResult";
 
+export async function getUsers() {
+  await connect();
+  const users = await User.find().lean();
+  return users;
+}
+
 export async function getUserById(id: string) {
   await connect();
   console.log(id);
@@ -28,14 +34,26 @@ export async function getUserByEmail(email: string) {
   return user[0];
 }
 
+export async function getAssignedUsersById(id: string) {
+  await connect();
+  const users = await User.find({
+    responsibleUser: new mongoose.Types.ObjectId(id),
+  }).lean();
+  return users;
+}
+
 export async function updateUserByEmail(email: string, user: Partial<IUser>) {
   await connect();
   const result = await User.updateOne({ email: email }, user);
   return Boolean(result.modifiedCount);
 }
 
-export async function updateUserById(id: string, user: Partial<IUser>) {
+export async function updateUserById(
+  id: string,
+  user: mongoose.UpdateQuery<IUser>
+) {
   await connect();
+  console.log(user);
   const result = await User.updateOne({ _id: id }, user);
   return Boolean(result.modifiedCount);
 }

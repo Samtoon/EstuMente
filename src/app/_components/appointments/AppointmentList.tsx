@@ -53,6 +53,7 @@ export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
             role={
               role === Roles.Practicante ? Roles.Consultante : Roles.Practicante
             }
+            psychologistUserId={psychologist?.user.toString()}
           />
         );
       })}

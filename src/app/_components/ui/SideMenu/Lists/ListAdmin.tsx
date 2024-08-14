@@ -31,7 +31,7 @@ export default function ListAdmin() {
       <MenuItem label="Reportes" path="/reportes">
         <FeedOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Administrar Base de Datos" path="">
+      <MenuItem label="Administrar Base de Datos" path="/base_de_datos">
         <StorageOutlined color="secondary" />
       </MenuItem>
       <MenuItem label="Crear Especialidades" path="">
