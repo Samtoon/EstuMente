@@ -21,5 +21,5 @@ export default interface IUser {
   career?: string;
   semester?: number;
   age?: number;
-  responsibleUser?: Types.ObjectId;
+  responsibleUser?: string;
 }

@@ -29,7 +29,7 @@ function Notas() {
   function searchNote(note: INote) {
     const params = new URLSearchParams(searchParams);
     if (note) {
-      params.set("id", note._id!);
+      params.set("id", note._id as string);
     } else {
       params.delete("id");
     }

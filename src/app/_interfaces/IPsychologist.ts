@@ -4,7 +4,7 @@ export interface IPsychologist {
   _id?: string;
   fullName: string;
   gender: string;
-  user: IUser | string;
+  user: string;
   profilePicture: string;
   slug: string;
   bio?: string;

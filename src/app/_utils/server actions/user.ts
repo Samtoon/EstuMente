@@ -1,6 +1,5 @@
 "use server";
 
-import { serialize } from "@/app/_database/connection";
 import {
   getAssignedUsersById,
   getUserById,
@@ -11,12 +10,12 @@ import { UpdateQuery } from "mongoose";
 
 export async function fetchUserById(id: string) {
   const user = await getUserById(id);
-  return serialize(user) as IUser;
+  return user;
 }
 
 export async function fetchAssignedUsersById(id: string) {
   const users = await getAssignedUsersById(id);
-  return serialize(users) as IUser[];
+  return users;
 }
 
 export async function saveUserById(id: string, user: UpdateQuery<IUser>) {

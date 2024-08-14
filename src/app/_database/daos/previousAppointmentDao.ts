@@ -1,6 +1,6 @@
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import PreviousAppointment from "../models/PreviousAppointment";
-import { connect } from "../connection";
+import { connect, serialize } from "../connection";
 import {
   filterAppointmentsByPsychologistPipeline,
   filterYearlyActivePatientsPipeline,
@@ -16,7 +16,7 @@ export async function getPreviousAppointmentsByPsychologist(
   const appointments = await PreviousAppointment.find({
     psychologist: psychologist,
   }).lean();
-  return appointments;
+  return serialize(appointments) as IPreviousAppointment[];
 }
 
 export async function getPreviousAppointmentsByPatient(patient: string) {
@@ -24,13 +24,13 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
   const appointments = await PreviousAppointment.find({
     patient: patient,
   }).lean();
-  return appointments;
+  return serialize(appointments) as IPreviousAppointment[];
 }
 
 export async function getPreviousAppointmentById(id: string) {
   await connect();
   const appointment = await PreviousAppointment.findById(id).lean();
-  return appointment;
+  return serialize(appointment) as IPreviousAppointment;
 }
 
 export async function createPreviousAppointment(

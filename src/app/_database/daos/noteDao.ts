@@ -1,17 +1,17 @@
 import { INote } from "@/app/_interfaces/INote";
 import Note from "../models/Note";
-import { connect } from "../connection";
-import { FilterQuery } from "mongoose";
+import { connect, serialize } from "../connection";
+import { FilterQuery, Types } from "mongoose";
 
 console.log("Entro al DAO de Notas");
 
 export async function getNotesByPatient(psychologist: string, patient: string) {
   await connect();
   const notes = await Note.find({
-    psychologist: psychologist,
-    patient: patient,
+    psychologist: new Types.ObjectId(psychologist),
+    patient: new Types.ObjectId(patient),
   }).lean();
-  return notes;
+  return serialize(notes) as INote[];
 }
 
 export async function createNote(note: INote) {
@@ -54,7 +54,7 @@ export async function getFilteredNotes(
   console.log("el query es:");
   console.log(prueba);
   const notes = await Note.find(prueba).sort(sortBy);
-  return notes;
+  return serialize(notes) as INote[];
 }
 
 export async function getNotesByTitle(
@@ -70,7 +70,7 @@ export async function getNotesByTitle(
   }).lean();
   console.log(`filtrando por ${title} encontré...`);
   console.log(notes);
-  return notes;
+  return serialize(notes) as INote[];
 }
 
 export async function getNotesByDate(
@@ -88,13 +88,13 @@ export async function getNotesByDate(
     patient: patient,
     createdAt: { $gte: dayStart, $lt: dayEnd },
   }).lean();
-  return notes;
+  return serialize(notes) as INote[];
 }
 
 export async function getNotesByAppointment(appointment: string) {
   await connect();
   const notes = await Note.find({ appointment: appointment }).lean();
-  return notes;
+  return serialize(notes) as INote[];
 }
 
 export async function updateNote(note: Partial<INote>) {
@@ -106,5 +106,5 @@ export async function updateNote(note: Partial<INote>) {
 export async function getNoteById(id: string) {
   await connect();
   const note = await Note.findById(id).lean();
-  return note;
+  return serialize(note) as INote;
 }

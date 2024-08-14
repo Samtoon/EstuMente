@@ -1,8 +1,3 @@
-import { useState } from "react";
-import { GetServerSideProps, NextPage } from "next";
-import NextLink from "next/link";
-import { getSession } from "next-auth/react";
-
 import {
   Box,
   Card,
@@ -11,19 +6,13 @@ import {
   Grid,
   Typography,
   Chip,
-  Button,
-  List,
 } from "@mui/material";
-import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
-import { serialize } from "@/app/_database/connection";
 import { getPreviousAppointmentById } from "@/app/_database/daos/previousAppointmentDao";
 import { CardPatientAppointment } from "@/app/_components/appointments/CardPatientAppointment";
 import { getUserById } from "@/app/_database/daos/userDao";
-import IUser from "@/app/_interfaces/IUser";
 import { SessionSummary } from "@/app/_components/appointments/SessionSummary";
 import { getNotesByAppointment } from "@/app/_database/daos/noteDao";
-import { INote } from "@/app/_interfaces/INote";
 import NotesCard from "@/app/_components/appointments/NotesCard";
 
 // import { PsychologistLayout } from "../../../components/layout";
@@ -53,13 +42,10 @@ export default async function AppointmentPage({
 }: {
   params: { id: string };
 }) {
-  const appointment = serialize(
-    await getPreviousAppointmentById(params.id)
-  ) as IPreviousAppointment;
-  const patient = serialize(await getUserById(appointment.patient)) as IUser;
-  const notes = serialize(
-    await getNotesByAppointment(appointment._id!)
-  ) as INote[];
+  const appointment = await getPreviousAppointmentById(params.id);
+
+  const patient = await getUserById(appointment.patient);
+  const notes = await getNotesByAppointment(appointment._id!);
   return (
     <PsychologistLayout
       title="Resumen de la sesión"

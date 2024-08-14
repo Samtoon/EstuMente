@@ -1,5 +1,5 @@
 import IUser from "@/app/_interfaces/IUser";
-import { connect } from "../connection";
+import { connect, serialize } from "../connection";
 import User from "../models/User";
 import {
   addAgePipeline,
@@ -14,7 +14,7 @@ import { IReportResult } from "@/app/_interfaces/IReportResult";
 export async function getUsers() {
   await connect();
   const users = await User.find().lean();
-  return users;
+  return serialize(users) as IUser[];
 }
 
 export async function getUserById(id: string) {
@@ -39,7 +39,7 @@ export async function getAssignedUsersById(id: string) {
   const users = await User.find({
     responsibleUser: new mongoose.Types.ObjectId(id),
   }).lean();
-  return users;
+  return serialize(users) as IUser[];
 }
 
 export async function updateUserByEmail(email: string, user: Partial<IUser>) {

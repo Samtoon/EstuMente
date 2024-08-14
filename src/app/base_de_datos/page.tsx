@@ -1,10 +1,7 @@
 import PageHeader from "../_components/PageHeader";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import IUser from "../_interfaces/IUser";
-import { esES } from "@mui/x-data-grid/locales/esES";
+import { GridColDef } from "@mui/x-data-grid";
 import { getUsers } from "../_database/daos/userDao";
 import UsersDataGrid from "../_components/dbManagement/UsersDataGrid";
-import { serialize } from "../_database/connection";
 
 const defaultRow = {
   Apellidos: "",
@@ -33,7 +30,7 @@ export default async function Page() {
   return (
     <>
       <PageHeader header="Gestión de la Base de Datos" />
-      <UsersDataGrid users={serialize(users) as IUser[]} />
+      <UsersDataGrid users={users} />
     </>
   );
 }

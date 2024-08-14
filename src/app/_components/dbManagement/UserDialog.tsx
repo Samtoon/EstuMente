@@ -44,16 +44,14 @@ export default function UserDialog({
   const responsibleUserCounts: Record<string, number> = {};
   const indexedUsers = users.map((user, index) => {
     if (user.responsibleUser) {
-      const key = user.responsibleUser.toString();
+      const key = user.responsibleUser;
       if (!responsibleUserCounts[key]) responsibleUserCounts[key] = 0;
       responsibleUserCounts[key] += 1;
     }
     return { ...user, index };
   });
   const assignedUsers = indexedUsers
-    .filter(
-      (user) => user.responsibleUser?.toString() === dbUser?._id?.toString()
-    )
+    .filter((user) => user.responsibleUser === dbUser?._id)
     .map((user) => ({
       id: user._id,
       label: user.fullName,
@@ -61,7 +59,7 @@ export default function UserDialog({
     }));
   let newAssignedUsers: typeof assignedUsers;
   const baseResponsibleUser = indexedUsers.find(
-    (user) => user._id === dbUser?.responsibleUser?.toString()
+    (user) => user._id === dbUser?.responsibleUser
   );
   const responsibleUser = baseResponsibleUser && {
     id: baseResponsibleUser?._id,
@@ -99,7 +97,7 @@ export default function UserDialog({
         .then(() =>
           Promise.all(
             newAssignedUsers.map((user) => {
-              const newId = new mongoose.Types.ObjectId(dbUser?._id);
+              const newId = dbUser?._id;
               users[user.index].responsibleUser = newId;
               return saveUserById(user.id!, { responsibleUser: newId });
             })
@@ -115,9 +113,7 @@ export default function UserDialog({
   }
   function editResponsibleUser() {
     if (editingResponsibleUser && dbUser) {
-      const newId =
-        newResponsibleUser &&
-        new mongoose.Types.ObjectId(newResponsibleUser.id);
+      const newId = newResponsibleUser?.id;
       if (index !== undefined) users[index].responsibleUser = newId;
       saveUserById(
         dbUser._id!,
@@ -135,15 +131,15 @@ export default function UserDialog({
           case Roles.Practicante:
             return (
               user.role === Roles.Tutor &&
-              (!responsibleUserCounts[user._id?.toString()!] ||
-                responsibleUserCounts[user._id?.toString()!] <= 5)
+              (!responsibleUserCounts[user._id!] ||
+                responsibleUserCounts[user._id!] <= 5)
             );
 
           case Roles.Tutor:
             return (
               user.role === Roles.Coordinador &&
-              (!responsibleUserCounts[user._id?.toString()!] ||
-                responsibleUserCounts[user._id?.toString()!] <= 5)
+              (!responsibleUserCounts[user._id!] ||
+                responsibleUserCounts[user._id!] <= 5)
             );
           default:
             return false;

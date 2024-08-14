@@ -18,7 +18,7 @@ export async function getUpcomingAppointmentsByPsychologist(
   console.log(
     "Encontrados " + appointments + " appointments. Saliendo del DAO..."
   );
-  return appointments;
+  return serialize(appointments) as IUpcomingAppointment[];
 }
 
 export async function getUpcomingAppointmentsByPatient(patient: string) {
@@ -32,13 +32,13 @@ export async function getUpcomingAppointmentsByPatient(patient: string) {
   console.log(
     "Encontrados " + appointments + " appointments. Saliendo del DAO..."
   );
-  return appointments;
+  return serialize(appointments) as IUpcomingAppointment[];
 }
 
 export async function getUpcomingAppointmentById(id: string) {
   await connect();
   const appointment = await UpcomingAppointment.findById(id).lean();
-  return appointment;
+  return serialize(appointment) as IUpcomingAppointment;
 }
 
 export async function createUpcomingAppointment(
@@ -48,11 +48,12 @@ export async function createUpcomingAppointment(
   const result = await UpcomingAppointment.create(upcomingAppointment);
   console.log("La cita insertada es");
   console.log(result);
-  return serialize(
-    await getUpcomingAppointmentsByPsychologist(
-      upcomingAppointment.psychologist
-    )
-  );
+  // return serialize(
+  //   await getUpcomingAppointmentsByPsychologist(
+  //     upcomingAppointment.psychologist
+  //   )
+  // );
+  return serialize(result) as IUpcomingAppointment;
 }
 
 export async function updateUpcomingAppointment(
@@ -82,5 +83,5 @@ export async function getOverdueUpcomingAppointments() {
     date: { $lt: date },
   }).lean();
   console.log("Hay " + appointments.length + " citas atrasadas");
-  return appointments;
+  return serialize(appointments) as IUpcomingAppointment[];
 }

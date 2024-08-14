@@ -6,13 +6,11 @@ import { AppointmentList } from "@/app/_components/appointments/AppointmentList"
 import { EmptyAppointment } from "@/app/_components/appointments/EmptyAppointment";
 // import { getAppointmentsByPatient } from "@/database/dbAppointments";
 import Box from "@mui/material/Box/Box";
-import Typography from "@mui/material/Typography/Typography";
 import {
   getUpcomingAppointmentsByPsychologist,
   getUpcomingAppointmentsByPatient,
 } from "@/app/_database/daos/upcomingAppointmentDao";
 import { getMyServerSession } from "@/app/_utils/next-auth";
-import { serialize } from "@/app/_database/connection";
 import Roles from "../_enums/Roles";
 import PageHeader from "../_components/PageHeader";
 
@@ -34,10 +32,7 @@ const AppointmentPage = async () => {
         {appointments.length === 0 ? (
           <EmptyAppointment message={"No tienes citas activas"} />
         ) : (
-          <AppointmentList
-            appointments={serialize(appointments)}
-            history={false}
-          />
+          <AppointmentList appointments={appointments} history={false} />
         )}
       </Box>
     </PatientLayout>

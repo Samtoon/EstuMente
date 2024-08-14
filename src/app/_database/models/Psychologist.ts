@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, Model } from "mongoose";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 
-const psychologistSchema = new Schema<IPsychologist>(
+const psychologistSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     fullName: {
@@ -27,8 +27,8 @@ const psychologistSchema = new Schema<IPsychologist>(
     },
     profilePicture: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   { timestamps: true }
 );

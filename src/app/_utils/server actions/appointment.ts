@@ -8,6 +8,8 @@ import {
   createUpcomingAppointment,
   deleteUpcomingAppointmentById,
   getOverdueUpcomingAppointments,
+  getUpcomingAppointmentById,
+  getUpcomingAppointmentsByPsychologist,
   updateUpcomingAppointment,
 } from "@/app/_database/daos/upcomingAppointmentDao";
 import { PreviousAppointmentStates } from "@/app/_enums/PreviousAppointmentStates";
@@ -35,7 +37,8 @@ export async function scheduleAppointment(
     roomName: room?.name!,
     roomURL: room?.url!,
   };
-  return await createUpcomingAppointment(appointment);
+  const newAppointment = await createUpcomingAppointment(appointment);
+  return newAppointment;
 }
 
 export async function moveAppointment(

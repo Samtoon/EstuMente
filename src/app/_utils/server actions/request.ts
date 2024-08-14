@@ -13,17 +13,13 @@ import IUser from "@/app/_interfaces/IUser";
 import { deleteFile, uploadFile } from "../google-drive";
 import Roles from "@/app/_enums/Roles";
 import { RequestStates } from "@/app/_enums/RequestStates";
-import {
-  updateUserByEmail,
-  updateUserById,
-} from "@/app/_database/daos/userDao";
+import { updateUserById } from "@/app/_database/daos/userDao";
 import slugify from "slugify";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { createPsychologist } from "@/app/_database/daos/psychologistDao";
-import { serialize } from "@/app/_database/connection";
 import { sendNotification } from "./notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 
 export async function fetchRequests() {
   const session = await getMyServerSession();
@@ -43,12 +39,12 @@ export async function sendRequest(
   user: IUser,
   requestedRole: Roles
 ) {
-  const previousRequests = await getRequestsByUser(user._id?.toString()!);
+  const previousRequests = await getRequestsByUser(user._id!);
   const promiseList: Promise<boolean | void>[] = [];
   for (let request of previousRequests) {
     promiseList.push(
       deleteFile(request.supportingDocumentId).then(() =>
-        deleteRequest(request._id)
+        deleteRequest(request._id!)
       )
     );
   }
@@ -67,7 +63,7 @@ export async function sendRequest(
     user: user._id!,
     state: RequestStates.Pendiente,
   };
-  return serialize(await createRequest(request)) as IRequest;
+  return await createRequest(request);
 }
 
 export async function answerRequest(

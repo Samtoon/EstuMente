@@ -7,26 +7,27 @@ import type { NextPage } from "next";
 // import { AppointmentHistoryList } from "../../../components/appointment";
 // import { EmptyAppointment } from "../../../components/ui";
 
-import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import PatientLayout from "@/app/_components/layout/PatientLayout";
 import { EmptyAppointment } from "@/app/_components/appointments/EmptyAppointment";
 import { getMyServerSession } from "@/app/_utils/next-auth";
-import { getPreviousAppointmentsByPatient, getPreviousAppointmentsByPsychologist } from "@/app/_database/daos/previousAppointmentDao";
+import {
+  getPreviousAppointmentsByPatient,
+  getPreviousAppointmentsByPsychologist,
+} from "@/app/_database/daos/previousAppointmentDao";
 import { AppointmentList } from "@/app/_components/appointments/AppointmentList";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { serialize } from "@/app/_database/connection";
 import Roles from "@/app/_enums/Roles";
 
-interface Props {
-}
+interface Props {}
 
 const HistoryAppointmentPage: NextPage<Props> = async () => {
-    const session = await getMyServerSession();
-    const appointments = session?.user.role === Roles.Practicante ? 
-    await getPreviousAppointmentsByPsychologist(session?.psychologist?._id!) : 
-    await getPreviousAppointmentsByPatient(session?.user._id!);
-    console.log(`El tipo de las fechas es:${typeof appointments[0]}`)
+  const session = await getMyServerSession();
+  const appointments =
+    session?.user.role === Roles.Practicante
+      ? await getPreviousAppointmentsByPsychologist(session?.psychologist?._id!)
+      : await getPreviousAppointmentsByPatient(session?.user._id!);
+  console.log(`El tipo de las fechas es:${typeof appointments[0]}`);
   return (
     <PatientLayout
       title="Historial de citas"
@@ -45,7 +46,7 @@ const HistoryAppointmentPage: NextPage<Props> = async () => {
         {appointments.length === 0 ? (
           <EmptyAppointment message={"Aún no tienes citas en tu historial"} />
         ) : (
-          <AppointmentList appointments={serialize(appointments)} history={true} />
+          <AppointmentList appointments={appointments} history={true} />
         )}
       </Box>
     </PatientLayout>

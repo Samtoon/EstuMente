@@ -41,11 +41,7 @@ export default function NotificationsList({
           />
           <IconButton
             onClick={() =>
-              handleClear(
-                notification._id!.toString(),
-                index,
-                notification.simpleClear
-              )
+              handleClear(notification._id!, index, notification.simpleClear)
             }
           >
             <Clear />

@@ -1,5 +1,4 @@
 "use server";
-import { serialize } from "@/app/_database/connection";
 import {
   createNote,
   getFilteredNotes,
@@ -19,17 +18,17 @@ export async function fetchNotesByPatient(
 ) {
   console.log("fetch notes, con " + psychologist + " y " + patient);
   const notes = await getNotesByPatient(psychologist, patient);
-  return serialize(notes) as INote[];
+  return notes;
 }
 
 export async function fetchNotesByAppointment(appointment: string) {
   const notes = await getNotesByAppointment(appointment);
-  return serialize(notes) as INote[];
+  return notes;
 }
 
 export async function fetchNoteById(id: string) {
   const note = await getNoteById(id);
-  return serialize(note) as INote;
+  return note;
 }
 
 export async function saveNote(note: INote) {
@@ -75,5 +74,5 @@ export async function filterNotes(
     date
   );
   console.log("voy a mandar:" + notes);
-  return serialize(notes) as INote[];
+  return notes;
 }

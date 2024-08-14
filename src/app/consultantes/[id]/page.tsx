@@ -1,15 +1,10 @@
-import { GetServerSideProps, NextPage } from "next";
-import { getSession } from "next-auth/react";
+import { NextPage } from "next";
 
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import IUser from "@/app/_interfaces/IUser";
-import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
-import User from "@/app/_database/models/User";
 import { getUserById } from "@/app/_database/daos/userDao";
 import { getPreviousAppointmentsByPatient } from "@/app/_database/daos/previousAppointmentDao";
 import { SessionClinicHistoryList } from "@/app/_components/sessions/SessionClinicHistoryList";
-import { serialize } from "@/app/_database/connection";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -27,9 +22,7 @@ interface Props {
 
 const PatientInfoPage: NextPage<Props> = async ({ params }) => {
   const patient = await getUserById(params.id);
-  const appointments = serialize(
-    await getPreviousAppointmentsByPatient(params.id)
-  ) as IPreviousAppointment[];
+  const appointments = await getPreviousAppointmentsByPatient(params.id);
   return (
     <PsychologistLayout
       title="Información del paciente"

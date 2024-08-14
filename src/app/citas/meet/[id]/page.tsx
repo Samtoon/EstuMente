@@ -1,7 +1,6 @@
 import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
 import PatientLayout from "@/app/_components/layout/PatientLayout";
 import CallDisplay from "@/app/_components/video/CallDisplay";
-import { serialize } from "@/app/_database/connection";
 import { getUpcomingAppointmentById } from "@/app/_database/daos/upcomingAppointmentDao";
 import { requestToken } from "@/app/_utils/server actions/other";
 import { NextPage } from "next";
@@ -11,7 +10,7 @@ import Roles from "@/app/_enums/Roles";
 const prueba = "https://estumente.daily.co/prueba";
 
 interface Props {
-  params: { id: string }
+  params: { id: string };
 }
 
 const MeetPage: NextPage<Props> = async ({ params }) => {
@@ -27,9 +26,9 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   function canJoin() {
     switch (session?.user.role) {
       case Roles.Consultante:
-        return session.user._id === appointment?.patient.toString();
+        return session.user._id === appointment?.patient;
       case Roles.Practicante:
-        return session.psychologist?._id === appointment?.psychologist.toString();
+        return session.psychologist?._id === appointment?.psychologist;
       default:
         return true;
     }
@@ -37,7 +36,7 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   const token = canJoin() ? await requestToken(appointment?.roomName!) : "";
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
-      <CallDisplay appointment={serialize(appointment!)} token={token!}/>
+      <CallDisplay appointment={appointment} token={token!} />
     </PatientLayout>
   );
 };

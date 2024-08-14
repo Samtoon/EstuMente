@@ -4,11 +4,11 @@ import { ReceiverTypes } from "../_enums/ReceiverTypes";
 import { NotificationTypes } from "../_enums/NotificationTypes";
 
 export interface INotification {
-  _id?: Schema.Types.ObjectId | string;
+  _id?: string;
   image?: string;
   receiver: {
     type: ReceiverTypes;
-    id: Schema.Types.ObjectId | string;
+    id: string;
   };
   body: string;
   createdAt?: Date;

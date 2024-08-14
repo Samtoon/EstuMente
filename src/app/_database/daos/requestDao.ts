@@ -1,5 +1,5 @@
 import Roles from "@/app/_enums/Roles";
-import { connect } from "../connection";
+import { connect, serialize } from "../connection";
 import Request from "../models/Request";
 import mongoose, { FilterQuery } from "mongoose";
 import { IRequest } from "@/app/_interfaces/IRequest";
@@ -22,25 +22,25 @@ export async function getRequestsByUserRole(userRole: Roles) {
       break;
   }
   const requests = await Request.find(filterQuery).lean();
-  return requests;
+  return serialize(requests) as IRequest[];
 }
 
 export async function getRequestsByUser(user: string) {
   await connect();
   const requests = Request.find({ user }).lean();
-  return requests;
+  return serialize(requests) as IRequest[];
 }
 
 export async function getRequestById(id: string) {
   await connect();
   const request = await Request.findById(id).lean();
-  return request;
+  return serialize(request) as IRequest;
 }
 
 export async function createRequest(request: IRequest) {
   await connect();
   const result = await Request.create(request);
-  return result;
+  return serialize(result) as IRequest;
 }
 
 export async function updateRequest(request: Partial<IRequest>) {

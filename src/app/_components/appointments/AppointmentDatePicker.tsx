@@ -160,10 +160,12 @@ export default function AppointmentDatePicker({
           onClick={async () => {
             const user = session?.user!;
             console.log(`Mandando la fecha: ${state.date}`);
-            appointments = await scheduleAppointment(
-              user._id!,
-              schedule.psychologist as string,
-              state.date!
+            appointments.push(
+              await scheduleAppointment(
+                user._id!,
+                schedule.psychologist as string,
+                state.date!
+              )
             );
             await sendNotification(
               { type: ReceiverTypes.User, id: psychologist.user as string },
