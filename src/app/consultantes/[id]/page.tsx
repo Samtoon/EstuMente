@@ -3,8 +3,9 @@ import { NextPage } from "next";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { PsychologistLayout } from "@/app/_components/layout/PsychologistLayout";
 import { getUserById } from "@/app/_database/daos/userDao";
-import { getPreviousAppointmentsByPatient } from "@/app/_database/daos/previousAppointmentDao";
+import { getPreviousAppointmentsByPatientAndPsychologist } from "@/app/_database/daos/previousAppointmentDao";
 import { SessionClinicHistoryList } from "@/app/_components/sessions/SessionClinicHistoryList";
+import { getMyServerSession } from "@/app/_utils/next-auth";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -21,8 +22,12 @@ interface Props {
 }
 
 const PatientInfoPage: NextPage<Props> = async ({ params }) => {
+  const session = await getMyServerSession();
   const patient = await getUserById(params.id);
-  const appointments = await getPreviousAppointmentsByPatient(params.id);
+  const appointments = await getPreviousAppointmentsByPatientAndPsychologist(
+    params.id,
+    session?.psychologist?._id!
+  );
   return (
     <PsychologistLayout
       title="Información del paciente"

@@ -27,6 +27,18 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
   return serialize(appointments) as IPreviousAppointment[];
 }
 
+export async function getPreviousAppointmentsByPatientAndPsychologist(
+  patient: string,
+  psychologist: string
+) {
+  await connect();
+  const appointments = await PreviousAppointment.find({
+    patient,
+    psychologist,
+  }).lean();
+  return serialize(appointments) as IPreviousAppointment[];
+}
+
 export async function getPreviousAppointmentById(id: string) {
   await connect();
   const appointment = await PreviousAppointment.findById(id).lean();
