@@ -39,7 +39,7 @@ interface Props {
   psychologist?: IPsychologist;
   fullName: string;
   image: string;
-  role: Roles;
+  role: Roles | string;
   psychologistUserId?: string;
 }
 
@@ -170,17 +170,21 @@ export const AppointmentCard: FC<Props> = ({
                         router.push(`/citas/meet/${appointment._id}`)
                       }
                     >
-                      Ingresar a mi cita
+                      Ingresar a la cita
                     </Button>
-                    <Button
-                      size="small"
-                      color="error"
-                      fullWidth
-                      disabled={isAppointmentTime(appointment.date)}
-                      onClick={() => setOpen(true)}
-                    >
-                      Cancelar cita
-                    </Button>
+                    {(session?.user._id === appointment.patient ||
+                      session?.psychologist?._id ===
+                        appointment.psychologist) && (
+                      <Button
+                        size="small"
+                        color="error"
+                        fullWidth
+                        disabled={isAppointmentTime(appointment.date)}
+                        onClick={() => setOpen(true)}
+                      >
+                        Cancelar cita
+                      </Button>
+                    )}
                     <Dialog open={open} onClose={() => setOpen(false)}>
                       <DialogContent>
                         <DialogContentText>
@@ -206,9 +210,12 @@ export const AppointmentCard: FC<Props> = ({
                                 sendNotification(
                                   {
                                     type: ReceiverTypes.User,
-                                    id: psychologistUserId!,
+                                    id:
+                                      session?.user._id === appointment.patient
+                                        ? psychologistUserId!
+                                        : appointment.patient,
                                   },
-                                  `El usuario ${session?.user.fullName} ha cancelado la cita que tenían para el día ` +
+                                  `El ${role} ${session?.user.fullName} ha cancelado la cita que tenían para el día ` +
                                     format(
                                       new Date(appointment.date),
                                       "dd 'de' MMMM 'a las' hh:mm aa"

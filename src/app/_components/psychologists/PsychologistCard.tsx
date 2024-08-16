@@ -13,22 +13,56 @@ import {
   Stack,
   Rating,
   CardMedia,
+  Dialog,
 } from "@mui/material";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { useRouter } from "next/navigation";
 import GoogleImage from "../ui/GoogleImage";
 import Roles from "@/app/_enums/Roles";
+import { useSession } from "next-auth/react";
+import { ContentTypes } from "./PsychologistList";
+import { getScheduleByPsychologist } from "@/app/_database/daos/scheduleDao";
+import { ISchedule } from "@/app/_interfaces/schedule/ISchedule";
+import { fetchScheduleByPsychologist } from "@/app/_utils/server actions/schedule";
 // import { IPsychologist } from "../../interfaces";
 
 interface Props {
   psychologist: IPsychologist;
+  setContent: ({ type, content }: { type: ContentTypes; content: any }) => void;
 }
 
-export const PsychologistCard: FC<Props> = ({ psychologist }) => {
+export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
   const router = useRouter();
-  // const [isImageLoaded, setIsImageLoaded] = useState(true);
-  // console.log("La foto del muchacho es: " +  psychologist.profilePicture);
-  // console.log("isImageLodaded: " +  isImageLoaded);
+  const { data: session } = useSession();
+  const [button1, button2] = (() => {
+    let button1: { url: string; label: string },
+      button2: { promise?: Promise<ISchedule>; label: string };
+    switch (session?.user.role!) {
+      case Roles.Consultante:
+        button1 = {
+          url: `/citas/agendar/${psychologist.slug}`,
+          label: "Pedir Cita",
+        };
+        button2 = { promise: undefined, label: "Ver Comentarios" };
+        break;
+      case Roles.Tutor:
+        button1 = {
+          url: `/citas?psychologist=${psychologist._id}`,
+          label: "Ver Citas Programadas",
+        };
+        button2 = {
+          promise: fetchScheduleByPsychologist(psychologist._id!),
+          label: "Ver Agenda",
+        };
+        break;
+      default:
+        button1 = { url: "", label: "" };
+        button2 = { promise: undefined, label: "" };
+        break;
+    }
+    return [button1, button2];
+  })();
+
   return (
     <Grid item xs={12} sm={6} md={6} lg={4}>
       <Card variant="outlined" className="fadeIn">
@@ -49,18 +83,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
               marginTop: 3,
               borderRadius: "50%",
             }}
-            //component="img"
-            //image={psychologist.profilePicture}
-            //alt="Practicante"
-            // onLoad={() => setIsImageLoaded(true)}
-            //sx={{ width: 120, height: 120, mt: 3, borderRadius: "50%" }}
           />
-          {/* {!isImageLoaded && (<div> Loading... </div>)} */}
-          {/* <Avatar
-            alt="Psychologist"
-            src={psychologist.url}
-            sx={{ width: 120, height: 120, mt: 3 }}
-          /> */}
         </Box>
         <CardContent>
           <Box sx={{ display: "block" }} className="fadeIn">
@@ -73,9 +96,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
             >
               {psychologist.fullName}
             </Typography>
-            {/* <Box sx={{ m: 2 }}>
-              <ListSpecialties specialties={psychologist.specialties} />
-            </Box> */}
+
             <Stack spacing={1} alignItems="center" sx={{ m: 2 }}>
               <Rating
                 name="half-rating-read"
@@ -92,29 +113,59 @@ export const PsychologistCard: FC<Props> = ({ psychologist }) => {
                 alignItems: "center",
               }}
             >
-              {/* <NextLink
-                href={`/app/citas/agendar/${psychologist.slug}`}
-                passHref
-                prefetch={false}
-              > */}
-              <Link>
+              <NextLink href={button1.url} passHref prefetch={false}>
+                {/* <Link> */}
                 <Button
                   size="small"
                   color="secondary"
                   className="card-btn"
                   sx={{ mb: 2 }}
-                  onClick={() => {
-                    router.push(`/citas/agendar/${psychologist.slug}`);
-                  }}
+                  // onClick={() => {
+                  //   router.push(`/citas/agendar/${psychologist.slug}`);
+                  // }}
                 >
-                  Pedir cita
+                  {button1.label}
                 </Button>
-              </Link>
-              {/* </NextLink> */}
-              {/* <NextLink href={`/psicologos/${psychologist.slug}`} passHref> */}
-              <Link>
-                <Button size="small">Ver mas información</Button>
-              </Link>
+                {/* </Link> */}
+              </NextLink>
+              {session?.user.role === Roles.Tutor && (
+                <NextLink
+                  href={`/citas/historial?psychologist=${psychologist._id}`}
+                  passHref
+                  prefetch={false}
+                >
+                  {/* <Link> */}
+                  <Button
+                    size="small"
+                    color="secondary"
+                    className="card-btn"
+                    sx={{ mb: 2 }}
+                    // onClick={() => {
+                    //   router.push(`/citas/agendar/${psychologist.slug}`);
+                    // }}
+                  >
+                    Ver Historial de Citas
+                  </Button>
+                  {/* </Link> */}
+                </NextLink>
+              )}
+              {/* <NextLink href={button2.promise} passHref> */}
+              {/* <Link> */}
+              <Button
+                size="small"
+                onClick={() => {
+                  button2.promise?.then((schedule) => {
+                    console.log("Promesa resuelta");
+                    setContent({
+                      content: [...schedule.days],
+                      type: ContentTypes.Schedule,
+                    });
+                  });
+                }}
+              >
+                {button2.label}
+              </Button>
+              {/* </Link> */}
               {/* </NextLink> */}
             </Box>
           </Box>

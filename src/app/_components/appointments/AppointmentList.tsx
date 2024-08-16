@@ -35,24 +35,33 @@ export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
         console.log(`Psicólogo: ${psychologist}`);
         const user = await getUserById(appointment.patient);
         console.log(`Paciente: ${user}`);
-        const role = session?.user.role;
+        // const role = session?.user.role;
+        const { fullName, image, role } = (() => {
+          let fullName = "",
+            image = "",
+            role = "";
+          switch (session?.user.role!) {
+            case Roles.Consultante:
+              fullName = psychologist.fullName;
+              image = psychologist.profilePicture;
+              role = Roles.Practicante;
+              break;
+            case Roles.Practicante:
+            case Roles.Tutor:
+              fullName = user.fullName;
+              image = user.profilePicture!;
+              role = Roles.Consultante;
+            default:
+          }
+          return { fullName, image, role };
+        })();
         return (
           <AppointmentCard
             appointment={appointment}
-            fullName={
-              role === Roles.Practicante
-                ? `${user?.firstName} ${user?.lastName}`
-                : psychologist?.fullName!
-            }
-            image={
-              role === Roles.Practicante
-                ? user?.profilePicture!
-                : psychologist?.profilePicture!
-            }
+            fullName={fullName}
+            image={image}
             key={appointment._id}
-            role={
-              role === Roles.Practicante ? Roles.Consultante : Roles.Practicante
-            }
+            role={role}
             psychologistUserId={psychologist?.user}
           />
         );

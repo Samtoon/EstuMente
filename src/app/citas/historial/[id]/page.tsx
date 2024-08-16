@@ -14,6 +14,7 @@ import { getUserById } from "@/app/_database/daos/userDao";
 import { SessionSummary } from "@/app/_components/appointments/SessionSummary";
 import { getNotesByAppointment } from "@/app/_database/daos/noteDao";
 import NotesCard from "@/app/_components/appointments/NotesCard";
+import { getMyServerSession } from "@/app/_utils/next-auth";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -42,10 +43,14 @@ export default async function AppointmentPage({
 }: {
   params: { id: string };
 }) {
+  const session = await getMyServerSession();
   const appointment = await getPreviousAppointmentById(params.id);
 
   const patient = await getUserById(appointment.patient);
-  const notes = await getNotesByAppointment(appointment._id!);
+  const notes =
+    session?.psychologist?._id === appointment.psychologist
+      ? await getNotesByAppointment(appointment._id!)
+      : undefined;
   return (
     <PsychologistLayout
       title="Resumen de la sesión"
@@ -79,9 +84,15 @@ export default async function AppointmentPage({
                   }}
                 />
                 <Divider sx={{ my: 3 }} />
-                {notes.length > 0 ? (
+                {/* {notes.length > 0  (
                   <NotesCard notes={notes} />
                 ) : (
+                  <Typography variant="h2">
+                    No se tomaron notas durante esta sesión
+                  </Typography>
+                )} */}
+                {notes && notes.length > 0 && <NotesCard notes={notes} />}
+                {notes && notes.length === 0 && (
                   <Typography variant="h2">
                     No se tomaron notas durante esta sesión
                   </Typography>

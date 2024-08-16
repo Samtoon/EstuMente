@@ -2,36 +2,31 @@
 import IUser from "@/app/_interfaces/IUser";
 import { DataGrid, GridColDef, useGridApiRef } from "@mui/x-data-grid";
 import { esES } from "@mui/x-data-grid/locales";
-import UserDialog from "./UserDialog";
 import { useState } from "react";
+import TutorDialog from "./TutorDialog";
 
 const defaultRow = {
   Apellidos: "",
   Nombres: "",
   Correo: "",
-  Rol: "",
   Estado: "",
 };
 
-type IRow = typeof defaultRow;
-
-export default function UsersDataGrid({ users }: { users: IUser[] }) {
+export default function TutorsDataGrid({ tutors }: { tutors: IUser[] }) {
   const columns: GridColDef[] = Object.keys(defaultRow).map((key) => ({
     field: key,
-    headerName: key,
+    renderHeader: () => <strong>{key}</strong>,
   }));
-  const rows = users.map((user, index) => ({
+  const rows = tutors.map((tutor, index) => ({
     id: index,
-    Apellidos: user.lastName,
-    Nombres: user.firstName,
-    Correo: user.email,
-    Rol: user.role,
-    Estado: user.state,
+    Apellidos: tutor.lastName,
+    Nombres: tutor.firstName,
+    Correo: tutor.email,
+    Estado: tutor.state,
   }));
-  // const [selectedUser, setSelectedUser] = useState<IUser>();
-  const [selectedIndex, setSelectedIndex] = useState<number>();
-  const [open, setOpen] = useState(false);
   const apiRef = useGridApiRef();
+  const [open, setOpen] = useState(false);
+  const [selectedTutorIndex, setSelectedTutorIndex] = useState(0);
   return (
     <>
       <DataGrid
@@ -41,19 +36,18 @@ export default function UsersDataGrid({ users }: { users: IUser[] }) {
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         autosizeOnMount
         onRowClick={(params) => {
-          setSelectedIndex(params.id as number);
+          setSelectedTutorIndex(params.id as number);
           setOpen(true);
           apiRef.current.autosizeColumns();
         }}
       />
-      <UserDialog
-        index={selectedIndex}
-        users={users}
+      <TutorDialog
         open={open}
         handleClose={() => {
           setOpen(false);
           apiRef.current.autosizeColumns();
         }}
+        tutor={tutors[selectedTutorIndex]}
       />
     </>
   );

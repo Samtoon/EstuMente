@@ -19,14 +19,32 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Roles from "@/app/_enums/Roles";
 
-interface Props {}
+interface Props {
+  searchParams: { psychologist?: string };
+}
 
-const HistoryAppointmentPage: NextPage<Props> = async () => {
+const HistoryAppointmentPage: NextPage<Props> = async ({ searchParams }) => {
   const session = await getMyServerSession();
-  const appointments =
-    session?.user.role === Roles.Practicante
-      ? await getPreviousAppointmentsByPsychologist(session?.psychologist?._id!)
-      : await getPreviousAppointmentsByPatient(session?.user._id!);
+  // const appointments =
+  //   session?.user.role === Roles.Practicante
+  //     ? await getPreviousAppointmentsByPsychologist(session?.psychologist?._id!)
+  //     : await getPreviousAppointmentsByPatient(session?.user._id!);
+  const appointments = await (async () => {
+    switch (session?.user.role!) {
+      case Roles.Tutor:
+        return searchParams.psychologist
+          ? getPreviousAppointmentsByPsychologist(searchParams.psychologist)
+          : [];
+      case Roles.Practicante:
+        return getPreviousAppointmentsByPsychologist(
+          session?.psychologist?._id!
+        );
+      case Roles.Consultante:
+        return getPreviousAppointmentsByPatient(session?.user._id!);
+      default:
+        return [];
+    }
+  })();
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`);
   return (
     <PatientLayout

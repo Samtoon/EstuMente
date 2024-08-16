@@ -27,7 +27,9 @@ export async function getRequestsByUserRole(userRole: Roles) {
 
 export async function getRequestsByUser(user: string) {
   await connect();
-  const requests = Request.find({ user }).lean();
+  const requests = await Request.find({ user }).lean();
+  console.log("Peticiones encontradas");
+  console.log(requests);
   return serialize(requests) as IRequest[];
 }
 

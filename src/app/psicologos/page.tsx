@@ -12,26 +12,20 @@ import PsiLayout from "@/app/_components/layout/PsiLayout";
 import { Search } from "@/app/_components/psychologists/Search";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import { fetchPsychologists } from "@/app/_database/connection";
-import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { PsychologistList } from "@/app/_components/psychologists/PsychologistList";
+import {
+  getPsychologistsByTutor,
+  getPsychologists,
+} from "../_database/daos/psychologistDao";
+import Roles from "../_enums/Roles";
+import { getMyServerSession } from "../_utils/next-auth";
 
-const SearchPage: NextPage = () => {
-  // const [query, setQuery] = useState("");
-  // const [psychologists, setPsychologists] = useState<IPsychologist[]>([]);
-  
-  // useEffect(() => {
-  //   async function recurrente() {
-  //     console.log("Hola mundo");
-  //     // const psychologists = await fetchPsychologists();
-  //     // setPsychologists(psychologists);
-  //   }
-  //   recurrente();
-  // });
-  // const { psychologists, isLoading } = usePsychologist(
-  //   `/psychologists/search?search=${query}`
-  // );
-
+const SearchPage: NextPage = async () => {
+  const session = await getMyServerSession();
+  const psychologists =
+    session?.user.role === Roles.Tutor
+      ? await getPsychologistsByTutor(session.user._id!)
+      : await getPsychologists();
   return (
     <PsiLayout title="PsicologicaMente" pageDescription="Sanando Juntos">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
@@ -41,42 +35,16 @@ const SearchPage: NextPage = () => {
           gutterBottom
           sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
         >
-          Elige a tu psicólogo
+          Elige un practicante
         </Typography>
 
         <Search onQueryChange="asdlfjasf" />
-
-        {/* {isLoading ? (
-          <FullScreenLoading />
-        ) : (
-          <PsychologistList psychologists={psychologists} />
-        )} */}
         <Suspense fallback="Cargando...">
-        <PsychologistList/>
+          <PsychologistList psychologists={psychologists} />
         </Suspense>
-        
       </Box>
     </PsiLayout>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-//   const session: any = await getSession({ req });
-
-//   if (session) {
-//     if (session.user.role !== "patient") {
-//       return {
-//         redirect: {
-//           destination: `/`,
-//           permanent: false,
-//         },
-//       };
-//     }
-//   }
-
-//   return {
-//     props: {},
-//   };
-// };
 
 export default SearchPage;

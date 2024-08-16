@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { Call } from "./Call";
 import { useSession } from "next-auth/react";
 import { addHours, isWithinInterval } from "date-fns";
+import Roles from "@/app/_enums/Roles";
+import { useRouter } from "next/navigation";
 
 export default function CallDisplay({
   appointment,
@@ -18,6 +20,7 @@ export default function CallDisplay({
 }) {
   const [room, setRoom] = useState(appointment.roomURL);
   const { data: session, update } = useSession();
+  const router = useRouter();
   const [leaving, setLeaving] = useState(false);
   useEffect(() => {
     console.log("use Effect malvado");
@@ -25,6 +28,13 @@ export default function CallDisplay({
       update({ appointmentPatientId: appointment.patient });
     }
   }, [session, appointment, update]);
+  if (leaving && session?.user.role !== Roles.Consultante)
+    router.push(
+      `/citas${
+        session?.user.role === Roles.Tutor &&
+        `?psychologist=${appointment.psychologist}`
+      }`
+    );
   if (
     !leaving &&
     !isWithinInterval(new Date(), {

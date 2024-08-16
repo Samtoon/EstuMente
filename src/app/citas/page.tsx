@@ -14,16 +14,36 @@ import { getMyServerSession } from "@/app/_utils/next-auth";
 import Roles from "../_enums/Roles";
 import PageHeader from "../_components/PageHeader";
 
-const AppointmentPage = async () => {
+const AppointmentPage = async ({
+  searchParams,
+}: {
+  searchParams: { psychologist?: string };
+}) => {
   // const session = await getServerSession(authOptions)
   // const appointments = await getAppointmentsByPatient(
   //   session?.user._id!
   // );
   const session = await getMyServerSession();
-  const appointments =
-    session?.user.role === Roles.Practicante
-      ? await getUpcomingAppointmentsByPsychologist(session?.psychologist?._id!)
-      : await getUpcomingAppointmentsByPatient(session?.user._id!);
+  // const appointments =
+  //   session?.user.role === Roles.Practicante
+  //     ? await getUpcomingAppointmentsByPsychologist(session?.psychologist?._id!)
+  //     : await getUpcomingAppointmentsByPatient(session?.user._id!);
+  const appointments = await (async () => {
+    switch (session?.user.role!) {
+      case Roles.Tutor:
+        return searchParams.psychologist
+          ? getUpcomingAppointmentsByPsychologist(searchParams.psychologist)
+          : [];
+      case Roles.Practicante:
+        return getUpcomingAppointmentsByPsychologist(
+          session?.psychologist?._id!
+        );
+      case Roles.Consultante:
+        return getUpcomingAppointmentsByPatient(session?.user._id!);
+      default:
+        return [];
+    }
+  })();
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`);
   return (
     <PatientLayout title="Mis citas" pageDescription="Mis citas">

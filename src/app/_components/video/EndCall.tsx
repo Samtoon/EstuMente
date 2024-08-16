@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { Typography, Box, Link, Button, Stack } from "@mui/material";
 import { VideocamOffOutlined } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Props {
   joinTrigger: () => void;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
+  // const {data: session} = useSession();
   const router = useRouter();
   return (
     <Box>
