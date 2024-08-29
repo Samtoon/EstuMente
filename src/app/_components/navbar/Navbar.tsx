@@ -20,10 +20,31 @@ import { SideMenu } from "../ui/SideMenu/SideMenu";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
+
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
   const { data: session, status } = useSession();
-
-  function middleButton(): JSX.Element {
+  useEffect(() => {
+    if (session) {
+      console.log("useEffect por primera vez");
+      let startDate = new Date();
+      document.addEventListener("visibilitychange", (ev) => {
+        if (document.visibilityState === "hidden") {
+          const data = new FormData();
+          data.set("userId", session?.user._id ?? "");
+          data.set(
+            "timeSpent",
+            String(new Date().getTime() - startDate.getTime())
+          );
+          console.log("Me escondí");
+          navigator.sendBeacon("/api/session_time", data);
+        } else {
+          startDate = new Date();
+        }
+        console.log("startDate es:", startDate);
+      });
+    }
+  }, [session]);
+  function middleButton() {
     switch (session?.user.role) {
       case undefined:
       case Roles.Consultante:
@@ -39,7 +60,7 @@ const Navbar = () => {
           </NextLink>
         );
       default:
-        return <Button variant="text">Caso default en middleButton</Button>;
+        return null;
     }
   }
 

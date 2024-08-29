@@ -45,7 +45,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
         };
         button2 = { promise: undefined, label: "Ver Comentarios" };
         break;
-      case Roles.Tutor:
+      default:
         button1 = {
           url: `/citas?psychologist=${psychologist._id}`,
           label: "Ver Citas Programadas",
@@ -54,10 +54,6 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
           promise: fetchScheduleByPsychologist(psychologist._id!),
           label: "Ver Agenda",
         };
-        break;
-      default:
-        button1 = { url: "", label: "" };
-        button2 = { promise: undefined, label: "" };
         break;
     }
     return [button1, button2];

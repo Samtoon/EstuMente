@@ -1,11 +1,6 @@
-import { getAssignedUsersById } from "@/app/_database/daos/userDao";
 import Roles from "@/app/_enums/Roles";
 import IUser from "@/app/_interfaces/IUser";
-import {
-  fetchAssignedUsersById,
-  fetchUserById,
-  saveUserById,
-} from "@/app/_utils/server actions/user";
+import { saveUserById } from "@/app/_utils/server actions/user";
 import { Cancel, Check, Edit } from "@mui/icons-material";
 import {
   Autocomplete,
@@ -20,9 +15,7 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import mongoose from "mongoose";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function UserDialog({
   index,
