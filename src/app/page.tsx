@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 "use client";
-=======
-'use client'
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 //import Navbar from "@/components/navbar/Navbar";
 import PsiLayout from "@/app/_components/layout/PsiLayout";
 import Navbar from "./_components/navbar/Navbar";
@@ -38,15 +34,9 @@ async function Usuarios() {
 } */
 
 export default function Home() {
-<<<<<<< HEAD
   const { data: session, status } = useSession();
   const router = useRouter();
 
-=======
-  const {data:session, status} = useSession();
-  const router = useRouter();
-  
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
   useEffect(() => {
     function recurrente() {
       if (session) {
@@ -55,7 +45,6 @@ export default function Home() {
     }
     console.log("hola");
     recurrente();
-<<<<<<< HEAD
   }, [session, router]);
   //const servicio = await fetchServices();
   //const usuarios = await fetchUsers();
@@ -67,19 +56,6 @@ export default function Home() {
           <Services/>
         </Suspense> */}
 
-=======
-  }, [session, router])
-  //const servicio = await fetchServices();
-  //const usuarios = await fetchUsers();
-  return(
-        <PsiLayout title="estumente" pageDescription="">
-        <Hero></Hero>
-        <Box sx={{ margin: "40px auto", padding: "0px 30px" }}>
-        {/* <Suspense fallback={<p>Cargando servicios</p>}>
-          <Services/>
-        </Suspense> */}
-        
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
         {/* <Suspense fallback={<p>Cargando usuarios</p>}>
           <Usuarios/>
         </Suspense> */}

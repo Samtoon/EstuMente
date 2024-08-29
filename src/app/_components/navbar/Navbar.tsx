@@ -20,7 +20,6 @@ import { SideMenu } from "../ui/SideMenu/SideMenu";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
-<<<<<<< HEAD
 
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
   const { data: session, status } = useSession();
@@ -46,12 +45,6 @@ const Navbar = () => {
     }
   }, [session]);
   function middleButton() {
-=======
-  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
-  const { data: session, status } = useSession();
-
-  function middleButton(): JSX.Element {
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
     switch (session?.user.role) {
       case undefined:
       case Roles.Consultante:
@@ -67,11 +60,7 @@ const Navbar = () => {
           </NextLink>
         );
       default:
-<<<<<<< HEAD
         return null;
-=======
-        return <Button variant="text">Caso default en middleButton</Button>;
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
     }
   }
 

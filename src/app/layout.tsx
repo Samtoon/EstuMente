@@ -1,18 +1,11 @@
 import "@/app/_styles/globals.css";
-<<<<<<< HEAD
 import CssBaseline from "@mui/material/CssBaseline";
-=======
-import CssBaseline from "@mui/material/CssBaseline"
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 import Providers from "@/app/_providers/Providers";
 import Navbar from "@/app/_components/navbar/Navbar";
 import styles from "@/app/_styles/layout.module.css";
 import Box from "@mui/material/Box/Box";
-<<<<<<< HEAD
 import { getMyServerSession } from "./_utils/next-auth";
 import { ToastContainer } from "react-toastify";
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 
 export const metadata = {
   title: "Next.js",
@@ -37,17 +30,9 @@ export default async function RootLayout({
         <Providers>
           <Box className={styles["layout"]}>
             <Navbar />
-<<<<<<< HEAD
             <ToastContainer position="bottom-center" />
             <Box className={styles["content"]}>{children}</Box>
           </Box>
-=======
-            <Box className={styles["content"]}>
-              {children}
-            </Box>
-          </Box>
-
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
         </Providers>
         {/* {children} */}
       </body>

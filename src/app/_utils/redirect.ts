@@ -1,6 +1,5 @@
 import Roles from "../_enums/Roles";
 
-<<<<<<< HEAD
 export function homepagePath(role: Roles) {
   switch (role) {
     case Roles.Consultante:
@@ -15,12 +14,3 @@ export function homepagePath(role: Roles) {
       return "/reportes";
   }
 }
-=======
-export function homepagePath(role: string): string {
-    switch (role) {
-        case Roles.Consultante:
-        case Roles.Practicante: return "/citas";
-        default: return "/psicologos";
-    }
-}
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758

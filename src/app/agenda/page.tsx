@@ -45,10 +45,7 @@ import ModalStates from "@/app/_enums/PeriodModalStates";
 import AddPeriodModal from "@/app/_components/schedule/AddPeriodModal";
 import ScheduleTable from "@/app/_components/schedule/ScheduleTable";
 import { SCHEDULES } from "@/app/_utils/endpoints";
-<<<<<<< HEAD
 import { toast } from "react-toastify";
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 
 interface state {
   day: IDay["day"];
@@ -71,7 +68,6 @@ export default function ConfigureSchedulePage() {
   // }
 
   function updateSchedule() {
-<<<<<<< HEAD
     toast.promise(
       fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
         method: "POST",
@@ -86,35 +82,18 @@ export default function ConfigureSchedulePage() {
         error: "Ha ocurrido un error, por favor inténtalo nuevamente",
       }
     );
-=======
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
-      method: "POST",
-      body: JSON.stringify({
-        psychologist: session?.psychologist?._id,
-        schedule: schedule,
-      }),
-    }).then(() => {
-      console.log("Guardado con éxito");
-    });
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
   }
 
   console.log("Carga la página");
   let result: ISchedule | null | undefined;
   const { data: session } = useSession();
-<<<<<<< HEAD
   const [loading, setLoading] = useState(true);
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
   const fetchSchedule = useCallback(() => {
     console.log(
       "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES
     );
     if (session) {
-<<<<<<< HEAD
       setLoading(true);
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
       fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${
           session?.psychologist?._id
@@ -127,10 +106,7 @@ export default function ConfigureSchedulePage() {
           res;
           console.log("Me llegó algo");
           if (res?.days) setSchedule([...res.days]);
-<<<<<<< HEAD
           setLoading(false);
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
         });
     }
   }, [session]);
@@ -214,11 +190,7 @@ export default function ConfigureSchedulePage() {
         <Box id="box2"sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100vw'}}>
         <Box id="box3" sx={{width: '100vw'}}> */}
         {/* <Paper sx={{ width: '100%',  }}> */}
-<<<<<<< HEAD
         <ScheduleTable schedule={schedule} loading={loading} />
-=======
-        <ScheduleTable schedule={schedule} />
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
         {/* </Box>
         </Box>
         </Box> */}

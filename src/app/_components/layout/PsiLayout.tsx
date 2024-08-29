@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 "use client";
-=======
-'use client'
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import Navbar from "@/app/_components/navbar/Navbar";
@@ -16,7 +12,6 @@ interface Props {
   children: ReactNode;
 }
 
-<<<<<<< HEAD
 export default function PsiLayout({ children, title }: Props) {
   const [isMenuOpen, toggleSideMenu] = useState(false);
   return (
@@ -37,27 +32,4 @@ export default function PsiLayout({ children, title }: Props) {
       <footer>{/* <Footer position={false} /> */}</footer>
     </>
   );
-=======
-export default function PsiLayout ({ children, title }:Props) {
-  const [isMenuOpen, toggleSideMenu] = useState(false)
-  return(
-    <>
-    <Head>
-      <title>{title}</title>
-    </Head>
-    {/* <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}> */}
-    
-      {/* <Navbar /> */}
-    
-
-    {/* <SideMenu /> */}
-    {/* </UiContext.Provider> */}
-    <main>
-      <ToastContainer />
-      {children}
-    </main>
-    <footer>{/* <Footer position={false} /> */}</footer>
-  </>
-  )
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 }

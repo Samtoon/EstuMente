@@ -18,10 +18,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
-<<<<<<< HEAD
 import { toast } from "react-toastify";
-=======
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 
 interface Props {
   open: boolean;
@@ -66,7 +63,6 @@ export default function RequestModal({
   // const [documentSrc, setDocumentSrc] = useState("");
   // const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
-<<<<<<< HEAD
 
   function handleClick(state: RequestStates) {
     toast
@@ -80,37 +76,6 @@ export default function RequestModal({
         requestList.splice(index, 1);
         handleClose();
       });
-=======
-  // useEffect(() => {
-  //     console.log("useEffect infinito?");
-  //     if (index !== -1) {
-  //         URL.revokeObjectURL(documentSrc);
-  //     setLoading(true);
-  //     Promise.all([
-  //         fetchUserById(requestList[index].user)
-  //             .then((foundUser) => setUser(foundUser)),
-  //         fetch(process.env.NEXT_PUBLIC_BASE_URL + FILES + "/" + requestList[index].supportingDocumentId)
-  //             .then((response) => {
-  //                 console.log(response);
-  //                 return response.blob();
-  //             })
-  //             .then((blob) => {
-  //                 const url = URL.createObjectURL(blob);
-  //                 console.log("La url es:", url);
-  //                 setDocumentSrc(url);
-  //             })
-  //             .catch((error) => console.log(error)),
-  //     ])
-  //         .then(() => setLoading(false));
-  //     }
-  // }, [requestList, index, setUser, documentSrc, setDocumentSrc]);
-  function handleClick(state: RequestStates) {
-    answerRequest(requestList[index], state, user!, comment).then(() => {
-      console.log("Solicitud respondida con éxito");
-      requestList.splice(index, 1);
-      handleClose();
-    });
->>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
   }
   return (
     <Dialog open={open} onClose={handleClose}>
