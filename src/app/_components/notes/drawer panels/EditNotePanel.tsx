@@ -5,9 +5,10 @@ import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import styles from "@/app/_styles/notes/notesTest.module.css";
-import { EventHandler, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 // import ReactQuill from "react-quill";
 
 const modules = {
@@ -39,7 +40,7 @@ export default function EditNotePanel({
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
   );
-  async function handleClick() {
+  function handleClick() {
     if (title !== "" && stripTags(content) !== "") {
       let note: INote;
       if (selectedNote) {
@@ -56,8 +57,13 @@ export default function EditNotePanel({
         setContent("");
         setTitle("");
       }
-      await saveNote(note);
-      trigger(true);
+      toast
+        .promise(saveNote(note), {
+          pending: "Guardando nota...",
+          success: "Nota guardada con éxito",
+          error: "Ha ocurrido un error, por favor inténtalo nuevamente",
+        })
+        .then(() => trigger(true));
     }
   }
   useEffect(() => {

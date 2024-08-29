@@ -19,6 +19,7 @@ import Roles from "@/app/_enums/Roles";
 import { sendNotification } from "@/app/_utils/server actions/notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { NotificationTypes } from "@/app/_enums/NotificationTypes";
+import { toast } from "react-toastify";
 
 export default function RegisterModal({
   open,
@@ -35,32 +36,38 @@ export default function RegisterModal({
   const user = session?.user;
   function handleSubmit(formData: FormData) {
     if (user) {
-      sendRequest(formData, user, selectedRole).then((request) => {
-        const possibleRoles = [
-          Roles.Administrador,
-          Roles.Coordinador,
-          Roles.Tutor,
-        ];
-        switch (request.requestedRole) {
-          case Roles.Coordinador:
-            possibleRoles.pop();
-          case Roles.Tutor:
-            possibleRoles.pop();
-        }
-        possibleRoles.forEach((role) => {
-          sendNotification(
-            { type: ReceiverTypes.Role, id: role },
-            `${user.firstName} ${user.lastName} está solicitando un cambio de rol a ${selectedRole}`,
-            false,
-            user.profilePicture,
-            {
-              notificationType: NotificationTypes.Request,
-              clues: [request._id!],
-            }
-          );
+      toast
+        .promise(sendRequest(formData, user, selectedRole), {
+          pending: "Enviando solicitud...",
+          success: "Solicitud enviada",
+          error: "Ha ocurrido un error, por favor intenta nuevamente",
+        })
+        .then((request) => {
+          const possibleRoles = [
+            Roles.Administrador,
+            Roles.Coordinador,
+            Roles.Tutor,
+          ];
+          switch (request.requestedRole) {
+            case Roles.Coordinador:
+              possibleRoles.pop();
+            case Roles.Tutor:
+              possibleRoles.pop();
+          }
+          possibleRoles.forEach((role) => {
+            sendNotification(
+              { type: ReceiverTypes.Role, id: role },
+              `${user.firstName} ${user.lastName} está solicitando un cambio de rol a ${selectedRole}`,
+              false,
+              user.profilePicture,
+              {
+                notificationType: NotificationTypes.Request,
+                clues: [request._id!],
+              }
+            );
+          });
+          handleClose();
         });
-        handleClose();
-      });
     }
   }
   return (

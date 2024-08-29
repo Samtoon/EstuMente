@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Box, AppBar, Toolbar, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -31,10 +31,9 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
       {/* <Navbar/> */}
       {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
-      
 
       <main>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
 
         {/* <Box
           display="flex"
@@ -45,7 +44,7 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
             m: { xs: "5rem 0rem", sm: "1rem 0rem" },
           }}
         > */}
-          {children}
+        {children}
         {/* </Box> */}
       </main>
       <footer>{/* <Footer position={false} /> */}</footer>

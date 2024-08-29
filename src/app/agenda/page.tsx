@@ -45,6 +45,7 @@ import ModalStates from "@/app/_enums/PeriodModalStates";
 import AddPeriodModal from "@/app/_components/schedule/AddPeriodModal";
 import ScheduleTable from "@/app/_components/schedule/ScheduleTable";
 import { SCHEDULES } from "@/app/_utils/endpoints";
+import { toast } from "react-toastify";
 
 interface state {
   day: IDay["day"];
@@ -67,25 +68,32 @@ export default function ConfigureSchedulePage() {
   // }
 
   function updateSchedule() {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
-      method: "POST",
-      body: JSON.stringify({
-        psychologist: session?.psychologist?._id,
-        schedule: schedule,
+    toast.promise(
+      fetch(process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES, {
+        method: "POST",
+        body: JSON.stringify({
+          psychologist: session?.psychologist?._id,
+          schedule: schedule,
+        }),
       }),
-    }).then(() => {
-      console.log("Guardado con éxito");
-    });
+      {
+        pending: "Guardando agenda...",
+        success: "Agenda guardada con éxito",
+        error: "Ha ocurrido un error, por favor inténtalo nuevamente",
+      }
+    );
   }
 
   console.log("Carga la página");
   let result: ISchedule | null | undefined;
   const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
   const fetchSchedule = useCallback(() => {
     console.log(
       "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES
     );
     if (session) {
+      setLoading(true);
       fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${
           session?.psychologist?._id
@@ -98,6 +106,7 @@ export default function ConfigureSchedulePage() {
           res;
           console.log("Me llegó algo");
           if (res?.days) setSchedule([...res.days]);
+          setLoading(false);
         });
     }
   }, [session]);
@@ -181,7 +190,7 @@ export default function ConfigureSchedulePage() {
         <Box id="box2"sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100vw'}}>
         <Box id="box3" sx={{width: '100vw'}}> */}
         {/* <Paper sx={{ width: '100%',  }}> */}
-        <ScheduleTable schedule={schedule} />
+        <ScheduleTable schedule={schedule} loading={loading} />
         {/* </Box>
         </Box>
         </Box> */}

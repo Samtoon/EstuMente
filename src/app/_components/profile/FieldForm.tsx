@@ -5,6 +5,7 @@ import IUser from "@/app/_interfaces/IUser";
 import { Grid } from "@mui/material";
 import { format, parse } from "date-fns";
 import { es } from "date-fns/locale";
+import { toast } from "react-toastify";
 
 export default function FieldForm({
   setUpdating,
@@ -40,7 +41,14 @@ export default function FieldForm({
     console.log(`La fecha es ${formData.get("Fecha de Nacimiento")}`);
     console.log("usuario actualizado:");
     console.log(updatedUser);
-    update(updatedUser).then(() => setUpdating(false));
+    toast
+      .promise(update(updatedUser), {
+        pending: "Guardando datos...",
+        success: "Datos actualizados con éxito",
+        error: "Ha ocurrido un error, por favor inténtalo de nuevo",
+      })
+      .then(() => setUpdating(false));
+    // update(updatedUser).then(() => setUpdating(false));
   }
   return (
     <form id="profileForm" action={handleSubmit}>

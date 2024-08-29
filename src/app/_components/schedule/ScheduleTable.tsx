@@ -8,6 +8,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Skeleton,
 } from "@mui/material";
 import CellButton from "./CellButton";
 import { IDay } from "@/app/_interfaces/schedule/IDay";
@@ -16,7 +17,9 @@ import { scheduleTheme } from "@/app/_themes/schedule-theme";
 export default function ScheduleTable({
   schedule,
   readOnly,
+  loading,
 }: {
+  loading?: boolean;
   schedule: IDay[];
   readOnly?: boolean;
 }) {
@@ -63,6 +66,7 @@ export default function ScheduleTable({
                     ? scheduleTheme.palette.primary.main
                     : scheduleTheme.palette.secondary.main;
                 }
+
                 return (
                   <TableCell
                     key={day + hour.getString()}
@@ -77,30 +81,13 @@ export default function ScheduleTable({
                       borderColor: "#e0e0e0",
                     }}
                   >
-                    {/* <Button size="large" variant="text" sx={{
-                                paddingTop: 0, 
-                                paddingBottom: 0, 
-                                paddingLeft: 0, 
-                                paddingRight: 0, 
-                                borderRadius: 0, 
-                                minHeight: "32px", 
-                                width: "100%", 
-                                backgroundColor: schedule[index].hours[hour.getValue()] ? "violet" : "cyan",
-                            }}
-                            onClick= {() => {
-                                schedule[index].hours[hour.getValue()] = !schedule[index].hours[hour.getValue()];
-                                setSchedule([...schedule]);
-                                console.log("Cambio");
-                            }}
-                            >
-                                
-                            </Button> */}
                     {!readOnly && (
                       <CellButton
                         initialSelected={schedule[index].hours[hour.getValue()]}
                         day={index}
                         hour={hour.getValue()}
                         schedule={schedule}
+                        loading={loading}
                       />
                     )}
                   </TableCell>

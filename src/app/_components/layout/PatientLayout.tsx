@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { FC, ReactNode, useState } from "react";
 import Head from "next/head";
 import { SideMenu } from "../ui/SideMenu/SideMenu";
@@ -20,22 +20,21 @@ const PatientLayout: FC<Props> = ({
   pageDescription,
   imageFullUrl,
 }) => {
-  const [isMenuOpen, toggleSideMenu] = useState(false)
+  const [isMenuOpen, toggleSideMenu] = useState(false);
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
       {/* <UiContext.Provider value = {{isMenuOpen: isMenuOpen, toggleSideMenu: () => {toggleSideMenu(!isMenuOpen)}}}> */}
-      
-        {/* <NavbarPatient /> */}
-      
+
+      {/* <NavbarPatient /> */}
 
       {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
 
       <main>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         {children}
       </main>
     </>

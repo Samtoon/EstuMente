@@ -23,6 +23,7 @@ import { useSession } from "next-auth/react";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { sendNotification } from "@/app/_utils/server actions/notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
+import { toast } from "react-toastify";
 
 interface IState {
   date?: Date;
@@ -160,24 +161,33 @@ export default function AppointmentDatePicker({
           onClick={async () => {
             const user = session?.user!;
             console.log(`Mandando la fecha: ${state.date}`);
-            appointments.push(
-              await scheduleAppointment(
-                user._id!,
-                schedule.psychologist as string,
-                state.date!
+            toast
+              .promise(
+                scheduleAppointment(
+                  user._id!,
+                  schedule.psychologist as string,
+                  state.date!
+                ),
+                {
+                  pending: "Programando cita...",
+                  success: "Cita programada con éxito",
+                  error: "Ha ocurrido un error, por favor inténtalo nuevamente",
+                }
               )
-            );
-            await sendNotification(
+              .then((appointment) => {
+                appointments.push(appointment);
+                dispatcher({
+                  type: "reset",
+                  appointments: appointments,
+                  schedule: schedule,
+                });
+              });
+            sendNotification(
               { type: ReceiverTypes.User, id: psychologist.user as string },
               `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
               true,
               user.profilePicture
             );
-            dispatcher({
-              type: "reset",
-              appointments: appointments,
-              schedule: schedule,
-            });
           }}
         >
           Programar ahora
