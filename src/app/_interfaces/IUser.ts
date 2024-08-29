@@ -22,5 +22,8 @@ export default interface IUser {
   semester?: number;
   age?: number;
   responsibleUser?: string;
+<<<<<<< HEAD
   totalTimeSpent: number;
+=======
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 }

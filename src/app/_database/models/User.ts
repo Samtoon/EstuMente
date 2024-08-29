@@ -52,7 +52,10 @@ const userSchema = new Schema<IUser>(
     dateOfBirth: Date,
     semester: Number,
     responsibleUser: Schema.Types.ObjectId,
+<<<<<<< HEAD
     totalTimeSpent: { type: Number, default: 0, required: true },
+=======
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
   },
   { timestamps: true }
 );

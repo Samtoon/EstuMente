@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 "use client";
+=======
+'use client'
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 import { Box, AppBar, Toolbar, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -31,6 +35,10 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
       {/* <Navbar/> */}
       {/* <SideMenu /> */}
       {/* </UiContext.Provider> */}
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 
       <main>
         {/* <ToastContainer /> */}
@@ -44,7 +52,11 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
             m: { xs: "5rem 0rem", sm: "1rem 0rem" },
           }}
         > */}
+<<<<<<< HEAD
         {children}
+=======
+          {children}
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
         {/* </Box> */}
       </main>
       <footer>{/* <Footer position={false} /> */}</footer>

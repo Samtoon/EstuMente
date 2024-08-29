@@ -19,7 +19,10 @@ import Roles from "@/app/_enums/Roles";
 import { sendNotification } from "@/app/_utils/server actions/notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { NotificationTypes } from "@/app/_enums/NotificationTypes";
+<<<<<<< HEAD
 import { toast } from "react-toastify";
+=======
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 
 export default function RegisterModal({
   open,
@@ -36,6 +39,7 @@ export default function RegisterModal({
   const user = session?.user;
   function handleSubmit(formData: FormData) {
     if (user) {
+<<<<<<< HEAD
       toast
         .promise(sendRequest(formData, user, selectedRole), {
           pending: "Enviando solicitud...",
@@ -68,6 +72,34 @@ export default function RegisterModal({
           });
           handleClose();
         });
+=======
+      sendRequest(formData, user, selectedRole).then((request) => {
+        const possibleRoles = [
+          Roles.Administrador,
+          Roles.Coordinador,
+          Roles.Tutor,
+        ];
+        switch (request.requestedRole) {
+          case Roles.Coordinador:
+            possibleRoles.pop();
+          case Roles.Tutor:
+            possibleRoles.pop();
+        }
+        possibleRoles.forEach((role) => {
+          sendNotification(
+            { type: ReceiverTypes.Role, id: role },
+            `${user.firstName} ${user.lastName} está solicitando un cambio de rol a ${selectedRole}`,
+            false,
+            user.profilePicture,
+            {
+              notificationType: NotificationTypes.Request,
+              clues: [request._id!],
+            }
+          );
+        });
+        handleClose();
+      });
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
     }
   }
   return (

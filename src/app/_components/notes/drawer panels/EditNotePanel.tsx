@@ -5,10 +5,16 @@ import { Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import styles from "@/app/_styles/notes/notesTest.module.css";
+<<<<<<< HEAD
 import { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+=======
+import { EventHandler, useEffect, useMemo, useRef, useState } from "react";
+import "react-quill/dist/quill.snow.css";
+import { useParams } from "next/navigation";
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
 // import ReactQuill from "react-quill";
 
 const modules = {
@@ -40,7 +46,11 @@ export default function EditNotePanel({
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
   );
+<<<<<<< HEAD
   function handleClick() {
+=======
+  async function handleClick() {
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
     if (title !== "" && stripTags(content) !== "") {
       let note: INote;
       if (selectedNote) {
@@ -57,6 +67,7 @@ export default function EditNotePanel({
         setContent("");
         setTitle("");
       }
+<<<<<<< HEAD
       toast
         .promise(saveNote(note), {
           pending: "Guardando nota...",
@@ -64,6 +75,10 @@ export default function EditNotePanel({
           error: "Ha ocurrido un error, por favor inténtalo nuevamente",
         })
         .then(() => trigger(true));
+=======
+      await saveNote(note);
+      trigger(true);
+>>>>>>> 8eea2ccdbe020cb45315b20374ed9dc1acc12758
     }
   }
   useEffect(() => {
