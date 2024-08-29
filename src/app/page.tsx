@@ -1,4 +1,4 @@
-'use client'
+"use client";
 //import Navbar from "@/components/navbar/Navbar";
 import PsiLayout from "@/app/_components/layout/PsiLayout";
 import Navbar from "./_components/navbar/Navbar";
@@ -34,9 +34,9 @@ async function Usuarios() {
 } */
 
 export default function Home() {
-  const {data:session, status} = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  
+
   useEffect(() => {
     function recurrente() {
       if (session) {
@@ -45,17 +45,17 @@ export default function Home() {
     }
     console.log("hola");
     recurrente();
-  }, [session, router])
+  }, [session, router]);
   //const servicio = await fetchServices();
   //const usuarios = await fetchUsers();
-  return(
-        <PsiLayout title="estumente" pageDescription="">
-        <Hero></Hero>
-        <Box sx={{ margin: "40px auto", padding: "0px 30px" }}>
+  return (
+    <PsiLayout title="estumente" pageDescription="">
+      <Hero></Hero>
+      <Box sx={{ margin: "40px auto", padding: "0px 30px" }}>
         {/* <Suspense fallback={<p>Cargando servicios</p>}>
           <Services/>
         </Suspense> */}
-        
+
         {/* <Suspense fallback={<p>Cargando usuarios</p>}>
           <Usuarios/>
         </Suspense> */}
@@ -78,10 +78,10 @@ export default function Home() {
         >
           {/* <NextLink href="/psicologos/" passHref>
             <Link> */}
-              <Button color="secondary" size="large" className="hero-btn">
-                Comienza aquí
-              </Button>
-            {/* </Link>
+          <Button color="secondary" size="large" className="hero-btn">
+            Comienza aquí
+          </Button>
+          {/* </Link>
           </NextLink> */}
         </Box>
       </Box>
@@ -114,15 +114,13 @@ export default function Home() {
         >
           {/* <NextLink href="/psicologo/registro" passHref>
             <Link> */}
-              <Button color="secondary" size="large" className="hero-btn">
-                Únete aquí
-              </Button>
-            {/* </Link>
+          <Button color="secondary" size="large" className="hero-btn">
+            Únete aquí
+          </Button>
+          {/* </Link>
           </NextLink> */}
         </Box>
       </Box>
-        </PsiLayout>
-        
-    
-  )
+    </PsiLayout>
+  );
 }
