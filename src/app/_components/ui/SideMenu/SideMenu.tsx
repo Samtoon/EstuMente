@@ -7,11 +7,7 @@ import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import NextLink from "next/link";
-import {
-  Avatar,
-  ListItemAvatar,
-  ListItemButton
-} from "@mui/material";
+import { Avatar, ListItemAvatar, ListItemButton } from "@mui/material";
 import {
   Build,
   LoginOutlined,
@@ -27,6 +23,8 @@ import ListCoordinator from "./Lists/ListCoordinator";
 import ListTutor from "./Lists/ListTutor";
 import MenuItem from "./MenuItem";
 import Roles from "@/app/_enums/Roles";
+import { SessionTimeContext } from "@/app/_contexts/SessionTimeContext";
+import { registerSessionTime } from "@/app/_utils/session-time";
 /*import { MenuItemPsychologist } from "./MenuItemPsychologist";
 import { ListPatient } from "./ListPatient";
 import { MenuItemAdmin } from "./MenuItemAdmin"; */
@@ -41,6 +39,7 @@ export const SideMenu = () => {
       router.push(url);
     }; */
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const { sessionTime, setSessionTime } = useContext(SessionTimeContext);
   const { data: session, status } = useSession();
   const role = session?.user.role;
 
@@ -52,14 +51,16 @@ export const SideMenu = () => {
       onClose={toggleSideMenu}
     >
       <Box sx={{ width: 250 }}>
-
         {session && (
           <div>
             <List>
               <ListItem>
                 <ListItemText primary={"Hola, " + session.user.firstName} />
                 <ListItemAvatar>
-                  <Avatar src={session.user.profilePicture} slotProps={{img: {referrerPolicy:"no-referrer"}}}/>
+                  <Avatar
+                    src={session.user.profilePicture}
+                    slotProps={{ img: { referrerPolicy: "no-referrer" } }}
+                  />
                 </ListItemAvatar>
               </ListItem>
             </List>
@@ -97,7 +98,13 @@ export const SideMenu = () => {
           <div>
             <Divider />
             <List>
-              <ListItemButton onClick={() => signOut({ callbackUrl: "/" })}>
+              <ListItemButton
+                onClick={() => {
+                  registerSessionTime(sessionTime!, session.user._id!);
+                  setSessionTime(undefined);
+                  signOut({ callbackUrl: "/" });
+                }}
+              >
                 <ListItemIcon>
                   <LogoutOutlined color="secondary" />
                 </ListItemIcon>
@@ -107,9 +114,7 @@ export const SideMenu = () => {
           </div>
         ) : (
           <List>
-            <ListItemButton
-              onClick={() => signIn("google")}
-            >
+            <ListItemButton onClick={() => signIn("google")}>
               <ListItemIcon>
                 <LoginOutlined color="secondary" />
               </ListItemIcon>
@@ -125,7 +130,7 @@ export const SideMenu = () => {
           </List>
         )}
         <MenuItem label="Pruebas" path="/pruebas">
-          <Build color="secondary"/>
+          <Build color="secondary" />
         </MenuItem>
       </Box>
     </Drawer>

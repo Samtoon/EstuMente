@@ -17,33 +17,41 @@ import { NotificationsNoneOutlined } from "@mui/icons-material";
 import NotificationsButton from "./notifications/NotificationsButton";
 import Roles from "@/app/_enums/Roles";
 import { SideMenu } from "../ui/SideMenu/SideMenu";
+import { SessionTimeContext } from "@/app/_contexts/SessionTimeContext";
+import { registerSessionTime } from "@/app/_utils/session-time";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
 
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const { sessionTime, setSessionTime } = useContext(SessionTimeContext);
   const { data: session, status } = useSession();
   useEffect(() => {
     if (session) {
-      console.log("useEffect por primera vez");
-      let startDate = new Date();
-      document.addEventListener("visibilitychange", (ev) => {
-        if (document.visibilityState === "hidden") {
-          const data = new FormData();
-          data.set("userId", session?.user._id ?? "");
-          data.set(
-            "timeSpent",
-            String(new Date().getTime() - startDate.getTime())
-          );
-          console.log("Me escondí");
-          navigator.sendBeacon("/api/session_time", data);
-        } else {
-          startDate = new Date();
-        }
-        console.log("startDate es:", startDate);
-      });
+      console.log("useEffect por primera vez, sessionTime es:", sessionTime);
+
+      if (sessionTime) {
+        const handleEvent = (ev: Event) => {
+          if (document.visibilityState === "hidden") {
+            registerSessionTime(sessionTime, session.user._id!);
+          } else {
+            setSessionTime(new Date());
+          }
+        };
+
+        document.addEventListener("visibilitychange", handleEvent);
+        return () => {
+          document.removeEventListener("visibilitychange", handleEvent);
+        };
+      }
     }
-  }, [session]);
+  }, [session, setSessionTime, sessionTime]);
+  useEffect(() => {
+    if (session) {
+      setSessionTime(new Date());
+      console.log("2do useEffect");
+    }
+  }, [session, setSessionTime]);
   function middleButton() {
     switch (session?.user.role) {
       case undefined:
