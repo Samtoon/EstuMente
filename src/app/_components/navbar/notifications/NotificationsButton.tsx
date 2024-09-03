@@ -37,10 +37,17 @@ export default function NotificationsButton() {
       pusherClient.bind("event", (notification: INotification) => {
         console.log("Ocurrió un cambio en el WebSocket, me llegó esto");
         console.log(notification);
-        setNotifications((prev) => [...prev, notification]);
+        if (notification) setNotifications((prev) => [...prev, notification]);
       });
       fetchNotificationsByUser(session?.user._id!, session?.user.role).then(
-        (notifications) => setNotifications(notifications)
+        (notifications) => {
+          console.log(
+            "Tengo",
+            notifications.length,
+            "notifiaciones del servidor"
+          );
+          setNotifications(notifications);
+        }
       );
       return () => {
         console.log("Me desuscribo");
