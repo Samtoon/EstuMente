@@ -41,14 +41,16 @@ export default function TutorsDataGrid({ tutors }: { tutors: IUser[] }) {
           apiRef.current.autosizeColumns();
         }}
       />
-      <TutorDialog
-        open={open}
-        handleClose={() => {
-          setOpen(false);
-          apiRef.current.autosizeColumns();
-        }}
-        tutor={tutors[selectedTutorIndex]}
-      />
+      {tutors.length && (
+        <TutorDialog
+          open={open}
+          handleClose={() => {
+            setOpen(false);
+            apiRef.current.autosizeColumns();
+          }}
+          tutor={tutors[selectedTutorIndex]}
+        />
+      )}
     </>
   );
 }
