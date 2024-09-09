@@ -36,7 +36,7 @@ export default function NotesDrawer({
   const [tabIndex, setTabIndex] = React.useState(0);
   const [shouldUpdate, setShouldUpdate] = useState(true);
   const [selectedNote, setSelectedNote] = useState<INote | undefined>(
-    undefined,
+    undefined
   );
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
