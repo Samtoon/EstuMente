@@ -2,7 +2,7 @@ import { NotificationsNoneOutlined } from "@mui/icons-material";
 import { Badge, IconButton, Popover } from "@mui/material";
 import React, { useEffect } from "react";
 import NotificationsList from "./NotificationsList";
-import { INotification } from "@/app/_interfaces/INotification";
+import { INotification, isNotification } from "@/app/_interfaces/INotification";
 import { useSession } from "next-auth/react";
 import {
   clearNotificationById,
@@ -37,7 +37,8 @@ export default function NotificationsButton() {
       pusherClient.bind("event", (notification: INotification) => {
         console.log("Ocurrió un cambio en el WebSocket, me llegó esto");
         console.log(notification);
-        if (notification) setNotifications((prev) => [...prev, notification]);
+        if (isNotification(notification))
+          setNotifications((prev) => [...prev, notification]);
       });
       fetchNotificationsByUser(session?.user._id!, session?.user.role).then(
         (notifications) => {

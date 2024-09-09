@@ -52,7 +52,6 @@ function Notas() {
             checkNote={searchNote}
             shouldUpdate={shouldUpdate}
             setShouldUpdate={setShouldUpdate}
-            filterPatient
           />
         </Box>
         <Box display="flex" flexGrow={1} className={styles["fill"]}>

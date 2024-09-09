@@ -18,3 +18,7 @@ export interface INotification {
     clues: string[];
   };
 }
+
+export function isNotification(object: any): object is INotification {
+  return "body" in object;
+}
