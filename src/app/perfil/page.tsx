@@ -21,7 +21,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (session) {
       hasPendingRequests(session.user._id!).then((value) =>
-        setPendingRequests(value)
+        setPendingRequests(value),
       );
     }
   }, [session, setPendingRequests]);

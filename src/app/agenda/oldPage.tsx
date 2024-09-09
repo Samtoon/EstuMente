@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
@@ -42,160 +42,160 @@ const ConfigureSchedulePage: NextPage = () => {
   const [checkedAfternoon, setCheckedAfternoon] = useState(false);
   const [checkedNight, setCheckedNight] = useState(false);
 
-  const {data: session, status} = useSession();
-//   const { user, isLoggedIn } = useContext(AuthContext);
+  const { data: session, status } = useSession();
+  //   const { user, isLoggedIn } = useContext(AuthContext);
   const [date, setDate] = useState<Date | number>(new Date());
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
   let id = "1";
-//   if (isLoggedIn) {
-//     id = user!._id;
-//   }
+  //   if (isLoggedIn) {
+  //     id = user!._id;
+  //   }
   if (session) {
     id = session.user._id!;
   }
 
-//   const { schedule, isLoading } = useSchedule(
-//     `/schedule/get-configure?psychologist=${id}&day=${format(
-//       date,
-//       "dd/MM/yyyy"
-//     )}`
-//   );
+  //   const { schedule, isLoading } = useSchedule(
+  //     `/schedule/get-configure?psychologist=${id}&day=${format(
+  //       date,
+  //       "dd/MM/yyyy"
+  //     )}`
+  //   );
 
   const [viewSchedule, setViewSchedule] = useState<string[]>([]);
   const [viewScheduledHours, setViewScheduledHours] = useState<string[]>([""]);
 
-//   useEffect(() => {
-//     if (schedule) {
-//       setViewSchedule(schedule.hours);
-//       if (schedule.scheduledHours !== undefined) {
-//         setViewScheduledHours(schedule.scheduledHours);
-//       }
-//     }
-//   }, [schedule]);
+  //   useEffect(() => {
+  //     if (schedule) {
+  //       setViewSchedule(schedule.hours);
+  //       if (schedule.scheduledHours !== undefined) {
+  //         setViewScheduledHours(schedule.scheduledHours);
+  //       }
+  //     }
+  //   }, [schedule]);
 
   const [hours, setHours] = useState(viewSchedule);
   const [hoursScheduled, setHoursScheduled] = useState(viewScheduledHours);
 
-//   const handleChangeHours = (
-//     event: React.MouseEvent<HTMLElement>,
-//     newHours: string[]
-//   ) => {
-//     setHours(newHours);
+  //   const handleChangeHours = (
+  //     event: React.MouseEvent<HTMLElement>,
+  //     newHours: string[]
+  //   ) => {
+  //     setHours(newHours);
 
-//     containsAll(morning, newHours)
-//       ? setCheckedMorning(true)
-//       : setCheckedMorning(false);
+  //     containsAll(morning, newHours)
+  //       ? setCheckedMorning(true)
+  //       : setCheckedMorning(false);
 
-//     containsAll(afternoon, newHours)
-//       ? setCheckedAfternoon(true)
-//       : setCheckedAfternoon(false);
+  //     containsAll(afternoon, newHours)
+  //       ? setCheckedAfternoon(true)
+  //       : setCheckedAfternoon(false);
 
-//     containsAll(night, newHours)
-//       ? setCheckedNight(true)
-//       : setCheckedNight(false);
-//   };
+  //     containsAll(night, newHours)
+  //       ? setCheckedNight(true)
+  //       : setCheckedNight(false);
+  //   };
 
-//   const handleViewHours = () => {
-//     setHours(viewSchedule);
-//     setHoursScheduled(viewScheduledHours);
-//     setDisabled(false);
+  //   const handleViewHours = () => {
+  //     setHours(viewSchedule);
+  //     setHoursScheduled(viewScheduledHours);
+  //     setDisabled(false);
 
-//     containsAll(morning, viewSchedule)
-//       ? setCheckedMorning(true)
-//       : setCheckedMorning(false);
+  //     containsAll(morning, viewSchedule)
+  //       ? setCheckedMorning(true)
+  //       : setCheckedMorning(false);
 
-//     containsAll(afternoon, viewSchedule)
-//       ? setCheckedAfternoon(true)
-//       : setCheckedAfternoon(false);
+  //     containsAll(afternoon, viewSchedule)
+  //       ? setCheckedAfternoon(true)
+  //       : setCheckedAfternoon(false);
 
-//     containsAll(night, viewSchedule)
-//       ? setCheckedNight(true)
-//       : setCheckedNight(false);
-//   };
+  //     containsAll(night, viewSchedule)
+  //       ? setCheckedNight(true)
+  //       : setCheckedNight(false);
+  //   };
 
-//   const handleSave = async () => {
-//     const psychologist = user!._id;
-//     const day = format(date, "dd/MM/yyyy");
-//     const newSchedule = hours;
+  //   const handleSave = async () => {
+  //     const psychologist = user!._id;
+  //     const day = format(date, "dd/MM/yyyy");
+  //     const newSchedule = hours;
 
-//     try {
-//       setLoading(true);
-//       await psiApi.post("/schedule", { psychologist, day, hours });
-//       setLoading(false);
-//       toast.success("Agenda configurada con éxito", {
-//         position: toast.POSITION.BOTTOM_CENTER,
-//       });
-//       setViewSchedule(newSchedule);
-//     } catch (error) {
-//       console.log(error);
-//       setLoading(false);
-//       toast.error("No fue posible crear la agenda", {
-//         position: toast.POSITION.BOTTOM_CENTER,
-//       });
-//     }
-//   };
+  //     try {
+  //       setLoading(true);
+  //       await psiApi.post("/schedule", { psychologist, day, hours });
+  //       setLoading(false);
+  //       toast.success("Agenda configurada con éxito", {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //       setViewSchedule(newSchedule);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setLoading(false);
+  //       toast.error("No fue posible crear la agenda", {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //     }
+  //   };
 
-//   const handleEdit = async () => {
-//     setDisabled(true);
-//     const psychologist = user!._id;
-//     const day = format(date, "dd/MM/yyyy");
-//     const newSchedule = hours;
+  //   const handleEdit = async () => {
+  //     setDisabled(true);
+  //     const psychologist = user!._id;
+  //     const day = format(date, "dd/MM/yyyy");
+  //     const newSchedule = hours;
 
-//     try {
-//       setLoading(true);
-//       await psiApi.put("/schedule", { psychologist, day, hours });
-//       setLoading(false);
-//       setDisabled(false);
-//       toast.success("Agenda actualizada con éxito", {
-//         position: toast.POSITION.BOTTOM_CENTER,
-//       });
-//       setViewSchedule(newSchedule);
-//     } catch (error) {
-//       console.log(error);
-//       setLoading(false);
-//       setDisabled(false);
-//       toast.error("No fue posible actualizar la agenda", {
-//         position: toast.POSITION.BOTTOM_CENTER,
-//       });
-//     }
-//   };
+  //     try {
+  //       setLoading(true);
+  //       await psiApi.put("/schedule", { psychologist, day, hours });
+  //       setLoading(false);
+  //       setDisabled(false);
+  //       toast.success("Agenda actualizada con éxito", {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //       setViewSchedule(newSchedule);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setLoading(false);
+  //       setDisabled(false);
+  //       toast.error("No fue posible actualizar la agenda", {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //     }
+  //   };
 
-//   const handleCheckedMorning = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setCheckedMorning(event.target.checked);
-//     if (!checkedMorning) {
-//       const newHours = mergeArray(morning, hours);
-//       setHours(removeArray(newHours, hoursScheduled));
-//     } else {
-//       const arrayFlitered = removeArray(hours, morning);
-//       setHours(arrayFlitered);
-//     }
-//   };
+  //   const handleCheckedMorning = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setCheckedMorning(event.target.checked);
+  //     if (!checkedMorning) {
+  //       const newHours = mergeArray(morning, hours);
+  //       setHours(removeArray(newHours, hoursScheduled));
+  //     } else {
+  //       const arrayFlitered = removeArray(hours, morning);
+  //       setHours(arrayFlitered);
+  //     }
+  //   };
 
-//   const handleCheckedAfternoon = (
-//     event: React.ChangeEvent<HTMLInputElement>
-//   ) => {
-//     setCheckedAfternoon(event.target.checked);
-//     if (!checkedAfternoon) {
-//       const newHours = mergeArray(afternoon, hours);
-//       setHours(removeArray(newHours, hoursScheduled));
-//     } else {
-//       const arrayFlitered = removeArray(hours, afternoon);
-//       setHours(arrayFlitered);
-//     }
-//   };
+  //   const handleCheckedAfternoon = (
+  //     event: React.ChangeEvent<HTMLInputElement>
+  //   ) => {
+  //     setCheckedAfternoon(event.target.checked);
+  //     if (!checkedAfternoon) {
+  //       const newHours = mergeArray(afternoon, hours);
+  //       setHours(removeArray(newHours, hoursScheduled));
+  //     } else {
+  //       const arrayFlitered = removeArray(hours, afternoon);
+  //       setHours(arrayFlitered);
+  //     }
+  //   };
 
-//   const handleCheckedNight = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setCheckedNight(event.target.checked);
-//     if (!checkedNight) {
-//       const newHours = mergeArray(night, hours);
-//       setHours(removeArray(newHours, hoursScheduled));
-//     } else {
-//       const arrayFlitered = removeArray(hours, night);
-//       setHours(arrayFlitered);
-//     }
-//   };
+  //   const handleCheckedNight = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setCheckedNight(event.target.checked);
+  //     if (!checkedNight) {
+  //       const newHours = mergeArray(night, hours);
+  //       setHours(removeArray(newHours, hoursScheduled));
+  //     } else {
+  //       const arrayFlitered = removeArray(hours, night);
+  //       setHours(arrayFlitered);
+  //     }
+  //   };
 
   return (
     <PsychologistLayout
@@ -246,463 +246,463 @@ const ConfigureSchedulePage: NextPage = () => {
         {/* {isLoading ? (
           <ScreenLoading />
         ) : ( */}
-          <Box
-            sx={{ m: { xs: "0", sm: "0 5rem", md: "0 10rem", lg: "0 20rem" } }}
-          >
-            <Grid container spacing={3}>
-              <Grid
-                item
-                xs={4}
-                sm={4}
-                container
-                direction="column"
-                alignItems="stretch"
-              >
-                <Typography variant="h6" align="center" gutterBottom>
-                  Mañana
-                </Typography>
-                <Switch
-                  color="secondary"
-                  checked={checkedMorning}
-                  // onChange={handleCheckedMorning}
-                  inputProps={{ "aria-label": "controlled" }}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                />
-
-                <ToggleButtonGroup
-                  orientation="vertical"
-                  size="small"
-                  color="secondary"
-                  value={hours}
-                  // onChange={handleChangeHours}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                >
-                  <ToggleButton
-                    value={"07:00"}
-                    disabled={
-                      hoursScheduled.indexOf("07:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("07:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    7:00 am
-                  </ToggleButton>
-
-                  <ToggleButton
-                    value={"08:00"}
-                    disabled={
-                      hoursScheduled.indexOf("08:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("08:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    8:00 am
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"09:00"}
-                    disabled={
-                      hoursScheduled.indexOf("09:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("09:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    9:00 am
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"10:00"}
-                    disabled={
-                      hoursScheduled.indexOf("10:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("10:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    10:00 am
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"11:00"}
-                    disabled={
-                      hoursScheduled.indexOf("11:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("11:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    11:00 am
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"12:00"}
-                    disabled={
-                      hoursScheduled.indexOf("12:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("12:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    12:00 m
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Grid>
-              <Grid
-                item
-                xs={4}
-                sm={4}
-                container
-                direction="column"
-                alignItems="stretch"
-              >
-                <Typography variant="h6" align="center" gutterBottom>
-                  Tarde
-                </Typography>
-                <Switch
-                  color="secondary"
-                  checked={checkedAfternoon}
-                  // onChange={handleCheckedAfternoon}
-                  inputProps={{ "aria-label": "controlled" }}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                />
-                <ToggleButtonGroup
-                  orientation="vertical"
-                  size="small"
-                  color="secondary"
-                  value={hours}
-                  // onChange={handleChangeHours}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                >
-                  <ToggleButton
-                    value={"13:00"}
-                    disabled={
-                      hoursScheduled.indexOf("13:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("13:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    1:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"14:00"}
-                    disabled={
-                      hoursScheduled.indexOf("14:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("14:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    2:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"15:00"}
-                    disabled={
-                      hoursScheduled.indexOf("15:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("15:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    3:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"16:00"}
-                    disabled={
-                      hoursScheduled.indexOf("16:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("16:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    4:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"17:00"}
-                    disabled={
-                      hoursScheduled.indexOf("17:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("17:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    5:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"18:00"}
-                    disabled={
-                      hoursScheduled.indexOf("18:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("18:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    6:00 pm
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Grid>
-              <Grid
-                item
-                xs={4}
-                sm={4}
-                container
-                direction="column"
-                alignItems="stretch"
-              >
-                <Typography variant="h6" align="center" gutterBottom>
-                  Noche
-                </Typography>
-                <Switch
-                  color="secondary"
-                  checked={checkedNight}
-                  // onChange={handleCheckedNight}
-                  inputProps={{ "aria-label": "controlled" }}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                />
-                <ToggleButtonGroup
-                  orientation="vertical"
-                  size="small"
-                  color="secondary"
-                  value={hours}
-                  // onChange={handleChangeHours}
-                  disabled={viewSchedule.length === 0 ? false : disabled}
-                >
-                  <ToggleButton
-                    value={"19:00"}
-                    disabled={
-                      hoursScheduled.indexOf("19:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("19:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    7:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"20:00"}
-                    disabled={
-                      hoursScheduled.indexOf("20:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("20:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    8:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"21:00"}
-                    disabled={
-                      hoursScheduled.indexOf("21:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("21:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    9:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"22:00"}
-                    disabled={
-                      hoursScheduled.indexOf("22:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("22:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    10:00 pm
-                  </ToggleButton>
-                  <ToggleButton
-                    value={"23:00"}
-                    disabled={
-                      hoursScheduled.indexOf("23:00") === -1 ? false : true
-                    }
-                  >
-                    <EventAvailable
-                      color="secondary"
-                      sx={{
-                        display:
-                          hoursScheduled.indexOf("23:00") === -1
-                            ? "none"
-                            : "flex",
-                        mr: 0.2,
-                        fontSize: 18,
-                      }}
-                    />
-                    11:00 pm
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Grid>
-            </Grid>
-
-            <Box
-              display="flex"
-              flexDirection="column"
-              sx={{ alignItems: "center", justifyContent: "center" }}
+        <Box
+          sx={{ m: { xs: "0", sm: "0 5rem", md: "0 10rem", lg: "0 20rem" } }}
+        >
+          <Grid container spacing={3}>
+            <Grid
+              item
+              xs={4}
+              sm={4}
+              container
+              direction="column"
+              alignItems="stretch"
             >
-              {viewSchedule.length === 0 ? (
-                <Button
-                  size="large"
-                  color="secondary"
-                  sx={{ mt: 3 }}
-                  // onClick={handleSave}
-                  disabled={loading}
+              <Typography variant="h6" align="center" gutterBottom>
+                Mañana
+              </Typography>
+              <Switch
+                color="secondary"
+                checked={checkedMorning}
+                // onChange={handleCheckedMorning}
+                inputProps={{ "aria-label": "controlled" }}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              />
+
+              <ToggleButtonGroup
+                orientation="vertical"
+                size="small"
+                color="secondary"
+                value={hours}
+                // onChange={handleChangeHours}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              >
+                <ToggleButton
+                  value={"07:00"}
+                  disabled={
+                    hoursScheduled.indexOf("07:00") === -1 ? false : true
+                  }
                 >
-                  {loading && (
-                    <CircularProgress
-                      size={30}
-                      sx={{ position: "absolute" }}
-                      color="secondary"
-                    />
-                  )}
-                  Guardar
-                </Button>
-              ) : (
-                <Button
-                  size="large"
-                  color="secondary"
-                  sx={{ mt: 3 }}
-                  disabled={disabled}
-                  // onClick={handleEdit}
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("07:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  7:00 am
+                </ToggleButton>
+
+                <ToggleButton
+                  value={"08:00"}
+                  disabled={
+                    hoursScheduled.indexOf("08:00") === -1 ? false : true
+                  }
                 >
-                  {loading && (
-                    <CircularProgress
-                      size={30}
-                      sx={{ position: "absolute" }}
-                      color="secondary"
-                    />
-                  )}
-                  Editar
-                </Button>
-              )}
-            </Box>
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("08:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  8:00 am
+                </ToggleButton>
+                <ToggleButton
+                  value={"09:00"}
+                  disabled={
+                    hoursScheduled.indexOf("09:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("09:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  9:00 am
+                </ToggleButton>
+                <ToggleButton
+                  value={"10:00"}
+                  disabled={
+                    hoursScheduled.indexOf("10:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("10:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  10:00 am
+                </ToggleButton>
+                <ToggleButton
+                  value={"11:00"}
+                  disabled={
+                    hoursScheduled.indexOf("11:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("11:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  11:00 am
+                </ToggleButton>
+                <ToggleButton
+                  value={"12:00"}
+                  disabled={
+                    hoursScheduled.indexOf("12:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("12:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  12:00 m
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              sm={4}
+              container
+              direction="column"
+              alignItems="stretch"
+            >
+              <Typography variant="h6" align="center" gutterBottom>
+                Tarde
+              </Typography>
+              <Switch
+                color="secondary"
+                checked={checkedAfternoon}
+                // onChange={handleCheckedAfternoon}
+                inputProps={{ "aria-label": "controlled" }}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              />
+              <ToggleButtonGroup
+                orientation="vertical"
+                size="small"
+                color="secondary"
+                value={hours}
+                // onChange={handleChangeHours}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              >
+                <ToggleButton
+                  value={"13:00"}
+                  disabled={
+                    hoursScheduled.indexOf("13:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("13:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  1:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"14:00"}
+                  disabled={
+                    hoursScheduled.indexOf("14:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("14:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  2:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"15:00"}
+                  disabled={
+                    hoursScheduled.indexOf("15:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("15:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  3:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"16:00"}
+                  disabled={
+                    hoursScheduled.indexOf("16:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("16:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  4:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"17:00"}
+                  disabled={
+                    hoursScheduled.indexOf("17:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("17:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  5:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"18:00"}
+                  disabled={
+                    hoursScheduled.indexOf("18:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("18:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  6:00 pm
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              sm={4}
+              container
+              direction="column"
+              alignItems="stretch"
+            >
+              <Typography variant="h6" align="center" gutterBottom>
+                Noche
+              </Typography>
+              <Switch
+                color="secondary"
+                checked={checkedNight}
+                // onChange={handleCheckedNight}
+                inputProps={{ "aria-label": "controlled" }}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              />
+              <ToggleButtonGroup
+                orientation="vertical"
+                size="small"
+                color="secondary"
+                value={hours}
+                // onChange={handleChangeHours}
+                disabled={viewSchedule.length === 0 ? false : disabled}
+              >
+                <ToggleButton
+                  value={"19:00"}
+                  disabled={
+                    hoursScheduled.indexOf("19:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("19:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  7:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"20:00"}
+                  disabled={
+                    hoursScheduled.indexOf("20:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("20:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  8:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"21:00"}
+                  disabled={
+                    hoursScheduled.indexOf("21:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("21:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  9:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"22:00"}
+                  disabled={
+                    hoursScheduled.indexOf("22:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("22:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  10:00 pm
+                </ToggleButton>
+                <ToggleButton
+                  value={"23:00"}
+                  disabled={
+                    hoursScheduled.indexOf("23:00") === -1 ? false : true
+                  }
+                >
+                  <EventAvailable
+                    color="secondary"
+                    sx={{
+                      display:
+                        hoursScheduled.indexOf("23:00") === -1
+                          ? "none"
+                          : "flex",
+                      mr: 0.2,
+                      fontSize: 18,
+                    }}
+                  />
+                  11:00 pm
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+          </Grid>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            sx={{ alignItems: "center", justifyContent: "center" }}
+          >
+            {viewSchedule.length === 0 ? (
+              <Button
+                size="large"
+                color="secondary"
+                sx={{ mt: 3 }}
+                // onClick={handleSave}
+                disabled={loading}
+              >
+                {loading && (
+                  <CircularProgress
+                    size={30}
+                    sx={{ position: "absolute" }}
+                    color="secondary"
+                  />
+                )}
+                Guardar
+              </Button>
+            ) : (
+              <Button
+                size="large"
+                color="secondary"
+                sx={{ mt: 3 }}
+                disabled={disabled}
+                // onClick={handleEdit}
+              >
+                {loading && (
+                  <CircularProgress
+                    size={30}
+                    sx={{ position: "absolute" }}
+                    color="secondary"
+                  />
+                )}
+                Editar
+              </Button>
+            )}
           </Box>
+        </Box>
         {/* )} */}
       </Box>
     </PsychologistLayout>

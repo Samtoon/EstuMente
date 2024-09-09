@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { FC } from "react";
 // import { useRouter } from "next/router";
 // import {
@@ -30,14 +30,13 @@ interface Props {
 const genders = ["Hombres", "Mujeres", "No tengo preferencia"];
 
 export const Search: FC<Props> = ({ onQueryChange }) => {
-
   // const { psychologistsList } = usePsychologistList("/psychologists");
 
   // const { specialtiesList } = useSpecialtiesList("/specialties");
 
   const [selected, setSelected] = React.useState(false);
 
-  const [search, setSearch] = React.useState('nombre');
+  const [search, setSearch] = React.useState("nombre");
 
   // const handleChange = (
   //   event: React.MouseEvent<HTMLElement>,
@@ -45,7 +44,7 @@ export const Search: FC<Props> = ({ onQueryChange }) => {
   // ) => {
   //   if (newSearch !== null) {
   //     setSearch(newSearch);
-  //   }  
+  //   }
   // };
 
   // const onSearchTerm = (
@@ -53,11 +52,11 @@ export const Search: FC<Props> = ({ onQueryChange }) => {
   // ) => {
   //   //router.push(`/psicologos/buscar/${searchTerm}`);
   //   if(!searchTerm) {
-  //     onQueryChange("") 
+  //     onQueryChange("")
   //   } else {
-  //     onQueryChange(searchTerm) 
+  //     onQueryChange(searchTerm)
   //   }
-      
+
   // };
 
   return (
@@ -125,27 +124,42 @@ export const Search: FC<Props> = ({ onQueryChange }) => {
                   setSelected(!selected);
                 }}
               >
-                {selected ? <Check color="secondary"/> : <Tune color="secondary"/> }
+                {selected ? (
+                  <Check color="secondary" />
+                ) : (
+                  <Tune color="secondary" />
+                )}
               </ToggleButton>
             </Stack>
           </Grid>
-          {selected && <Grid item xs={12}>
-            <Stack direction="row" spacing={2}>
-              <ToggleButtonGroup
-                color="secondary"
-                value={search}
-                exclusive
-                // onChange={handleChange}
-                size="small"
-                sx={{textTransform: "none"}}
-                fullWidth
-              >
-                <ToggleButton value="nombre" sx={{textTransform: "none"}}>Nombre</ToggleButton>
-                <ToggleButton value="especialidad" sx={{textTransform: "none"}}>Especialidad</ToggleButton>
-                <ToggleButton value="genero" sx={{textTransform: "none"}}>Género</ToggleButton>
-              </ToggleButtonGroup>
-            </Stack>
-          </Grid>}
+          {selected && (
+            <Grid item xs={12}>
+              <Stack direction="row" spacing={2}>
+                <ToggleButtonGroup
+                  color="secondary"
+                  value={search}
+                  exclusive
+                  // onChange={handleChange}
+                  size="small"
+                  sx={{ textTransform: "none" }}
+                  fullWidth
+                >
+                  <ToggleButton value="nombre" sx={{ textTransform: "none" }}>
+                    Nombre
+                  </ToggleButton>
+                  <ToggleButton
+                    value="especialidad"
+                    sx={{ textTransform: "none" }}
+                  >
+                    Especialidad
+                  </ToggleButton>
+                  <ToggleButton value="genero" sx={{ textTransform: "none" }}>
+                    Género
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </Stack>
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </Box>

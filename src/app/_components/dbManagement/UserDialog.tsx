@@ -52,7 +52,7 @@ export default function UserDialog({
     }));
   let newAssignedUsers: typeof assignedUsers;
   const baseResponsibleUser = indexedUsers.find(
-    (user) => user._id === dbUser?.responsibleUser
+    (user) => user._id === dbUser?.responsibleUser,
   );
   const responsibleUser = baseResponsibleUser && {
     id: baseResponsibleUser?._id,
@@ -85,7 +85,7 @@ export default function UserDialog({
         assignedUsers.map((user) => {
           users[user.index].responsibleUser = undefined;
           return saveUserById(user.id!, { $unset: { responsibleUser: 1 } });
-        })
+        }),
       )
         .then(() =>
           Promise.all(
@@ -93,8 +93,8 @@ export default function UserDialog({
               const newId = dbUser?._id;
               users[user.index].responsibleUser = newId;
               return saveUserById(user.id!, { responsibleUser: newId });
-            })
-          )
+            }),
+          ),
         )
         .then(() => {
           console.log(users);
@@ -110,7 +110,7 @@ export default function UserDialog({
       if (index !== undefined) users[index].responsibleUser = newId;
       saveUserById(
         dbUser._id!,
-        newId ? { responsibleUser: newId } : { $unset: { responsibleUser: 1 } }
+        newId ? { responsibleUser: newId } : { $unset: { responsibleUser: 1 } },
       ).then(() => setEditingResponsibleUser(false));
       console.log(users);
     } else {

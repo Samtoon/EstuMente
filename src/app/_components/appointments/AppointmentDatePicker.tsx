@@ -46,7 +46,7 @@ function reducer(state: IState, action: IAction): IState {
       const availableHours = getAvailableHours(
         action.body as Date,
         state.appointments!,
-        action.schedule!
+        action.schedule!,
       );
       console.log("Las horas son:");
       console.log(availableHours);
@@ -66,7 +66,7 @@ function reducer(state: IState, action: IAction): IState {
         availableHours: getAvailableHours(
           state.date!,
           action.appointments!,
-          action.schedule!
+          action.schedule!,
         ),
         appointments: action.appointments!,
       };
@@ -150,7 +150,7 @@ export default function AppointmentDatePicker({
                   <MenuItem value={index} key={`opcion${index}`}>
                     {new Hour(index).getString()}
                   </MenuItem>
-                )
+                ),
             )}
           </Select>
         </FormControl>
@@ -166,13 +166,13 @@ export default function AppointmentDatePicker({
                 scheduleAppointment(
                   user._id!,
                   schedule.psychologist as string,
-                  state.date!
+                  state.date!,
                 ),
                 {
                   pending: "Programando cita...",
                   success: "Cita programada con éxito",
                   error: "Ha ocurrido un error, por favor inténtalo nuevamente",
-                }
+                },
               )
               .then((appointment) => {
                 appointments.push(appointment);
@@ -186,7 +186,7 @@ export default function AppointmentDatePicker({
               { type: ReceiverTypes.User, id: psychologist.user as string },
               `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
               true,
-              user.profilePicture
+              user.profilePicture,
             );
           }}
         >

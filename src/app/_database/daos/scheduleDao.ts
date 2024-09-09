@@ -15,13 +15,13 @@ export async function getScheduleByPsychologist(psychologist: string) {
 
 export async function updateScheduleByPsychologist(
   psychologist: string,
-  schedule: IDay[]
+  schedule: IDay[],
 ) {
   await connect();
   await Schedule.updateOne(
     { psychologist: psychologist },
     { days: schedule },
-    { upsert: true }
+    { upsert: true },
   );
 }
 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import Button from "@mui/material/Button/Button";
 import Link from "@mui/material/Link/Link";
@@ -11,11 +10,13 @@ const backgroundImage = "/images/banner.jpg";
 
 export const Hero = () => {
   return (
-      <HeroLayout sxBackground={{
+    <HeroLayout
+      sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundColor: "#7fc7d9", // Average color of the background image.
         backgroundPosition: "center",
-      }}>
+      }}
+    >
       <Typography
         color="inherit"
         align="center"
@@ -34,14 +35,12 @@ export const Hero = () => {
       >
         Sanando Juntos
       </Typography>
-        
-        <NextLink href="/" passHref>
+
+      <NextLink href="/" passHref>
         <Button color="secondary" size="large" className="hero-btn">
-            Comienza aquí
-          </Button>
-        </NextLink>
-          
-        
+          Comienza aquí
+        </Button>
+      </NextLink>
     </HeroLayout>
   );
 };

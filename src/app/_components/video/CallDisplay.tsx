@@ -33,7 +33,7 @@ export default function CallDisplay({
       `/citas${
         session?.user.role === Roles.Tutor &&
         `?psychologist=${appointment.psychologist}`
-      }`
+      }`,
     );
   if (
     !leaving &&

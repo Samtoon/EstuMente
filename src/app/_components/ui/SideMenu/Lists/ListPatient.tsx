@@ -1,6 +1,12 @@
 import React, { useContext } from "react";
 import { UiContext } from "@/app/_contexts/ui/UiContext";
-import { Divider, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import {
   AccountCircleOutlined,
   DateRangeOutlined,
@@ -29,4 +35,4 @@ export default function ListPatient() {
       </MenuItem>
     </List>
   );
-};
+}

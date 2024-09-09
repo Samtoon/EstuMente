@@ -14,8 +14,8 @@ export async function POST(req: Request) {
     console.log(
       `La sesión duró ${formatDuration(
         intervalToDuration({ start: 0, end: Number(timeSpent) }),
-        { locale: es }
-      )}`
+        { locale: es },
+      )}`,
     );
     updateUserById(String(userId), {
       $inc: { totalTimeSpent: Number(timeSpent) },

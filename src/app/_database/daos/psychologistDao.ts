@@ -14,7 +14,7 @@ export async function getPsychologists() {
 export async function getPsychologistsByTutor(tutorId: string) {
   await connect();
   const psychologists = await Psychologist.aggregate(
-    getPsychologistsByTutorPipeline(tutorId)
+    getPsychologistsByTutorPipeline(tutorId),
   );
   return serialize(psychologists) as IPsychologist[];
 }
@@ -41,7 +41,7 @@ export async function getPsychologistByUser(user: string) {
 
 export async function updatePsychologistByUser(
   user: string,
-  psychologist: IPsychologist
+  psychologist: IPsychologist,
 ) {
   await connect();
   const result = await Psychologist.updateOne({ user: user }, psychologist);

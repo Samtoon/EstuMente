@@ -24,7 +24,7 @@ export default async function PsychologistDisplay({
   const service = "Servicio";
   const date = new Date(2014, 4, 18);
   const appointments = await getUpcomingAppointmentsByPsychologist(
-    psychologist._id!
+    psychologist._id!,
   );
   const schedule = await getScheduleById(psychologist._id!);
   console.log("psychologist es:");

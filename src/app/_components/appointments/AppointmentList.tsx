@@ -17,7 +17,7 @@ interface Props {
 export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
   function helper(
     appointmentLeft: IUpcomingAppointment | IPreviousAppointment,
-    appointmentRight: IUpcomingAppointment | IPreviousAppointment
+    appointmentRight: IUpcomingAppointment | IPreviousAppointment,
   ) {
     const a = new Date(appointmentLeft.date);
     const b = new Date(appointmentRight.date);
@@ -30,7 +30,7 @@ export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
     <Grid container spacing={4}>
       {appointments.map(async (appointment) => {
         const psychologist = await getPsychologistById(
-          appointment.psychologist
+          appointment.psychologist,
         );
         console.log(`Psicólogo: ${psychologist}`);
         const user = await getUserById(appointment.patient);

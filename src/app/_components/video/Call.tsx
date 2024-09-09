@@ -9,11 +9,11 @@ import { noteTheme } from "@/app/_themes/note-theme";
 import NotesDrawer from "../notes/NotesDrawer";
 
 interface Props {
-  room: any,
-  setRoom: any,
-  appointmentId: string,
-  refreshData: any,
-  token: string,
+  room: any;
+  setRoom: any;
+  appointmentId: string;
+  refreshData: any;
+  token: string;
 }
 
 export const Call: FC<Props> = ({
@@ -66,7 +66,8 @@ export const Call: FC<Props> = ({
 
       let participants;
       try {
-        newCallFrame.join({ url: room, token: token })
+        newCallFrame
+          .join({ url: room, token: token })
           .then((value) => console.log(value))
           .catch((reason) => console.log(reason))
           .catch((error) => console.log(error));
@@ -115,7 +116,13 @@ export const Call: FC<Props> = ({
           {session?.psychologist && (
             <>
               <ThemeProvider theme={noteTheme}>
-                <IconButton disabled={open} color="primary" id="button-notes" size="large" onClick={() => setOpen(true)}>
+                <IconButton
+                  disabled={open}
+                  color="primary"
+                  id="button-notes"
+                  size="large"
+                  onClick={() => setOpen(true)}
+                >
                   <Note />
                 </IconButton>
               </ThemeProvider>

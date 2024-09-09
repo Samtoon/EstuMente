@@ -9,7 +9,7 @@ async function connect() {
     console.log("No existe una conexión, intentando crear una...");
     try {
       await mongoose.connect(process.env.DB_URL!);
-      console.log("Conexión exitosa")
+      console.log("Conexión exitosa");
     } catch (error) {
       console.log(error);
     }
@@ -25,8 +25,6 @@ function myFunction(service: any) {
 function fullName(user: any) {
   return user.email;
 }
-
-
 
 async function fetchServices() {
   await connect();
@@ -50,7 +48,7 @@ async function fetchPsychologists() {
   psychologists.forEach((psychologist) => {
     psychologist._id = psychologist._id.toString();
     psychologist.user = psychologist.user.toString();
-  })
+  });
   return psychologists;
 }
 

@@ -93,13 +93,13 @@ export default function RequestTable({ requests }: { requests: IRequest[] }) {
                     setLoading(true);
                     Promise.all([
                       fetchUserById(requests[index].user).then((foundUser) =>
-                        setUser(foundUser)
+                        setUser(foundUser),
                       ),
                       fetch(
                         process.env.NEXT_PUBLIC_BASE_URL +
                           FILES +
                           "/" +
-                          requests[index].supportingDocumentId
+                          requests[index].supportingDocumentId,
                       )
                         .then((response) => {
                           console.log(response);

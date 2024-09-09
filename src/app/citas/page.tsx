@@ -36,7 +36,7 @@ const AppointmentPage = async ({
           : [];
       case Roles.Practicante:
         return getUpcomingAppointmentsByPsychologist(
-          session?.psychologist?._id!
+          session?.psychologist?._id!,
         );
       case Roles.Consultante:
         return getUpcomingAppointmentsByPatient(session?.user._id!);

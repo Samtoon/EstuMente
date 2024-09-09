@@ -38,7 +38,7 @@ export default function EditNotePanel({
   const [title, setTitle] = useState("");
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
+    [],
   );
   function handleClick() {
     if (title !== "" && stripTags(content) !== "") {

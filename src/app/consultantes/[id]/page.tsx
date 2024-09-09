@@ -26,7 +26,7 @@ const PatientInfoPage: NextPage<Props> = async ({ params }) => {
   const patient = await getUserById(params.id);
   const appointments = await getPreviousAppointmentsByPatientAndPsychologist(
     params.id,
-    session?.psychologist?._id!
+    session?.psychologist?._id!,
   );
   return (
     <PsychologistLayout

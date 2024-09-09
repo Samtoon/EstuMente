@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { Theme, styled } from "@mui/material/styles";
 import { SxProps } from "@mui/system";
@@ -34,7 +34,7 @@ interface ProductHeroLayoutProps {
 }
 
 export const HeroLayout = (
-  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps
+  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps,
 ) => {
   const { sxBackground, children } = props;
 

@@ -58,7 +58,7 @@ const ScheduleAppointmentPage: NextPage<Props> = (
   {
     //   psychologist,
     //   services,
-  }
+  },
 ) => {
   const router = useRouter();
   //   const { user, isLoggedIn } = useContext(AuthContext);
@@ -100,14 +100,14 @@ const ScheduleAppointmentPage: NextPage<Props> = (
 
   const handleChangeHour = (
     event: React.MouseEvent<HTMLElement>,
-    newHour: string | null
+    newHour: string | null,
   ) => {
     setHour(newHour);
   };
 
   const handleChangeService = (
     event: React.MouseEvent<HTMLElement>,
-    newService: string | null
+    newService: string | null,
   ) => {
     // setService(newService);
     // if (newService) {

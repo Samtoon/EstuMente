@@ -22,7 +22,7 @@ export const addAgePipeline: PipelineStage[] = [
 
 export function filterUsersByRolePipeline(
   filter: PsychologistFilters,
-  role: Roles
+  role: Roles,
 ) {
   const pipeline: PipelineStage[] = [
     {

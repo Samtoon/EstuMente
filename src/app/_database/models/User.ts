@@ -54,7 +54,7 @@ const userSchema = new Schema<IUser>(
     responsibleUser: Schema.Types.ObjectId,
     totalTimeSpent: { type: Number, default: 0, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.index({ firstName: "text", lastName: "text" });

@@ -33,7 +33,7 @@ const HomePagePatient: NextPage = () => {
           Sanando Juntos
         </Typography>
       </Box>
-      <TestLayout title={Roles.Consultante}/>
+      <TestLayout title={Roles.Consultante} />
     </PatientLayout>
   );
 };

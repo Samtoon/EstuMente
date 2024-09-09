@@ -10,7 +10,7 @@ import { IReportResult } from "@/app/_interfaces/IReportResult";
 import mongoose from "mongoose";
 
 export async function getPreviousAppointmentsByPsychologist(
-  psychologist: string
+  psychologist: string,
 ) {
   await connect();
   const appointments = await PreviousAppointment.find({
@@ -29,7 +29,7 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
 
 export async function getPreviousAppointmentsByPatientAndPsychologist(
   patient: string,
-  psychologist: string
+  psychologist: string,
 ) {
   await connect();
   const appointments = await PreviousAppointment.find({
@@ -46,7 +46,7 @@ export async function getPreviousAppointmentById(id: string) {
 }
 
 export async function createPreviousAppointment(
-  appointment: IPreviousAppointment
+  appointment: IPreviousAppointment,
 ) {
   await connect();
   const result = await PreviousAppointment.create(appointment);
@@ -54,12 +54,12 @@ export async function createPreviousAppointment(
 }
 
 export async function updatePreviousAppointment(
-  appointment: Partial<IPreviousAppointment>
+  appointment: Partial<IPreviousAppointment>,
 ) {
   await connect();
   const result = await PreviousAppointment.updateOne(
     { _id: new mongoose.Types.ObjectId(appointment._id) },
-    appointment
+    appointment,
   );
   console.log("Se actualizaron", result.modifiedCount, "citas");
   return Boolean(result.modifiedCount);
@@ -67,22 +67,22 @@ export async function updatePreviousAppointment(
 
 export async function filterYearlyActivePatients(
   filter: PatientFilters,
-  year: number
+  year: number,
 ) {
   await connect();
   const results: IReportResult[] = await PreviousAppointment.aggregate(
-    filterYearlyActivePatientsPipeline(filter, year)
+    filterYearlyActivePatientsPipeline(filter, year),
   );
   return results;
 }
 
 export async function filterAppointmentsByPsychologist(
   filter: PatientFilters,
-  psychologist?: string
+  psychologist?: string,
 ) {
   await connect();
   const results: IReportResult[] = await PreviousAppointment.aggregate(
-    filterAppointmentsByPsychologistPipeline(filter, psychologist)
+    filterAppointmentsByPsychologistPipeline(filter, psychologist),
   );
   return results;
 }

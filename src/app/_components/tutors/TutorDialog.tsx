@@ -56,7 +56,7 @@ export default function TutorDialog({
                     {value.toString()}
                   </Grid>
                 </>
-              )
+              ),
           )}
         </Grid>
       </DialogContent>

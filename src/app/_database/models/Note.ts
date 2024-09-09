@@ -10,7 +10,7 @@ const noteSchema = new Schema<INote>(
     psychologist: Schema.Types.ObjectId,
     patientName: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Note: Model<INote> = mongoose.models.Note || model("Note", noteSchema);

@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 console.log("Entro al DAO de citas");
 
 export async function getUpcomingAppointmentsByPsychologist(
-  psychologist: string
+  psychologist: string,
 ) {
   await connect();
   console.log("Trayendo appointments desde el DAO");
@@ -16,7 +16,7 @@ export async function getUpcomingAppointmentsByPsychologist(
   // console.log("Ejemplo");
   // console.log(appointments[0])
   console.log(
-    "Encontrados " + appointments + " appointments. Saliendo del DAO..."
+    "Encontrados " + appointments + " appointments. Saliendo del DAO...",
   );
   return serialize(appointments) as IUpcomingAppointment[];
 }
@@ -30,7 +30,7 @@ export async function getUpcomingAppointmentsByPatient(patient: string) {
   // console.log("Ejemplo");
   // console.log(appointments[0])
   console.log(
-    "Encontrados " + appointments + " appointments. Saliendo del DAO..."
+    "Encontrados " + appointments + " appointments. Saliendo del DAO...",
   );
   return serialize(appointments) as IUpcomingAppointment[];
 }
@@ -42,7 +42,7 @@ export async function getUpcomingAppointmentById(id: string) {
 }
 
 export async function createUpcomingAppointment(
-  upcomingAppointment: IUpcomingAppointment
+  upcomingAppointment: IUpcomingAppointment,
 ) {
   await connect();
   const result = await UpcomingAppointment.create(upcomingAppointment);
@@ -57,12 +57,12 @@ export async function createUpcomingAppointment(
 }
 
 export async function updateUpcomingAppointment(
-  appointment: Partial<IUpcomingAppointment>
+  appointment: Partial<IUpcomingAppointment>,
 ) {
   await connect();
   const result = await UpcomingAppointment.updateOne(
     { _id: new mongoose.Types.ObjectId(appointment._id) },
-    appointment
+    appointment,
   );
   console.log("Se actualizaron", result.modifiedCount, "citas");
   return Boolean(result.modifiedCount);

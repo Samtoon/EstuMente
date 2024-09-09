@@ -17,7 +17,7 @@ function Notas() {
   const { replace } = useRouter();
 
   const [selectedNote, setSelectedNote] = useState<INote | undefined>(
-    undefined
+    undefined,
   );
   useEffect(() => {
     console.log("corre useEffect");
@@ -52,7 +52,6 @@ function Notas() {
             checkNote={searchNote}
             shouldUpdate={shouldUpdate}
             setShouldUpdate={setShouldUpdate}
-            filterPatient
           />
         </Box>
         <Box display="flex" flexGrow={1} className={styles["fill"]}>

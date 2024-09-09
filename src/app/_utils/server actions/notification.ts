@@ -14,7 +14,7 @@ export async function sendNotification(
   body: string,
   simpleClear: boolean,
   image?: string,
-  condition?: INotification["condition"]
+  condition?: INotification["condition"],
 ) {
   const notification: INotification = {
     image,
@@ -34,7 +34,7 @@ export async function fetchNotificationsByUser(user: string, role: Roles) {
   const notifications = await getNotificationsByUser(user, role);
   const results = await Promise.all(notifications.map(notificationChecker));
   const checkedNotifications = notifications.filter(
-    (_v, index) => results[index]
+    (_v, index) => results[index],
   );
   console.log("Resultados filtro", checkedNotifications.length);
   return checkedNotifications;

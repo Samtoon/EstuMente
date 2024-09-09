@@ -80,7 +80,7 @@ export default function ConfigureSchedulePage() {
         pending: "Guardando agenda...",
         success: "Agenda guardada con éxito",
         error: "Ha ocurrido un error, por favor inténtalo nuevamente",
-      }
+      },
     );
   }
 
@@ -90,14 +90,14 @@ export default function ConfigureSchedulePage() {
   const [loading, setLoading] = useState(true);
   const fetchSchedule = useCallback(() => {
     console.log(
-      "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES
+      "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES,
     );
     if (session) {
       setLoading(true);
       fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${
           session?.psychologist?._id
-        }`
+        }`,
       )
         .then((res) => res.json())
         .then((res) => {
@@ -119,7 +119,7 @@ export default function ConfigureSchedulePage() {
     days.map((day) => ({
       day: day,
       hours: new Array(24).fill(false),
-    }))
+    })),
   );
   const [modalOpen, setModalOpen] = useState(ModalStates.Closed);
   // console.log("el lunes es: " + JSON.stringify(schedule));

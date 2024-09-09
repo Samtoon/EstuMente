@@ -3,7 +3,7 @@ import mongoose, { PipelineStage } from "mongoose";
 
 export function filterYearlyActivePatientsPipeline(
   filter: PatientFilters,
-  year: number
+  year: number,
 ) {
   const pipeline: PipelineStage[] = [
     {
@@ -57,7 +57,7 @@ export function filterYearlyActivePatientsPipeline(
 
 export function filterAppointmentsByPsychologistPipeline(
   filter: PatientFilters,
-  psychologist?: string
+  psychologist?: string,
 ) {
   const pipeline: PipelineStage[] = [
     {

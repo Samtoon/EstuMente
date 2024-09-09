@@ -89,7 +89,7 @@ export default function ReportsPage() {
               fetcher={() =>
                 countUsersByRole(
                   PsychologistFilters.Semester,
-                  Roles.Coordinador
+                  Roles.Coordinador,
                 )
               }
             />

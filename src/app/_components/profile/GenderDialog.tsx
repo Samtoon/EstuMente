@@ -1,5 +1,5 @@
 import {
-    Button,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,19 +12,19 @@ import { useState } from "react";
 export default function GenderDialog({
   open,
   onClose,
-  setGender
+  setGender,
 }: {
   open: boolean;
   onClose: () => void;
-  setGender: (gender: string) => void
+  setGender: (gender: string) => void;
 }) {
-    function handleSubmit(formData: FormData) {
-        const gender = formData.get("gender")?.toString();
-        if (gender) {
-            setGender(gender);
-        }
-        onClose();
+  function handleSubmit(formData: FormData) {
+    const gender = formData.get("gender")?.toString();
+    if (gender) {
+      setGender(gender);
     }
+    onClose();
+  }
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Género personalizado</DialogTitle>
@@ -33,13 +33,15 @@ export default function GenderDialog({
           Por favor ingresa el género con el que te identificas
         </DialogContentText>
         <form id="genderForm" action={handleSubmit}>
-        <TextField label="Género" name="gender"/>
+          <TextField label="Género" name="gender" />
         </form>
       </DialogContent>
       <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit" form="genderForm">Subscribe</Button>
-        </DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button type="submit" form="genderForm">
+          Subscribe
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

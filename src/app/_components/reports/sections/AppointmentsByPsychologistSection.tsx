@@ -55,7 +55,7 @@ export default function AppointmentsByPsychologistSection() {
         fetcher={() =>
           countAppointmentsByPsychologist(
             PatientFilters.Gender,
-            selectedOption.id
+            selectedOption.id,
           )
         }
       />
@@ -64,7 +64,7 @@ export default function AppointmentsByPsychologistSection() {
         fetcher={() =>
           countAppointmentsByPsychologist(
             PatientFilters.Career,
-            selectedOption.id
+            selectedOption.id,
           )
         }
       />

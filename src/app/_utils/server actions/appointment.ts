@@ -19,7 +19,7 @@ import { IUpcomingAppointment } from "@/app/_interfaces/IUpcomingAppointment";
 export async function scheduleAppointment(
   user: string,
   psychologist: string,
-  date: Date
+  date: Date,
 ) {
   console.log("Llamaron a la acción milagrosa");
   console.log("Me llega la fecha: " + date);
@@ -42,7 +42,7 @@ export async function scheduleAppointment(
 }
 
 export async function moveAppointment(
-  upcomingAppointment: IUpcomingAppointment
+  upcomingAppointment: IUpcomingAppointment,
 ) {
   const previousAppointment: IPreviousAppointment = {
     _id: upcomingAppointment._id,
@@ -63,14 +63,14 @@ export async function compareDates() {
   const appointments = await getOverdueUpcomingAppointments();
   console.log(`Intentando mover ${appointments.length} citas`);
   await Promise.all(
-    appointments.map(async (appointment) => await moveAppointment(appointment))
+    appointments.map(async (appointment) => await moveAppointment(appointment)),
   );
   return appointments.length;
 }
 
 export async function cancelAppointment(
   upcomingAppointment: IUpcomingAppointment,
-  cancelReason?: string
+  cancelReason?: string,
 ) {
   const previousAppointment: IPreviousAppointment = {
     _id: upcomingAppointment._id,
@@ -89,7 +89,7 @@ export async function cancelAppointment(
 export async function rateAppointment(
   appointmentId: string,
   calification: number,
-  calificationComment?: string
+  calificationComment?: string,
 ) {
   let result = await updateUpcomingAppointment({
     _id: appointmentId,

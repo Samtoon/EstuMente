@@ -20,7 +20,7 @@ export default function GenderField({ readOnly }: { readOnly?: boolean }) {
     }
   }, [customGender, setSelection]);
   function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void {
     if (event.target.value === addOption) {
       setOpen(true);

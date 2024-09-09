@@ -63,7 +63,7 @@ export default function RegisterModal({
               {
                 notificationType: NotificationTypes.Request,
                 clues: [request._id!],
-              }
+              },
             );
           });
           handleClose();
@@ -104,7 +104,7 @@ export default function RegisterModal({
                     setFileURL(
                       e.target.files?.[0]
                         ? URL.createObjectURL(e.target.files?.[0])
-                        : ""
+                        : "",
                     );
                   }}
                   accept=".pdf"

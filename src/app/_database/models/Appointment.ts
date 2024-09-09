@@ -113,7 +113,7 @@ const appointmentSchema = new Schema(
       trim: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Appointment: Model<IPreviousAppointment> =

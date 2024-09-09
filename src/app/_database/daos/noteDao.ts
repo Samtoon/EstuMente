@@ -25,7 +25,7 @@ export async function getFilteredNotes(
   patient?: string,
   patientName?: string,
   title?: string,
-  date?: Date
+  date?: Date,
 ) {
   await connect();
   let dateExp: any = date;
@@ -60,7 +60,7 @@ export async function getFilteredNotes(
 export async function getNotesByTitle(
   psychologist: string,
   patient: string,
-  title: string
+  title: string,
 ) {
   await connect();
   const notes = await Note.find({
@@ -76,7 +76,7 @@ export async function getNotesByTitle(
 export async function getNotesByDate(
   psychologist: string,
   patient: string,
-  date: Date
+  date: Date,
 ) {
   await connect();
   const dayStart = new Date(date);

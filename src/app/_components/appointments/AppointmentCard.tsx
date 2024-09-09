@@ -204,7 +204,7 @@ export const AppointmentCard: FC<Props> = ({
                           onClick={() => {
                             cancelAppointment(
                               appointment as IUpcomingAppointment,
-                              cancelReason
+                              cancelReason,
                             ).then((success) => {
                               if (success)
                                 sendNotification(
@@ -218,13 +218,13 @@ export const AppointmentCard: FC<Props> = ({
                                   `El ${role} ${session?.user.fullName} ha cancelado la cita que tenían para el día ` +
                                     format(
                                       new Date(appointment.date),
-                                      "dd 'de' MMMM 'a las' hh:mm aa"
+                                      "dd 'de' MMMM 'a las' hh:mm aa",
                                     ) +
                                     (cancelReason.length > 0
                                       ? `, con esta justificación: ${cancelReason}`
                                       : ""),
                                   true,
-                                  session?.user.profilePicture
+                                  session?.user.profilePicture,
                                 );
                             });
                             setOpen(false);

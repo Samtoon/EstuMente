@@ -30,14 +30,15 @@ export const EmptyAppointment: FC<Props> = async ({ message }) => {
           <Typography align="center" gutterBottom>
             {message}
           </Typography>
-          {session?.user.role === Roles.Consultante &&
-            (<NextLink href={`/psicologos`} passHref prefetch={false}>
+          {session?.user.role === Roles.Consultante && (
+            <NextLink href={`/psicologos`} passHref prefetch={false}>
               {/* <Link> */}
               <Button color="secondary" className="card-btn">
                 Pide tu cita aquí
               </Button>
               {/* </Link> */}
-            </NextLink>)}
+            </NextLink>
+          )}
         </Box>
       </Box>
     </Box>

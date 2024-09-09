@@ -28,7 +28,7 @@ export default function DownloadButton({
         imgX,
         imgY,
         imgWidth * ratio,
-        imgHeight * ratio
+        imgHeight * ratio,
       );
       const date = format(new Date(), "do 'de' MMMM 'del' y 'a las' p aaaa", {
         locale: es,

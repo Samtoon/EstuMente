@@ -11,7 +11,7 @@ import Roles from "@/app/_enums/Roles";
 
 export async function countYearlyActivePatients(
   filter: PatientFilters,
-  year: number
+  year: number,
 ) {
   const results = await filterYearlyActivePatients(filter, year);
   return results;
@@ -19,7 +19,7 @@ export async function countYearlyActivePatients(
 
 export async function countUsersByRole(
   filter: PsychologistFilters,
-  role: Roles
+  role: Roles,
 ) {
   const results = await filterUsersByRole(filter, role);
   return results;
@@ -27,7 +27,7 @@ export async function countUsersByRole(
 
 export async function countAppointmentsByPsychologist(
   filter: PatientFilters,
-  psychologist?: string
+  psychologist?: string,
 ) {
   const results = await filterAppointmentsByPsychologist(filter, psychologist);
   return results;

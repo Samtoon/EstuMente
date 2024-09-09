@@ -36,7 +36,7 @@ export default function NotificationsList({
           <ListItemText
             primary={notification.body}
             secondary={timeAgo.format(
-              new Date(notification.createdAt!).getTime()
+              new Date(notification.createdAt!).getTime(),
             )}
           />
           <IconButton

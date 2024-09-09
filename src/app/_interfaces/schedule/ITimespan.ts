@@ -1,4 +1,4 @@
 export interface ITimespan {
-    key: string,
-    value: number
+  key: string;
+  value: number;
 }

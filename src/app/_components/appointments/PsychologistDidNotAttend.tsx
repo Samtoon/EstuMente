@@ -28,7 +28,6 @@ export const PsychologistDidNotAttend: FC<Props> = ({ appointmentId }) => {
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     // event.preventDefault();
     // setIsPosting(true);
-
     // try {
     //   await psiApi.put("/appointments/notattend", {
     //     id: appointmentId,

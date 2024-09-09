@@ -25,7 +25,7 @@ export const CancelModal: FC<Props> = ({ appointmentId }) => {
   const [cancelReason, setCancelReason] = useState("");
 
   const handleChangeCancelReason = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCancelReason(event.target.value);
   };

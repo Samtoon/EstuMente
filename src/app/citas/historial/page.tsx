@@ -37,7 +37,7 @@ const HistoryAppointmentPage: NextPage<Props> = async ({ searchParams }) => {
           : [];
       case Roles.Practicante:
         return getPreviousAppointmentsByPsychologist(
-          session?.psychologist?._id!
+          session?.psychologist?._id!,
         );
       case Roles.Consultante:
         return getPreviousAppointmentsByPatient(session?.user._id!);
