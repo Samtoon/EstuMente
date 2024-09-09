@@ -46,7 +46,7 @@ export default function ListNotesPanel({
         session.psychologist?._id!,
         filter,
         filterBy,
-        filterPatient ? session.appointmentPatientId : undefined,
+        filterPatient ? session.appointmentPatientId : undefined
       );
       updatePromise
         .then((notes) => {
@@ -64,7 +64,7 @@ export default function ListNotesPanel({
         filterBy={filterBy}
         setFilterBy={setFilterBy}
         trigger={setShouldUpdate}
-        filterPatient
+        filterPatient={filterPatient}
       />
       <Divider />
       <List id={styles["notes-list"]}>
