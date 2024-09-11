@@ -24,6 +24,14 @@ import { ContentTypes } from "./PsychologistList";
 import { getScheduleByPsychologist } from "@/app/_database/daos/scheduleDao";
 import { ISchedule } from "@/app/_interfaces/schedule/ISchedule";
 import { fetchScheduleByPsychologist } from "@/app/_utils/server actions/schedule";
+import { Schedule } from "@mui/icons-material";
+import {
+  CommentsButton,
+  PreviousAppointmentsButton,
+  ScheduleButton,
+  SeeScheduleButton,
+  UpcomingAppointmentsButton,
+} from "./CardButtons";
 // import { IPsychologist } from "../../interfaces";
 
 interface Props {
@@ -34,29 +42,29 @@ interface Props {
 export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [button1, button2] = (() => {
-    let button1: { url: string; label: string },
-      button2: { promise?: Promise<ISchedule>; label: string };
+  const buttons = (() => {
+    const buttons: React.JSX.Element[] = [];
     switch (session?.user.role!) {
       case Roles.Consultante:
-        button1 = {
-          url: `/citas/agendar/${psychologist.slug}`,
-          label: "Pedir Cita",
-        };
-        button2 = { promise: undefined, label: "Ver Comentarios" };
+        buttons.push(<ScheduleButton psychologistSlug={psychologist.slug} />);
         break;
+      case Roles.Tutor:
+      case Roles.Coordinador:
+      case Roles.Administrador:
+        buttons.push(
+          <UpcomingAppointmentsButton psychologistId={psychologist._id!} />,
+          <PreviousAppointmentsButton psychologistId={psychologist._id!} />
+        );
       default:
-        button1 = {
-          url: `/citas?psychologist=${psychologist._id}`,
-          label: "Ver Citas Programadas",
-        };
-        button2 = {
-          promise: fetchScheduleByPsychologist(psychologist._id!),
-          label: "Ver Agenda",
-        };
-        break;
     }
-    return [button1, button2];
+    buttons.push(
+      <SeeScheduleButton
+        psychologistId={psychologist._id!}
+        setContent={setContent}
+      />,
+      <CommentsButton />
+    );
+    return buttons;
   })();
 
   return (
@@ -109,58 +117,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
                 alignItems: "center",
               }}
             >
-              <NextLink href={button1.url} passHref prefetch={false}>
-                {/* <Link> */}
-                <Button
-                  size="small"
-                  color="secondary"
-                  className="card-btn"
-                  sx={{ mb: 2 }}
-                  // onClick={() => {
-                  //   router.push(`/citas/agendar/${psychologist.slug}`);
-                  // }}
-                >
-                  {button1.label}
-                </Button>
-                {/* </Link> */}
-              </NextLink>
-              {session?.user.role === Roles.Tutor && (
-                <NextLink
-                  href={`/citas/historial?psychologist=${psychologist._id}`}
-                  passHref
-                  prefetch={false}
-                >
-                  {/* <Link> */}
-                  <Button
-                    size="small"
-                    color="secondary"
-                    className="card-btn"
-                    sx={{ mb: 2 }}
-                    // onClick={() => {
-                    //   router.push(`/citas/agendar/${psychologist.slug}`);
-                    // }}
-                  >
-                    Ver Historial de Citas
-                  </Button>
-                  {/* </Link> */}
-                </NextLink>
-              )}
-              {/* <NextLink href={button2.promise} passHref> */}
-              {/* <Link> */}
-              <Button
-                size="small"
-                onClick={() => {
-                  button2.promise?.then((schedule) => {
-                    console.log("Promesa resuelta");
-                    setContent({
-                      content: [...schedule.days],
-                      type: ContentTypes.Schedule,
-                    });
-                  });
-                }}
-              >
-                {button2.label}
-              </Button>
+              {buttons}
               {/* </Link> */}
               {/* </NextLink> */}
             </Box>

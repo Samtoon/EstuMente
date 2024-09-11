@@ -30,18 +30,16 @@ const AppointmentPage = async ({
   //     : await getUpcomingAppointmentsByPatient(session?.user._id!);
   const appointments = await (async () => {
     switch (session?.user.role!) {
-      case Roles.Tutor:
-        return searchParams.psychologist
-          ? getUpcomingAppointmentsByPsychologist(searchParams.psychologist)
-          : [];
       case Roles.Practicante:
         return getUpcomingAppointmentsByPsychologist(
-          session?.psychologist?._id!,
+          session?.psychologist?._id!
         );
       case Roles.Consultante:
         return getUpcomingAppointmentsByPatient(session?.user._id!);
       default:
-        return [];
+        return searchParams.psychologist
+          ? getUpcomingAppointmentsByPsychologist(searchParams.psychologist)
+          : [];
     }
   })();
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`);

@@ -31,18 +31,16 @@ const HistoryAppointmentPage: NextPage<Props> = async ({ searchParams }) => {
   //     : await getPreviousAppointmentsByPatient(session?.user._id!);
   const appointments = await (async () => {
     switch (session?.user.role!) {
-      case Roles.Tutor:
-        return searchParams.psychologist
-          ? getPreviousAppointmentsByPsychologist(searchParams.psychologist)
-          : [];
       case Roles.Practicante:
         return getPreviousAppointmentsByPsychologist(
-          session?.psychologist?._id!,
+          session?.psychologist?._id!
         );
       case Roles.Consultante:
         return getPreviousAppointmentsByPatient(session?.user._id!);
       default:
-        return [];
+        return searchParams.psychologist
+          ? getPreviousAppointmentsByPsychologist(searchParams.psychologist)
+          : [];
     }
   })();
   console.log(`El tipo de las fechas es:${typeof appointments[0]}`);

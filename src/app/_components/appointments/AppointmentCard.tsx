@@ -161,17 +161,23 @@ export const AppointmentCard: FC<Props> = ({
               >
                 {(appointment as IUpcomingAppointment).roomURL && (
                   <>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      fullWidth
-                      disabled={!isAppointmentTime(appointment.date)}
-                      onClick={() =>
-                        router.push(`/citas/meet/${appointment._id}`)
-                      }
-                    >
-                      Ingresar a la cita
-                    </Button>
+                    {[
+                      Roles.Consultante,
+                      Roles.Practicante,
+                      Roles.Tutor,
+                    ].includes(session?.user.role!) && (
+                      <Button
+                        size="small"
+                        color="secondary"
+                        fullWidth
+                        disabled={!isAppointmentTime(appointment.date)}
+                        onClick={() =>
+                          router.push(`/citas/meet/${appointment._id}`)
+                        }
+                      >
+                        Ingresar a la cita
+                      </Button>
+                    )}
                     {(session?.user._id === appointment.patient ||
                       session?.psychologist?._id ===
                         appointment.psychologist) && (
@@ -204,7 +210,7 @@ export const AppointmentCard: FC<Props> = ({
                           onClick={() => {
                             cancelAppointment(
                               appointment as IUpcomingAppointment,
-                              cancelReason,
+                              cancelReason
                             ).then((success) => {
                               if (success)
                                 sendNotification(
@@ -218,13 +224,13 @@ export const AppointmentCard: FC<Props> = ({
                                   `El ${role} ${session?.user.fullName} ha cancelado la cita que tenían para el día ` +
                                     format(
                                       new Date(appointment.date),
-                                      "dd 'de' MMMM 'a las' hh:mm aa",
+                                      "dd 'de' MMMM 'a las' hh:mm aa"
                                     ) +
                                     (cancelReason.length > 0
                                       ? `, con esta justificación: ${cancelReason}`
                                       : ""),
                                   true,
-                                  session?.user.profilePicture,
+                                  session?.user.profilePicture
                                 );
                             });
                             setOpen(false);
