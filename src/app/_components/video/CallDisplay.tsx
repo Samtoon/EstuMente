@@ -26,7 +26,7 @@ export default function CallDisplay({
   const { data: session, update } = useSession();
   const router = useRouter();
   const [leaving, setLeaving] = useState(
-    compareAsc(new Date(), new Date(appointment.date)) === 1
+    compareAsc(new Date(), addHours(new Date(appointment.date), 1)) === 1
   );
   useEffect(() => {
     console.log("use Effect malvado");
