@@ -28,7 +28,7 @@ export default function Home() {
         }}
         indicatorContainerProps={{
           style: {
-            marginTop: "-20vh",
+            marginTop: "-20%",
             zIndex: 1,
             position: "absolute",
           },
