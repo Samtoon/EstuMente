@@ -35,7 +35,7 @@ export default function Home() {
           className: "indicators",
         }}
         sx={{
-          overflow: "auto",
+          overflow: "visible",
           ".indicators svg": {
             fontSize: "2em",
           },

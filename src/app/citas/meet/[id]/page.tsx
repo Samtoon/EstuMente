@@ -6,6 +6,9 @@ import { requestToken } from "@/app/_utils/server actions/other";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
 import Roles from "@/app/_enums/Roles";
+import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
+import { getPreviousAppointmentById } from "@/app/_database/daos/previousAppointmentDao";
+import { redirect } from "next/navigation";
 
 const prueba = "https://estumente.daily.co/prueba";
 
@@ -15,7 +18,12 @@ interface Props {
 
 const MeetPage: NextPage<Props> = async ({ params }) => {
   // const router = useRouter();
+  let pastAppointment: IPreviousAppointment | null;
   const appointment = await getUpcomingAppointmentById(params.id);
+  if (!appointment) {
+    pastAppointment = await getPreviousAppointmentById(params.id);
+    if (!pastAppointment) redirect("/citas");
+  }
   console.log("El appointment que recibo es:");
   console.log(appointment);
   const session = await getServerSession(authOptions);
@@ -36,7 +44,10 @@ const MeetPage: NextPage<Props> = async ({ params }) => {
   const token = canJoin() ? await requestToken(appointment?.roomName!) : "";
   return (
     <PatientLayout title="Sesión" pageDescription="Sesión iniciada">
-      <CallDisplay appointment={appointment} token={token!} />
+      <CallDisplay
+        appointment={appointment ?? pastAppointment!}
+        token={token!}
+      />
     </PatientLayout>
   );
 };

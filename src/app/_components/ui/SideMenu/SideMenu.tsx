@@ -139,7 +139,7 @@ export const SideMenu = () => {
               />
             </ListItemButton>
 
-            <ListItem button /* onClick={() => navigateTo("/psicologos")} */>
+            {/* <ListItem>
               <ListItemIcon>
                 <SupervisedUserCircleOutlined color="secondary" />
               </ListItemIcon>
@@ -150,10 +150,10 @@ export const SideMenu = () => {
                   fontWeight: "fontWeightMedium",
                 }}
               />
-            </ListItem>
+            </ListItem> */}
           </List>
         )}
-        <MenuItem label="Pruebas" path="/pruebas">
+        <MenuItem label="Pruebas" path="">
           <Build color="secondary" />
         </MenuItem>
       </Box>

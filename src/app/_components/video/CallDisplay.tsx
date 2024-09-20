@@ -7,22 +7,27 @@ import { IUpcomingAppointment } from "@/app/_interfaces/IUpcomingAppointment";
 import { useEffect, useState } from "react";
 import { Call } from "./Call";
 import { useSession } from "next-auth/react";
-import { addHours, isWithinInterval } from "date-fns";
+import { addHours, compareAsc, isWithinInterval } from "date-fns";
 import Roles from "@/app/_enums/Roles";
 import { useRouter } from "next/navigation";
 import { FontWeightValues } from "@/app/_enums/FontWeightValues";
+import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 
 export default function CallDisplay({
   appointment,
   token,
 }: {
-  appointment: IUpcomingAppointment;
+  appointment: IUpcomingAppointment | IPreviousAppointment;
   token: string;
 }) {
-  const [room, setRoom] = useState(appointment.roomURL);
+  const [room, setRoom] = useState(
+    (appointment as IUpcomingAppointment).roomURL || null
+  );
   const { data: session, update } = useSession();
   const router = useRouter();
-  const [leaving, setLeaving] = useState(false);
+  const [leaving, setLeaving] = useState(
+    compareAsc(new Date(), new Date(appointment.date)) === 1
+  );
   useEffect(() => {
     console.log("use Effect malvado");
     if (session?.appointmentPatientId !== appointment.patient) {
@@ -60,7 +65,9 @@ export default function CallDisplay({
           />
         ) : (
           <EndCall
-            joinTrigger={() => setRoom(appointment.roomURL)}
+            joinTrigger={() =>
+              setRoom((appointment as IUpcomingAppointment).roomURL)
+            }
             leaveTrigger={() => setLeaving(true)}
           />
         )

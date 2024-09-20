@@ -41,37 +41,50 @@ const allowedPaths = {
   ],
 };
 
-export default withAuth(function middleware(req) {
-  if (req.nextauth.token) {
-    const session = req.nextauth.token as unknown as Session;
+export default withAuth(
+  function middleware(req) {
     const pathname = req.nextUrl.pathname;
-    let myAllowedPaths: string[];
-    switch (session.user.role) {
-      case Roles.Consultante:
-        myAllowedPaths = allowedPaths.Consultante;
-        break;
-      case Roles.Practicante:
-        myAllowedPaths = allowedPaths.Practicante;
-        break;
-      case Roles.Tutor:
-        myAllowedPaths = allowedPaths.Tutor;
-        break;
-      case Roles.Coordinador:
-        myAllowedPaths = allowedPaths.Coordinador;
-        break;
-      case Roles.Administrador:
-        myAllowedPaths = allowedPaths.Administrador;
-        break;
+    if (req.nextauth.token) {
+      const session = req.nextauth.token as unknown as Session;
+      console.log("Pathname es:", pathname);
+      let myAllowedPaths: string[];
+      switch (session.user.role) {
+        case Roles.Consultante:
+          myAllowedPaths = allowedPaths.Consultante;
+          break;
+        case Roles.Practicante:
+          myAllowedPaths = allowedPaths.Practicante;
+          break;
+        case Roles.Tutor:
+          myAllowedPaths = allowedPaths.Tutor;
+          break;
+        case Roles.Coordinador:
+          myAllowedPaths = allowedPaths.Coordinador;
+          break;
+        case Roles.Administrador:
+          myAllowedPaths = allowedPaths.Administrador;
+          break;
+      }
+      if (!myAllowedPaths.some((path) => pathname.startsWith(path))) {
+        return NextResponse.redirect(new URL(myAllowedPaths[0], req.nextUrl));
+      }
+    } else {
+      if (pathname !== "/")
+        return NextResponse.redirect(new URL("/", req.nextUrl));
     }
-    if (!myAllowedPaths.some((path) => pathname.startsWith(path))) {
-      return NextResponse.redirect(new URL(myAllowedPaths[0], req.nextUrl));
-    }
+  },
+  {
+    callbacks: {
+      authorized(params) {
+        return true;
+      },
+    },
   }
-});
+);
 
 //Matches every path except the home page and the following:
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images|$).*)",
+    "/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images).*)",
   ],
 };

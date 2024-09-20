@@ -50,7 +50,7 @@ export async function updateUserByEmail(email: string, user: Partial<IUser>) {
 
 export async function updateUserById(
   id: string,
-  user: mongoose.UpdateQuery<IUser>,
+  user: mongoose.UpdateQuery<IUser>
 ) {
   await connect();
   console.log(user);
@@ -73,11 +73,11 @@ export async function getUpdatedUserByEmail(email: string, user: IUser) {
 
 export async function filterUsersByRole(
   filter: PsychologistFilters,
-  role: Roles,
+  role: Roles
 ) {
   await connect();
   const results: IReportResult[] = await User.aggregate(
-    filterUsersByRolePipeline(filter, role),
+    filterUsersByRolePipeline(filter, role)
   );
   return results;
 }
@@ -85,7 +85,7 @@ export async function filterUsersByRole(
 export async function getPatientsByPsychologist(psychologist: string) {
   console.log("el psicólogo es:", psychologist);
   const users: IUser[] = await User.aggregate(
-    getPatientsByPsychologistPipeline(psychologist),
+    getPatientsByPsychologistPipeline(psychologist)
   );
   console.log(`Resultado: ${users}`);
   return users;

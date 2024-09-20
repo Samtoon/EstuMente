@@ -6,6 +6,7 @@ import { getUserById } from "@/app/_database/daos/userDao";
 import { getPreviousAppointmentsByPatientAndPsychologist } from "@/app/_database/daos/previousAppointmentDao";
 import { SessionClinicHistoryList } from "@/app/_components/sessions/SessionClinicHistoryList";
 import { getMyServerSession } from "@/app/_utils/next-auth";
+import { redirect } from "next/navigation";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -22,11 +23,13 @@ interface Props {
 }
 
 const PatientInfoPage: NextPage<Props> = async ({ params }) => {
-  const session = await getMyServerSession();
   const patient = await getUserById(params.id);
+  if (!patient) redirect("/consultantes");
+  const session = await getMyServerSession();
+
   const appointments = await getPreviousAppointmentsByPatientAndPsychologist(
     params.id,
-    session?.psychologist?._id!,
+    session?.psychologist?._id!
   );
   return (
     <PsychologistLayout

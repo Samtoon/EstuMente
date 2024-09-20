@@ -131,7 +131,7 @@ export default function AppointmentDatePicker({
               backgroundColor: "#c33a40 !important",
             },
             ".MuiPickersDay-root": {
-              color: "#333333 !important",
+              color: "#333333",
             },
           }}
           onChange={(newValue) =>

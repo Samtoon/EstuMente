@@ -76,68 +76,65 @@ const Navbar = () => {
   return (
     <>
       <AppBar>
-        <Toolbar>
-          <NextLink href="/" passHref>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              <Typography
-                variant="h6"
-                component="h6"
-                sx={{ ml: 0.5 }}
-                color="white"
-              >
-                EstuMente
-              </Typography>
-            </Box>
-          </NextLink>
-          <Box flex={1} />
-          {middleButton()}
-          <Box flex={1} />
-          <Divider
-            orientation="vertical"
-            sx={{ minHeight: "inherit", border: "2px solid white" }}
-          />
-          {session ? (
-            <NotificationsButton />
-          ) : (
-            <Box
-              sx={{
-                display: { xs: "none", sm: "block", minHeight: "inherit" },
-              }}
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Typography
+              variant="h1"
+              component="h1"
+              sx={{ ml: 0.5 }}
+              color="white"
             >
-              <Button
-                variant="text"
-                className="hero-btn"
-                onClick={() => signIn("google")}
-                color="contrast"
+              Acompañamiento Psicológico
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", minHeight: "inherit" }}>
+            <Divider
+              orientation="vertical"
+              sx={{ minHeight: "inherit", border: "2px solid white" }}
+            />
+            {session ? (
+              <NotificationsButton />
+            ) : (
+              <Box
                 sx={{
-                  borderRadius: "0px",
-                  minWidth: "100px",
-                  maxWidth: "10%",
-                  minHeight: "inherit",
+                  display: { xs: "none", sm: "block", minHeight: "inherit" },
                 }}
               >
-                Iniciar sesión
-              </Button>
-            </Box>
-          )}
-          <Divider
-            orientation="vertical"
-            sx={{ minHeight: "inherit", border: "2px solid white" }}
-          />
-          <Button
-            onClick={toggleSideMenu}
-            variant="text"
-            size="large"
-            color="contrast"
-            sx={{
-              minHeight: "inherit",
-              borderRadius: "0px",
-              minWidth: "100px",
-              maxWidth: "10%",
-            }}
-          >
-            Menú
-          </Button>
+                <Button
+                  variant="text"
+                  className="hero-btn"
+                  onClick={() => signIn("google")}
+                  color="contrast"
+                  sx={{
+                    borderRadius: "0px",
+                    minWidth: "100px",
+                    maxWidth: "10%",
+                    minHeight: "inherit",
+                  }}
+                >
+                  Iniciar sesión
+                </Button>
+              </Box>
+            )}
+            <Divider
+              orientation="vertical"
+              sx={{ minHeight: "inherit", border: "2px solid white" }}
+            />
+            <Button
+              onClick={toggleSideMenu}
+              variant="text"
+              size="large"
+              color="contrast"
+              sx={{
+                minHeight: "inherit",
+                borderRadius: "0px",
+                minWidth: "100px",
+                maxWidth: "10%",
+              }}
+            >
+              Menú
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
       {pathname !== "/" && <Toolbar />}

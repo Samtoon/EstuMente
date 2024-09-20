@@ -16,6 +16,7 @@ import { getNotesByAppointment } from "@/app/_database/daos/noteDao";
 import NotesCard from "@/app/_components/appointments/NotesCard";
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import { FontWeightValues } from "@/app/_enums/FontWeightValues";
+import { redirect } from "next/navigation";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -44,9 +45,9 @@ export default async function AppointmentPage({
 }: {
   params: { id: string };
 }) {
-  const session = await getMyServerSession();
   const appointment = await getPreviousAppointmentById(params.id);
-
+  if (!appointment) redirect("/citas/historial");
+  const session = await getMyServerSession();
   const patient = await getUserById(appointment.patient);
   const notes =
     session?.psychologist?._id === appointment.psychologist
@@ -60,7 +61,7 @@ export default async function AppointmentPage({
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
         <Grid container className="fadeIn" spacing={2}>
           <Grid item xs={12} sm={6}>
-            <CardPatientAppointment patient={patient} />
+            <CardPatientAppointment patient={patient!} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card className="summary-card">

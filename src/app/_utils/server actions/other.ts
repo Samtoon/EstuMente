@@ -14,7 +14,7 @@ export async function requestToken(roomName: string) {
     headers: dailyHeaders,
   });
   console.log(response);
-  if (!response.ok) return null;
+  if (!response.ok) return "";
   const { token }: { token: string } = await response.json();
   console.log("El token es: " + token);
   return token;
