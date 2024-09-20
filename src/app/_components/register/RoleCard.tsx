@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import Roles from "@/app/_enums/Roles";
 import { selectedTheme, unselectedTheme } from "@/app/_themes/role-cards-theme";
 import { ThemeProvider } from "@emotion/react";
@@ -25,10 +26,19 @@ export default function RoleCard({
           sx={{ height: "100%", flexDirection: "column" }}
         >
           <CardContent>
-            <Typography variant="h5" color="text.secondary" fontWeight="bold">
+            <Typography
+              variant="h5"
+              color="text.primary"
+              fontWeight={FontWeightValues.Semibold}
+            >
               {role}
             </Typography>
-            <Typography color="text.secondary">{description}</Typography>
+            <Typography
+              color="text.secondary"
+              fontWeight={FontWeightValues.Regular}
+            >
+              {description}
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>

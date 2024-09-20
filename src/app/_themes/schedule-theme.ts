@@ -3,10 +3,10 @@ import { createTheme } from "@mui/material";
 export const scheduleTheme = createTheme({
   palette: {
     primary: {
-      main: "#7F00FF",
+      main: "#CC3333",
     },
     secondary: {
-      main: "#f5f5f5",
+      main: "#C2BABA",
     },
   },
 });

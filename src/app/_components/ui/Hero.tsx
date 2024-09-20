@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography/Typography";
 import NextLink from "next/link";
 import { HeroLayout } from "./HeroLayout";
 
-const backgroundImage = "/images/banner.jpg";
+const backgroundImage = "/images/newBanner.jpg";
 
 export const Hero = () => {
   return (

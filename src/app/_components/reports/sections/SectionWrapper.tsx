@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -13,7 +14,13 @@ export default function SectionWrapper({
   return (
     <Box m={2} p={2} sx={{ border: 1, borderRadius: 3 }}>
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="h2">{title}</Typography>
+        <Typography
+          variant="h2"
+          color="text2.main"
+          fontWeight={FontWeightValues.Bold}
+        >
+          {title}
+        </Typography>
         {filter}
       </Box>
 

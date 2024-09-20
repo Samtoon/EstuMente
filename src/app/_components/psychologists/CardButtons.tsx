@@ -3,6 +3,7 @@ import { Button, ButtonProps, CircularProgress } from "@mui/material";
 import { ContentTypes } from "./PsychologistList";
 import { fetchScheduleByPsychologist } from "@/app/_utils/server actions/schedule";
 import { useState } from "react";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 function ButtonTemplate({
   secondary,
@@ -11,9 +12,13 @@ function ButtonTemplate({
   return (
     <Button
       size="small"
-      color={!secondary ? "secondary" : undefined}
+      color={!secondary ? "secondary" : "info"}
       className={!secondary ? "card-btn" : undefined}
-      sx={!secondary ? { my: 1 } : { my: 0.5 }}
+      sx={
+        !secondary
+          ? { my: 1, fontWeight: FontWeightValues.Extrabold }
+          : { my: 0.5, fontWeight: FontWeightValues.Regular }
+      }
       {...props}
     ></Button>
   );

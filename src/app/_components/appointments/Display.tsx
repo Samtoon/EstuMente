@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker/DatePicker";
 import AppointmentDatePicker from "./AppointmentDatePicker";
 import { getScheduleById } from "@/app/_database/daos/scheduleDao";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 // import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { es } from "date-fns/locale";
@@ -24,7 +25,7 @@ export default async function PsychologistDisplay({
   const service = "Servicio";
   const date = new Date(2014, 4, 18);
   const appointments = await getUpcomingAppointmentsByPsychologist(
-    psychologist._id!,
+    psychologist._id!
   );
   const schedule = await getScheduleById(psychologist._id!);
   console.log("psychologist es:");
@@ -39,7 +40,13 @@ export default async function PsychologistDisplay({
             backgroundColor: "secondary.main",
           }}
         >
-          <Typography variant="h6" component="h6" align="center" color="white">
+          <Typography
+            variant="h6"
+            component="h6"
+            align="center"
+            color="white"
+            fontWeight={FontWeightValues.Semibold}
+          >
             Pedir cita con
           </Typography>
           <Box
@@ -53,7 +60,13 @@ export default async function PsychologistDisplay({
               sx={{ width: 120, height: 120, mb: 2 }}
             />
           </Box>
-          <Typography variant="h1" component="h1" align="center" color="white">
+          <Typography
+            variant="h1"
+            component="h1"
+            align="center"
+            color="white"
+            fontWeight={FontWeightValues.Semibold}
+          >
             {psychologist.fullName}
           </Typography>
           <Stack spacing={1} alignItems="center" sx={{ m: 1 }}>

@@ -12,9 +12,9 @@ const HeroLayoutRoot = styled("section")(({ theme }) => ({
   alignItems: "center",
 
   [theme.breakpoints.up("xs")]: {
-    height: "60vh",
+    height: "90vh",
     minHeight: 400,
-    maxHeight: 500,
+    maxHeight: 3000,
   },
 }));
 
@@ -34,7 +34,7 @@ interface ProductHeroLayoutProps {
 }
 
 export const HeroLayout = (
-  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps,
+  props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps
 ) => {
   const { sxBackground, children } = props;
 
@@ -50,7 +50,7 @@ export const HeroLayout = (
         }}
       >
         {children}
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             left: 0,
@@ -61,7 +61,7 @@ export const HeroLayout = (
             opacity: 0.5,
             zIndex: -1,
           }}
-        />
+        /> */}
         <Background sx={sxBackground} />
       </Container>
     </HeroLayoutRoot>

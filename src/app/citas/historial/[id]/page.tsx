@@ -15,6 +15,7 @@ import { SessionSummary } from "@/app/_components/appointments/SessionSummary";
 import { getNotesByAppointment } from "@/app/_database/daos/noteDao";
 import NotesCard from "@/app/_components/appointments/NotesCard";
 import { getMyServerSession } from "@/app/_utils/next-auth";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -65,7 +66,13 @@ export default async function AppointmentPage({
             <Card className="summary-card">
               <CardContent>
                 <Box display="flex" alignItems="center">
-                  <Typography variant="h2">Resumen </Typography>
+                  <Typography
+                    variant="h2"
+                    fontWeight={FontWeightValues.Semibold}
+                    color="text2.main"
+                  >
+                    Resumen{" "}
+                  </Typography>
                   <Box flex={1} />
                   <Chip
                     label={`Cita ${appointment.state}`}
@@ -93,7 +100,7 @@ export default async function AppointmentPage({
                 )} */}
                 {notes && notes.length > 0 && <NotesCard notes={notes} />}
                 {notes && notes.length === 0 && (
-                  <Typography variant="h2">
+                  <Typography variant="h2" color="text2.main">
                     No se tomaron notas durante esta sesión
                   </Typography>
                 )}
@@ -131,63 +138,3 @@ export default async function AppointmentPage({
     </PsychologistLayout>
   );
 }
-
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-
-// export const getServerSideProps: GetServerSideProps = async ({
-//   req,
-//   query,
-// }) => {
-//   const { id = "" } = query;
-//   const session: any = await getSession({ req });
-
-//   if (session) {
-//     if (session.user.role !== "psychologist") {
-//       return {
-//         redirect: {
-//           destination: `/app/home`,
-//           permanent: false,
-//         },
-//       };
-//     }
-//   }
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: `/autenticacion/login?p=/psicologo/sesiones/${id}`,
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   const appointment = await dbAppointment.getAppointmentToPsychologist(
-//     id.toString()
-//   );
-
-//   if (!appointment) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   /*Buscar una mejor forma de validar esto*/
-//   // if (appointment.psychologist._id !== session.user._id) {
-//   //   return {
-//   //     redirect: {
-//   //       destination: "/",
-//   //       permanent: false,
-//   //     },
-//   //   };
-//   // }
-
-//   return {
-//     props: {
-//       appointment,
-//     },
-//   };
-// };

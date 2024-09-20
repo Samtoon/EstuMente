@@ -5,6 +5,7 @@ import fetchPsychologists from "@/app/_utils/server actions/psychologist";
 import Chart from "../Chart";
 import { countAppointmentsByPsychologist } from "@/app/_utils/server actions/report";
 import PatientFilters from "@/app/_enums/reports/PatientFilters";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function AppointmentsByPsychologistSection() {
   console.log("Carga consultas");
@@ -29,7 +30,15 @@ export default function AppointmentsByPsychologistSection() {
       title="Consultas por Practicante"
       filter={
         <Autocomplete
-          sx={{ width: "20rem" }}
+          sx={{
+            width: "20rem",
+            input: {
+              fontWeight: FontWeightValues.Medium,
+            },
+            "label, input": {
+              color: "#666666",
+            },
+          }}
           size="small"
           renderInput={(params) => (
             <TextField {...params} label="Practicante" />
@@ -55,7 +64,7 @@ export default function AppointmentsByPsychologistSection() {
         fetcher={() =>
           countAppointmentsByPsychologist(
             PatientFilters.Gender,
-            selectedOption.id,
+            selectedOption.id
           )
         }
       />
@@ -64,7 +73,7 @@ export default function AppointmentsByPsychologistSection() {
         fetcher={() =>
           countAppointmentsByPsychologist(
             PatientFilters.Career,
-            selectedOption.id,
+            selectedOption.id
           )
         }
       />

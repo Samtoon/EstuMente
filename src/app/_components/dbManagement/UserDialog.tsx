@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import Roles from "@/app/_enums/Roles";
 import IUser from "@/app/_interfaces/IUser";
 import { saveUserById } from "@/app/_utils/server actions/user";
@@ -52,7 +53,7 @@ export default function UserDialog({
     }));
   let newAssignedUsers: typeof assignedUsers;
   const baseResponsibleUser = indexedUsers.find(
-    (user) => user._id === dbUser?.responsibleUser,
+    (user) => user._id === dbUser?.responsibleUser
   );
   const responsibleUser = baseResponsibleUser && {
     id: baseResponsibleUser?._id,
@@ -85,7 +86,7 @@ export default function UserDialog({
         assignedUsers.map((user) => {
           users[user.index].responsibleUser = undefined;
           return saveUserById(user.id!, { $unset: { responsibleUser: 1 } });
-        }),
+        })
       )
         .then(() =>
           Promise.all(
@@ -93,8 +94,8 @@ export default function UserDialog({
               const newId = dbUser?._id;
               users[user.index].responsibleUser = newId;
               return saveUserById(user.id!, { responsibleUser: newId });
-            }),
-          ),
+            })
+          )
         )
         .then(() => {
           console.log(users);
@@ -110,7 +111,7 @@ export default function UserDialog({
       if (index !== undefined) users[index].responsibleUser = newId;
       saveUserById(
         dbUser._id!,
-        newId ? { responsibleUser: newId } : { $unset: { responsibleUser: 1 } },
+        newId ? { responsibleUser: newId } : { $unset: { responsibleUser: 1 } }
       ).then(() => setEditingResponsibleUser(false));
       console.log(users);
     } else {
@@ -181,8 +182,10 @@ export default function UserDialog({
     console.log(user);
     return (
       <Dialog open={open} onClose={handleClose} sx={{ overflow: "auto" }}>
-        <DialogTitle>{dbUser.fullName}</DialogTitle>
-        <DialogContent>
+        <DialogTitle fontWeight={FontWeightValues.Bold} color="secondary">
+          {dbUser.fullName}
+        </DialogTitle>
+        <DialogContent sx={{ color: "#666666" }}>
           <Grid container spacing={1}>
             {Object.entries(user).map(([key, value], index) => {
               switch (key) {
@@ -197,8 +200,8 @@ export default function UserDialog({
                           </Grid>
                         )}
                         <Grid item key={`${key}:key`} xs={4}>
-                          <Typography>
-                            <b>{key + ":"}</b>
+                          <Typography fontWeight={FontWeightValues.Semibold}>
+                            {key + ":"}
                           </Typography>
                         </Grid>
                         <Grid item key={`${key}:value`} xs={6}>
@@ -245,8 +248,8 @@ export default function UserDialog({
                           </Grid>
                         )}
                         <Grid item xs={4}>
-                          <Typography>
-                            <b>{key + ":"}</b>
+                          <Typography fontWeight={FontWeightValues.Semibold}>
+                            {key + ":"}
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -291,8 +294,8 @@ export default function UserDialog({
                           </Grid>
                         )}
                         <Grid item xs={4}>
-                          <Typography>
-                            <b>{key + ":"}</b>
+                          <Typography fontWeight={FontWeightValues.Semibold}>
+                            {key + ":"}
                           </Typography>
                         </Grid>
                         <Grid item xs={8}>

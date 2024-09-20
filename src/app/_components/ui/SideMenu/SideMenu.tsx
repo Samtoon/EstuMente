@@ -55,7 +55,13 @@ export const SideMenu = () => {
           <div>
             <List>
               <ListItem>
-                <ListItemText primary={"Hola, " + session.user.firstName} />
+                <ListItemText
+                  primary={"Hola, " + session.user.firstName}
+                  primaryTypographyProps={{
+                    color: "text1.main",
+                    fontWeight: "fontWeightMedium",
+                  }}
+                />
                 <ListItemAvatar>
                   <Avatar
                     src={session.user.profilePicture}
@@ -108,7 +114,13 @@ export const SideMenu = () => {
                 <ListItemIcon>
                   <LogoutOutlined color="secondary" />
                 </ListItemIcon>
-                <ListItemText primary={"Salir"} />
+                <ListItemText
+                  primary={"Salir"}
+                  primaryTypographyProps={{
+                    color: "text1.main",
+                    fontWeight: "fontWeightMedium",
+                  }}
+                />
               </ListItemButton>
             </List>
           </div>
@@ -118,14 +130,26 @@ export const SideMenu = () => {
               <ListItemIcon>
                 <LoginOutlined color="secondary" />
               </ListItemIcon>
-              <ListItemText primary={"Iniciar sesión"} />
+              <ListItemText
+                primary={"Iniciar sesión"}
+                primaryTypographyProps={{
+                  color: "text1.main",
+                  fontWeight: "fontWeightMedium",
+                }}
+              />
             </ListItemButton>
 
             <ListItem button /* onClick={() => navigateTo("/psicologos")} */>
               <ListItemIcon>
                 <SupervisedUserCircleOutlined color="secondary" />
               </ListItemIcon>
-              <ListItemText primary={"Psicólogos"} />
+              <ListItemText
+                primary={"Psicólogos"}
+                primaryTypographyProps={{
+                  color: "text1.main",
+                  fontWeight: "fontWeightMedium",
+                }}
+              />
             </ListItem>
           </List>
         )}

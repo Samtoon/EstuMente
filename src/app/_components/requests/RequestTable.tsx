@@ -14,6 +14,7 @@ import Roles from "@/app/_enums/Roles";
 import IUser from "@/app/_interfaces/IUser";
 import { fetchUserById } from "@/app/_utils/server actions/user";
 import { FILES } from "@/app/_utils/endpoints";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function RequestTable({ requests }: { requests: IRequest[] }) {
   const [open, setOpen] = useState(false);
@@ -35,56 +36,35 @@ export default function RequestTable({ requests }: { requests: IRequest[] }) {
       />
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead
+            sx={{
+              "*": {
+                backgroundColor: "#CC0000",
+                color: "white !important",
+                borderLeft: 1,
+                fontWeight: `${FontWeightValues.Semibold} !important`,
+              },
+            }}
+          >
             <TableRow>
-              <TableCell
-                sx={{
-                  backgroundColor: "purple",
-                  color: "white",
-                  borderLeft: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Apellidos
-              </TableCell>
-              <TableCell
-                sx={{
-                  backgroundColor: "purple",
-                  color: "white",
-                  borderLeft: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Nombres
-              </TableCell>
-              <TableCell
-                sx={{
-                  backgroundColor: "purple",
-                  color: "white",
-                  borderLeft: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Rol solicitado
-              </TableCell>
-              <TableCell
-                sx={{
-                  backgroundColor: "purple",
-                  color: "white",
-                  borderLeft: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                Fecha solicitud
-              </TableCell>
+              <TableCell>Apellidos</TableCell>
+              <TableCell>Nombres</TableCell>
+              <TableCell>Rol solicitado</TableCell>
+              <TableCell>Fecha solicitud</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody
+            sx={{
+              ".MuiTableCell-root": {
+                color: "#666666",
+              },
+            }}
+          >
             {requests.map((request, index) => (
               <TableRow
                 key={`row${index}`}
                 hover
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", color: "#666666" }}
                 onClick={() => {
                   setOpen(true);
                   setRequestIndex(index);
@@ -93,13 +73,13 @@ export default function RequestTable({ requests }: { requests: IRequest[] }) {
                     setLoading(true);
                     Promise.all([
                       fetchUserById(requests[index].user).then((foundUser) =>
-                        setUser(foundUser),
+                        setUser(foundUser)
                       ),
                       fetch(
                         process.env.NEXT_PUBLIC_BASE_URL +
                           FILES +
                           "/" +
-                          requests[index].supportingDocumentId,
+                          requests[index].supportingDocumentId
                       )
                         .then((response) => {
                           console.log(response);

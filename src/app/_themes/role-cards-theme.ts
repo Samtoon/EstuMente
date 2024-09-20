@@ -3,9 +3,10 @@ import { createTheme } from "@mui/material";
 export const selectedTheme = createTheme({
   palette: {
     background: {
-      paper: "#7f00ff", // your color
+      paper: "#CC0000", // your color
     },
     text: {
+      primary: "#FFFFFF",
       secondary: "#FFFFFF",
     },
   },
@@ -14,10 +15,11 @@ export const selectedTheme = createTheme({
 export const unselectedTheme = createTheme({
   palette: {
     background: {
-      paper: "#EFF7FF", // your color
+      paper: "#CCCCCC", // your color
     },
     text: {
-      secondary: "#000000",
+      primary: "#333333",
+      secondary: "#666666",
     },
   },
 });

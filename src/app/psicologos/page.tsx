@@ -19,6 +19,7 @@ import {
 } from "../_database/daos/psychologistDao";
 import Roles from "../_enums/Roles";
 import { getMyServerSession } from "../_utils/next-auth";
+import PageHeader from "../_components/PageHeader";
 
 const SearchPage: NextPage = async () => {
   const session = await getMyServerSession();
@@ -29,14 +30,7 @@ const SearchPage: NextPage = async () => {
   return (
     <PsiLayout title="PsicologicaMente" pageDescription="Sanando Juntos">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          gutterBottom
-          sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
-        >
-          Elige un practicante
-        </Typography>
+        <PageHeader header="Elige un practicante" />
 
         <Search onQueryChange="asdlfjasf" />
         <Suspense fallback="Cargando...">

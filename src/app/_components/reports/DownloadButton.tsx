@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { Download } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { format } from "date-fns";
@@ -28,7 +29,7 @@ export default function DownloadButton({
         imgX,
         imgY,
         imgWidth * ratio,
-        imgHeight * ratio,
+        imgHeight * ratio
       );
       const date = format(new Date(), "do 'de' MMMM 'del' y 'a las' p aaaa", {
         locale: es,
@@ -54,7 +55,7 @@ export default function DownloadButton({
       color="secondary"
       size="large"
       endIcon={<Download />}
-      sx={{ m: 2 }}
+      sx={{ m: 2, fontWeight: FontWeightValues.Semibold }}
     >
       Descargar en PDF
     </Button>

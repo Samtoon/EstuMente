@@ -46,6 +46,8 @@ import AddPeriodModal from "@/app/_components/schedule/AddPeriodModal";
 import ScheduleTable from "@/app/_components/schedule/ScheduleTable";
 import { SCHEDULES } from "@/app/_utils/endpoints";
 import { toast } from "react-toastify";
+import PageHeader from "../_components/PageHeader";
+import { FontWeightValues } from "../_enums/FontWeightValues";
 
 interface state {
   day: IDay["day"];
@@ -80,7 +82,7 @@ export default function ConfigureSchedulePage() {
         pending: "Guardando agenda...",
         success: "Agenda guardada con éxito",
         error: "Ha ocurrido un error, por favor inténtalo nuevamente",
-      },
+      }
     );
   }
 
@@ -90,14 +92,14 @@ export default function ConfigureSchedulePage() {
   const [loading, setLoading] = useState(true);
   const fetchSchedule = useCallback(() => {
     console.log(
-      "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES,
+      "voy a mandar: " + process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES
     );
     if (session) {
       setLoading(true);
       fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL + SCHEDULES}?psychologist=${
           session?.psychologist?._id
-        }`,
+        }`
       )
         .then((res) => res.json())
         .then((res) => {
@@ -119,32 +121,32 @@ export default function ConfigureSchedulePage() {
     days.map((day) => ({
       day: day,
       hours: new Array(24).fill(false),
-    })),
+    }))
   );
   const [modalOpen, setModalOpen] = useState(ModalStates.Closed);
   // console.log("el lunes es: " + JSON.stringify(schedule));
   return (
-    <PsychologistLayout title="configurar calendario" pageDescription="">
+    <Box display="flex" flexDirection="column" height="100%">
       <AddPeriodModal
         schedule={schedule}
         setSchedule={setSchedule}
         state={modalOpen}
         close={() => setModalOpen(ModalStates.Closed)}
       />
-      <Typography
-        variant="h1"
-        component="h1"
-        gutterBottom
-        sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
-      >
-        Configurar Agenda
-      </Typography>
-      <Stack direction="row" sx={{ height: "80vh" }}>
-        <List>
+      <PageHeader header="Configurar agenda" />
+      <Stack direction="row" overflow="hidden" marginBottom="30px">
+        <List
+          sx={{
+            span: {
+              color: "#666666",
+              fontWeight: `${FontWeightValues.Semibold} !important`,
+            },
+          }}
+        >
           <ListItem key="addPeriod">
             <ListItemButton onClick={() => setModalOpen(ModalStates.Add)}>
               <ListItemIcon>
-                <AddBox />
+                <AddBox color="secondary" />
               </ListItemIcon>
               <ListItemText primary="Agregar periodo" />
             </ListItemButton>
@@ -152,35 +154,45 @@ export default function ConfigureSchedulePage() {
           <ListItem key="removePeriod">
             <ListItemButton onClick={() => setModalOpen(ModalStates.Remove)}>
               <ListItemIcon>
-                <DisabledByDefault />
+                <DisabledByDefault color="secondary" />
               </ListItemIcon>
               <ListItemText primary="Eliminar periodo" />
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ThemeProvider theme={scheduleTheme}>
-            <ListItem>
+
+          <ListItem>
+            <ThemeProvider theme={scheduleTheme}>
               <ListItemIcon>
                 <Circle color="primary" />
               </ListItemIcon>
-              <ListItemText primary="Disponible" />
-            </ListItem>
-            <ListItem>
+            </ThemeProvider>
+            <ListItemText primary="Disponible" />
+          </ListItem>
+          <ListItem>
+            <ThemeProvider theme={scheduleTheme}>
               <ListItemIcon>
                 <Circle color="secondary" />
               </ListItemIcon>
-              <ListItemText primary="No disponible" />
-            </ListItem>
-          </ThemeProvider>
+            </ThemeProvider>
+            <ListItemText primary="No disponible" />
+          </ListItem>
+
           <Divider />
           <ListItem onClick={updateSchedule}>
             <ListItemButton>
-              <ListItemText primary="Guardar cambios" />
+              <ListItemText
+                primary="Guardar cambios"
+                sx={{ textAlign: "center" }}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton onClick={fetchSchedule}>
-              <ListItemText primary="Cancelar cambios" />
+              <ListItemText
+                primary="Cancelar cambios"
+                sx={{ textAlign: "center" }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
@@ -196,6 +208,6 @@ export default function ConfigureSchedulePage() {
         </Box> */}
         {/* </Paper> */}
       </Stack>
-    </PsychologistLayout>
+    </Box>
   );
 }

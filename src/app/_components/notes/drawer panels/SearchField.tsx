@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import NoteFilters from "@/app/_enums/NoteFilters";
 import { Search } from "@mui/icons-material";
 import {
@@ -59,13 +60,22 @@ export default function SearchField({
     // searchNotes(filterBy === NoteFilters.Title ? title : date as Date, filterBy);
   }
   return (
-    <Stack direction="row" spacing={2} justifyContent="center">
+    <Stack direction="row" spacing={2} justifyContent="center" mb="10px">
       <FormControl size="small" variant="standard" sx={{ minWidth: 70 }}>
-        <InputLabel id="search-by-label">Buscar por:</InputLabel>
+        <InputLabel
+          id="search-by-label"
+          sx={{ fontWeight: FontWeightValues.Light }}
+        >
+          Buscar por:
+        </InputLabel>
         <Select
           labelId="search-by-label"
           value={filterBy}
           onChange={(e) => setFilterBy(e.target.value as NoteFilters)}
+          sx={{
+            fontWeight: FontWeightValues.Semibold,
+            ".MuiInput-input": { color: "#666666" },
+          }}
         >
           <MenuItem value={NoteFilters.Title}>Título</MenuItem>
           <MenuItem value={NoteFilters.Date}>Fecha</MenuItem>

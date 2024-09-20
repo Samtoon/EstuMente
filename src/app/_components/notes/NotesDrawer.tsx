@@ -24,6 +24,7 @@ import { INote } from "@/app/_interfaces/INote";
 import { fetchNotesByPatient } from "@/app/_utils/server actions/note";
 import { useSession } from "next-auth/react";
 import styles from "@/app/_styles/notes/notesTest.module.css";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function NotesDrawer({
   open,
@@ -86,6 +87,9 @@ export default function NotesDrawer({
           value={tabIndex}
           onChange={handleChange}
           variant="fullWidth"
+          sx={{
+            ".MuiTab-root": { fontWeight: FontWeightValues.Semibold },
+          }}
         >
           <Tab label="Nueva nota" value={0} />
           <Tab label="Notas guardadas" value={1} />

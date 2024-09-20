@@ -33,6 +33,7 @@ import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import Roles from "@/app/_enums/Roles";
 import { useSession } from "next-auth/react";
 import IUser from "@/app/_interfaces/IUser";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 interface Props {
   appointment: IUpcomingAppointment | IPreviousAppointment;
@@ -97,33 +98,34 @@ export const AppointmentCard: FC<Props> = ({
             {/* <Typography component="div" variant="subtitle1">
               {`${appointment.typeService} con`}
             </Typography> */}
-            <Typography color="text.secondary" component="div" variant="h5">
+            <Typography
+              color="text2.main"
+              component="div"
+              variant="h5"
+              fontWeight={FontWeightValues.Semibold}
+            >
               {`${role}: ${fullName}`}
             </Typography>
 
-            <Typography variant="h6" color="text.secondary" component="div">
+            <Typography variant="h6" color="text2.main" component="div">
               {`Fecha: ${format(appointment.date, "EEEE dd", {
                 locale: es,
               })} de ${format(appointment.date, "MMMM yyyy", {
                 locale: es,
               })}`}
             </Typography>
-            <Typography variant="h6" color="text.secondary" component="div">
+            <Typography variant="h6" color="text2.main" component="div">
               {`Hora de inicio: ${format(appointment.date, "HH:mm a")}`}
             </Typography>
             {!(appointment as IUpcomingAppointment).roomURL && (
-              <NextLink href={`/citas/historial/${appointment._id}`} passHref>
-                {/* <Link> */}
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                  component="div"
-                  gutterBottom
-                >
-                  Ver información de la cita
-                </Typography>
-                {/* </Link> */}
-              </NextLink>
+              <Link
+                href={`/citas/historial/${appointment._id}`}
+                color="secondary"
+                variant="body1"
+                gutterBottom
+              >
+                Ver información de la cita
+              </Link>
             )}
             {/* {!appointment.isPaid ? (
               <Chip

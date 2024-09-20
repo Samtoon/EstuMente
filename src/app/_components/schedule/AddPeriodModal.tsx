@@ -50,6 +50,7 @@ export default function AddPeriodModal({
             dia = e.target.value as IDay["day"];
           }}
           fullWidth
+          color="secondary"
         >
           {days.map((day) => (
             <MenuItem key={`opcion${day}`} value={day}>
@@ -63,6 +64,7 @@ export default function AddPeriodModal({
           onChange={(e) => {
             horaInicial = e.target.value as number;
           }}
+          color="secondary"
           fullWidth
         >
           {hours.map((hour) => (
@@ -78,6 +80,7 @@ export default function AddPeriodModal({
             horaFinal = e.target.value as number;
           }}
           fullWidth
+          color="secondary"
         >
           {hours.map((hour) => (
             <MenuItem key={`opcion${hour}final`} value={hour.getValue()}>

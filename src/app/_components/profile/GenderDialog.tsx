@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import {
   Button,
   Dialog,
@@ -27,19 +28,34 @@ export default function GenderDialog({
   }
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Género personalizado</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+      <DialogTitle
+        sx={{ fontWeight: FontWeightValues.Semibold, color: "#666666" }}
+      >
+        Género personalizado
+      </DialogTitle>
+      <DialogContent sx={{ color: "#6666666" }}>
+        <DialogContentText pb="10px">
           Por favor ingresa el género con el que te identificas
         </DialogContentText>
         <form id="genderForm" action={handleSubmit}>
-          <TextField label="Género" name="gender" />
+          <TextField
+            label="Género"
+            name="gender"
+            color="secondary"
+            sx={{
+              input: {
+                fontWeight: FontWeightValues.Medium,
+                color: "#666666",
+              },
+            }}
+            fullWidth
+          />
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button type="submit" form="genderForm">
-          Subscribe
+        <Button onClick={onClose}>Cancelar</Button>
+        <Button type="submit" form="genderForm" color="secondary">
+          Guardar
         </Button>
       </DialogActions>
     </Dialog>

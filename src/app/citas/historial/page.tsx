@@ -18,6 +18,7 @@ import { AppointmentList } from "@/app/_components/appointments/AppointmentList"
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Roles from "@/app/_enums/Roles";
+import PageHeader from "@/app/_components/PageHeader";
 
 interface Props {
   searchParams: { psychologist?: string };
@@ -50,14 +51,7 @@ const HistoryAppointmentPage: NextPage<Props> = async ({ searchParams }) => {
       pageDescription="Historial de citas"
     >
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          gutterBottom
-          sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
-        >
-          Historial de citas
-        </Typography>
+        <PageHeader header="Historial de citas"/>
         {/*Mejorar la validacion porque si hay citas pero no son del tipo para el historial*/}
         {appointments.length === 0 ? (
           <EmptyAppointment message={"Aún no tienes citas en tu historial"} />

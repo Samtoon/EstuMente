@@ -25,7 +25,13 @@ export default function MenuItem({ label, path, children }: Props) {
   return (
     <ListItemButton onClick={() => navigateTo(path)} disabled={!path}>
       <ListItemIcon>{children}</ListItemIcon>
-      <ListItemText primary={label} />
+      <ListItemText
+        primary={label}
+        primaryTypographyProps={{
+          color: "text1.main",
+          fontWeight: "fontWeightMedium",
+        }}
+      />
     </ListItemButton>
   );
 }

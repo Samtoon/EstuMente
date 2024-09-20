@@ -14,6 +14,7 @@ import {
 import GenderDialog from "./GenderDialog";
 import GenderField from "./GenderField";
 import DateField from "./DateField";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function ProfileField({
   type,
@@ -49,7 +50,13 @@ export default function ProfileField({
               defaultValue={defaultValue || options[0]}
               disabled={disabled}
               fullWidth
-              InputProps={{ readOnly: !updating }}
+              InputProps={{
+                readOnly: !updating,
+                style: { fontWeight: FontWeightValues.Regular },
+              }}
+              InputLabelProps={{
+                style: { fontWeight: FontWeightValues.Regular },
+              }}
             >
               {options.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -79,7 +86,7 @@ export default function ProfileField({
               <Button
                 fullWidth
                 color="secondary"
-                sx={{ height: "100%" }}
+                sx={{ height: "100%", fontWeight: FontWeightValues.Regular }}
                 onClick={() => setModalOpen(true)}
                 disabled={pendingRequest}
               >
@@ -99,8 +106,14 @@ export default function ProfileField({
         defaultValue={defaultValue}
         disabled={disabled}
         fullWidth
-        InputProps={{ readOnly: !updating }}
-        InputLabelProps={{ shrink: defaultValue }}
+        InputProps={{
+          readOnly: !updating,
+          style: { fontWeight: FontWeightValues.Regular },
+        }}
+        InputLabelProps={{
+          shrink: defaultValue,
+          style: { fontWeight: FontWeightValues.Regular },
+        }}
       />
     </Grid>
   );

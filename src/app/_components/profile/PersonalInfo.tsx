@@ -22,6 +22,7 @@ import { es } from "date-fns/locale";
 import { esES } from "@mui/x-date-pickers/locales";
 import FieldForm from "./FieldForm";
 import ProfileFieldContext from "@/app/_contexts/ProfileFieldContext";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 interface Props {
   user: IUser;
@@ -54,6 +55,7 @@ export const PersonalInfo: FC<Props> = ({
             <Typography
               variant="h6"
               component="h6"
+              fontWeight={FontWeightValues.Bold}
               sx={{ fontSize: { xs: 16, md: 20 } }}
             >
               Información personal
@@ -68,6 +70,7 @@ export const PersonalInfo: FC<Props> = ({
                 onClick={() => {
                   setUpdating(true);
                 }}
+                sx={{ fontWeight: FontWeightValues.Bold }}
               >
                 Editar
               </Button>
@@ -80,6 +83,7 @@ export const PersonalInfo: FC<Props> = ({
                   setUpdating(false);
                   // reset();
                 }}
+                sx={{ fontWeight: FontWeightValues.Bold }}
               >
                 Cancelar
               </Button>
@@ -92,6 +96,7 @@ export const PersonalInfo: FC<Props> = ({
                 size="small"
                 disabled={loading}
                 form="profileForm"
+                sx={{ fontWeight: FontWeightValues.Bold }}
               >
                 {loading && (
                   <CircularProgress

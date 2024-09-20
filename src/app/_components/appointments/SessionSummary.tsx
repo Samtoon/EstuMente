@@ -34,19 +34,19 @@ export const SessionSummary: FC<Props> = ({ appointmentValues }) => {
       </Grid> */}
 
       <Grid item xs={6} sx={{ mt: 1 }}>
-        <Typography>Fecha</Typography>
+        <Typography color="text2.main">Fecha</Typography>
       </Grid>
       <Grid item xs={6} sx={{ mt: 1 }} display="flex" justifyContent="end">
-        <Typography>
+        <Typography color="text2.main">
           {format(summaryValues.date, "PPPP", { locale: es })}
         </Typography>
       </Grid>
 
       <Grid item xs={6} sx={{ mt: 1 }}>
-        <Typography>Hora</Typography>
+        <Typography color="text2.main">Hora</Typography>
       </Grid>
       <Grid item xs={6} sx={{ mt: 1 }} display="flex" justifyContent="end">
-        <Typography>
+        <Typography color="text2.main">
           {format(summaryValues.date, "hh:mm aa", { locale: es })}
         </Typography>
       </Grid>

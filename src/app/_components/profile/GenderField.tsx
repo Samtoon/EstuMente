@@ -1,6 +1,7 @@
 import { MenuItem, TextField } from "@mui/material";
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import GenderDialog from "./GenderDialog";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function GenderField({ readOnly }: { readOnly?: boolean }) {
   const addOption = "Añadir género personalizado...";
@@ -20,7 +21,7 @@ export default function GenderField({ readOnly }: { readOnly?: boolean }) {
     }
   }, [customGender, setSelection]);
   function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
     if (event.target.value === addOption) {
       setOpen(true);
@@ -38,7 +39,11 @@ export default function GenderField({ readOnly }: { readOnly?: boolean }) {
         fullWidth
         label="Género"
         name="Género"
-        InputProps={{ readOnly }}
+        InputProps={{
+          readOnly,
+          style: { fontWeight: FontWeightValues.Regular },
+        }}
+        InputLabelProps={{ style: { fontWeight: FontWeightValues.Regular } }}
       >
         {options
           .filter((option) => option.length > 0)

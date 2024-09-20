@@ -1,4 +1,5 @@
 "use client";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { INote } from "@/app/_interfaces/INote";
 import {
   Box,
@@ -19,9 +20,15 @@ export default function NotesCard({ notes }: { notes: INote[] }) {
     // <Card className="summary-card">
     //   <CardContent>
     <Box>
-      <Typography variant="h2">Notas de la sesión</Typography>
+      <Typography
+        variant="h2"
+        color="text2.main"
+        fontWeight={FontWeightValues.Semibold}
+      >
+        Notas de la sesión
+      </Typography>
       <Divider />
-      <List>
+      <List sx={{ color: "#666666" }}>
         {notes.map((note) => (
           <ListItem disablePadding key={`list-item-${note._id!}`}>
             <ListItemButton

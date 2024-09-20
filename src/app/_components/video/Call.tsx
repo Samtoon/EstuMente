@@ -3,7 +3,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import DailyIframe, { DailyCall } from "@daily-co/daily-js";
 import { Box, IconButton } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { Note } from "@mui/icons-material";
+import { Note, NoteAlt } from "@mui/icons-material";
 import { ThemeProvider } from "@emotion/react";
 import { noteTheme } from "@/app/_themes/note-theme";
 import NotesDrawer from "../notes/NotesDrawer";
@@ -45,16 +45,14 @@ export const Call: FC<Props> = ({
         },
         theme: {
           colors: {
-            accent: "#4D22B3",
-            accentText: "#FFFFFF",
-            background: "#1F1D36",
-            backgroundAccent: "#311673",
-            baseText: "#FFFFFF",
-            border: "#574770",
-            mainAreaBg: "#000000",
-            mainAreaBgAccent: "#333333",
-            mainAreaText: "#FFFFFF",
-            supportiveText: "#808080",
+            accent: "#e1e7e8",
+            accentText: "#CC0000",
+            background: "#CC0000",
+            baseText: "#ffffff",
+            backgroundAccent: "#ff5151",
+            mainAreaBg: "#f3f3f3",
+            mainAreaBgAccent: "#cecece",
+            mainAreaText: "#6c6c6d",
           },
         },
         userName: session?.user.firstName!,
@@ -115,17 +113,16 @@ export const Call: FC<Props> = ({
         <div ref={callRef} className="video">
           {session?.psychologist && (
             <>
-              <ThemeProvider theme={noteTheme}>
-                <IconButton
-                  disabled={open}
-                  color="primary"
-                  id="button-notes"
-                  size="large"
-                  onClick={() => setOpen(true)}
-                >
-                  <Note />
-                </IconButton>
-              </ThemeProvider>
+              <IconButton
+                disabled={open}
+                color="secondary"
+                id="button-notes"
+                size="large"
+                onClick={() => setOpen(true)}
+              >
+                <NoteAlt style={{ fontSize: "64px" }} />
+              </IconButton>
+
               <NotesDrawer open={open} handleClose={() => setOpen(false)} />
             </>
           )}

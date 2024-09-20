@@ -13,6 +13,7 @@ import {
 import CellButton from "./CellButton";
 import { IDay } from "@/app/_interfaces/schedule/IDay";
 import { scheduleTheme } from "@/app/_themes/schedule-theme";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function ScheduleTable({
   schedule,
@@ -35,9 +36,10 @@ export default function ScheduleTable({
               <TableCell
                 key={`header${day}`}
                 sx={{
-                  backgroundColor: "purple",
+                  backgroundColor: "#CC0000",
                   color: "white",
                   borderLeft: 1,
+                  fontWeight: FontWeightValues.Semibold,
                 }}
                 align="center"
               >
@@ -55,6 +57,7 @@ export default function ScheduleTable({
                   left: 0,
                   background: "white",
                   zIndex: 800,
+                  color: "#666666",
                 }}
               >
                 {hour.getString()}

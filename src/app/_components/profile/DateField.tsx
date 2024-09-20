@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { esES } from "@mui/x-date-pickers/locales";
@@ -29,6 +30,12 @@ export default function DateField({
         slotProps={{
           textField: {
             fullWidth: true,
+            inputProps: {
+              style: { fontWeight: FontWeightValues.Regular },
+            },
+            InputLabelProps: {
+              style: { fontWeight: FontWeightValues.Regular },
+            },
           },
         }}
         views={["day", "month", "year"]}

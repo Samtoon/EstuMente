@@ -1,3 +1,4 @@
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { IReportResult } from "@/app/_interfaces/IReportResult";
 import { Box, Typography } from "@mui/material";
 import {
@@ -38,9 +39,22 @@ export default function Chart({
   }, [fetcher]);
   return (
     <Box display="flex" flexDirection="column">
-      <Typography>{title}</Typography>
+      <Typography color="text2.main" fontWeight={FontWeightValues.Semibold}>
+        {title}
+      </Typography>
       <PieChart
-        colors={cheerfulFiestaPalette}
+        colors={[
+          "#1f77b4",
+          "#ff7f0e",
+          "#2ca02c",
+          "#d62728",
+          "#9467bd",
+          "#8c564b",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+        ]}
         loading={loading}
         series={[
           {
@@ -52,6 +66,9 @@ export default function Chart({
           [`& .${pieArcLabelClasses.root}`]: {
             fill: "white",
             fontWeight: "bold",
+          },
+          tspan: {
+            fill: "#666666",
           },
         }}
         width={380}

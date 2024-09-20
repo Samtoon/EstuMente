@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { addHours, isWithinInterval } from "date-fns";
 import Roles from "@/app/_enums/Roles";
 import { useRouter } from "next/navigation";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function CallDisplay({
   appointment,
@@ -33,7 +34,7 @@ export default function CallDisplay({
       `/citas${
         session?.user.role === Roles.Tutor &&
         `?psychologist=${appointment.psychologist}`
-      }`,
+      }`
     );
   if (
     !leaving &&
@@ -69,7 +70,11 @@ export default function CallDisplay({
             variant="h1"
             component="h1"
             gutterBottom
-            sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
+            sx={{
+              fontSize: { xs: 22, md: 32 },
+              fontWeight: FontWeightValues.Semibold,
+            }}
+            color="text1"
           >
             La cita ha finalizado
           </Typography>

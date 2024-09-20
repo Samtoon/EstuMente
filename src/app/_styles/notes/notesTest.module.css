@@ -12,13 +12,17 @@
   width: 100%;
 }
 
+.notes-panel :global(.MuiInputBase-input), .notes-panel :global(.ql-editor) {
+  color: #666666
+}
+
 #swipeable-views {
   min-height: inherit;
 }
 
 #swipeable-views :global(.react-swipeable-view-container) {
   min-height: 330px;
-  max-height: 330px;
+  max-height: 350px;
 }
 
 #swipeable-views :global(.ql-container) {

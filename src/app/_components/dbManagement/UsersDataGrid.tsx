@@ -4,6 +4,7 @@ import { DataGrid, GridColDef, useGridApiRef } from "@mui/x-data-grid";
 import { esES } from "@mui/x-data-grid/locales";
 import UserDialog from "./UserDialog";
 import { useState } from "react";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 const defaultRow = {
   Apellidos: "",
@@ -40,6 +41,12 @@ export default function UsersDataGrid({ users }: { users: IUser[] }) {
         columns={columns}
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         autosizeOnMount
+        sx={{
+          "& .MuiDataGrid-columnHeader *": {
+            fontWeight: FontWeightValues.Semibold,
+          },
+          color: "#666666",
+        }}
         onRowClick={(params) => {
           setSelectedIndex(params.id as number);
           setOpen(true);

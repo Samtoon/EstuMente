@@ -14,7 +14,14 @@ import { NextResponse } from "next/server";
 
 const allowedPaths = {
   Consultante: ["/citas", "/perfil", "/psicologos"],
-  Practicante: ["/citas", "/perfil", "/consultantes", "/notas", "/agenda"],
+  Practicante: [
+    "/citas",
+    "/perfil",
+    "/consultantes",
+    "/notas",
+    "/agenda",
+    "/pruebas",
+  ],
   Tutor: ["/psicologos", "/perfil", "/citas", "/reportes", "/solicitudes"],
   Coordinador: [
     "/tutores",

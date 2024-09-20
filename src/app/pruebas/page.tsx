@@ -14,14 +14,6 @@ export default function Pruebas(props: Props) {
   return (
     <PsychologistLayout title="Pruebas" pageDescription="Pruebas">
       <h1>Pruebas</h1>
-      <Box display="flex" flexDirection="row">
-        <ListNotesPanel
-          checkNote={(note) => {}}
-          shouldUpdate={true}
-          setShouldUpdate={(value) => {}}
-        />
-        <EditNotePanel trigger={(value) => {}} />
-      </Box>
       <Button color="secondary" onClick={() => setOpen(true)}>
         Abrir Notas
       </Button>

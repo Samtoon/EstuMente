@@ -24,6 +24,7 @@ import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import { sendNotification } from "@/app/_utils/server actions/notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { toast } from "react-toastify";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 interface IState {
   date?: Date;
@@ -46,7 +47,7 @@ function reducer(state: IState, action: IAction): IState {
       const availableHours = getAvailableHours(
         action.body as Date,
         state.appointments!,
-        action.schedule!,
+        action.schedule!
       );
       console.log("Las horas son:");
       console.log(availableHours);
@@ -66,7 +67,7 @@ function reducer(state: IState, action: IAction): IState {
         availableHours: getAvailableHours(
           state.date!,
           action.appointments!,
-          action.schedule!,
+          action.schedule!
         ),
         appointments: action.appointments!,
       };
@@ -99,36 +100,59 @@ export default function AppointmentDatePicker({
   }
 
   return (
-    <LocalizationProvider
-      dateAdapter={AdapterDateFns}
-      adapterLocale={es}
-      localeText={
-        esES.components.MuiLocalizationProvider.defaultProps.localeText
-      }
-    >
-      <StaticDatePicker
-        disablePast
-        views={["month", "day"]}
-        orientation="landscape"
-        shouldDisableDate={isDisabled}
-        onChange={(newValue) =>
-          newValue &&
-          dispatcher({
-            type: "date",
-            schedule: schedule,
-            body: newValue,
-          })
+    <Stack>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={es}
+        localeText={
+          esES.components.MuiLocalizationProvider.defaultProps.localeText
         }
-        // label="Selecciona una fecha"
-        // onChange={(newValue: any) => {
-        //   newValue && setDate(newValue);
-        //   setHour("");
-        //   setService("");
-        // }}
-        // renderInput={(params: any) => <TextField {...params} />}
-      />
-      <Stack spacing={2} justifyContent={"flex-start"} sx={{ height: "100%" }}>
-        <FormControl>
+      >
+        <StaticDatePicker
+          disablePast
+          views={["month", "day"]}
+          orientation="portrait"
+          shouldDisableDate={isDisabled}
+          slotProps={{
+            actionBar: {
+              actions: [],
+            },
+          }}
+          sx={{
+            ".MuiPickersToolbar-root span": {
+              fontWeight: FontWeightValues.Bold,
+              fontSize: "1.5em",
+              color: "#333333",
+            },
+            ".MuiPickersCalendarHeader-root": {
+              color: "#CC0000",
+            },
+            ".Mui-selected": {
+              backgroundColor: "#c33a40 !important",
+            },
+            ".MuiPickersDay-root": {
+              color: "#333333 !important",
+            },
+          }}
+          onChange={(newValue) =>
+            newValue &&
+            dispatcher({
+              type: "date",
+              schedule: schedule,
+              body: newValue,
+            })
+          }
+          // label="Selecciona una fecha"
+          // onChange={(newValue: any) => {
+          //   newValue && setDate(newValue);
+          //   setHour("");
+          //   setService("");
+          // }}
+          // renderInput={(params: any) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
+      <Stack spacing={2} justifyContent={"flex-start"} direction="row">
+        <FormControl sx={{ flexGrow: 1 }}>
           <InputLabel id="hora-label">Hora:</InputLabel>
           <Select
             labelId="hora-label"
@@ -150,7 +174,7 @@ export default function AppointmentDatePicker({
                   <MenuItem value={index} key={`opcion${index}`}>
                     {new Hour(index).getString()}
                   </MenuItem>
-                ),
+                )
             )}
           </Select>
         </FormControl>
@@ -158,6 +182,7 @@ export default function AppointmentDatePicker({
           size="large"
           color="secondary"
           disabled={!state.availableHours![state.date?.getHours()!]}
+          sx={{ flexGrow: 1 }}
           onClick={async () => {
             const user = session?.user!;
             console.log(`Mandando la fecha: ${state.date}`);
@@ -166,13 +191,13 @@ export default function AppointmentDatePicker({
                 scheduleAppointment(
                   user._id!,
                   schedule.psychologist as string,
-                  state.date!,
+                  state.date!
                 ),
                 {
                   pending: "Programando cita...",
                   success: "Cita programada con éxito",
                   error: "Ha ocurrido un error, por favor inténtalo nuevamente",
-                },
+                }
               )
               .then((appointment) => {
                 appointments.push(appointment);
@@ -186,13 +211,13 @@ export default function AppointmentDatePicker({
               { type: ReceiverTypes.User, id: psychologist.user as string },
               `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
               true,
-              user.profilePicture,
+              user.profilePicture
             );
           }}
         >
           Programar ahora
         </Button>
       </Stack>
-    </LocalizationProvider>
+    </Stack>
   );
 }

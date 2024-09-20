@@ -26,7 +26,10 @@ export default function NotificationsList({
   return notifications.length > 0 ? (
     <List>
       {notifications.map((notification, index) => (
-        <ListItem key={`Notificacion ${notification._id}`}>
+        <ListItem
+          key={`Notificacion ${notification._id}`}
+          sx={{ color: "#666666" }}
+        >
           <ListItemAvatar>
             <Avatar
               src={notification.image}
@@ -36,7 +39,7 @@ export default function NotificationsList({
           <ListItemText
             primary={notification.body}
             secondary={timeAgo.format(
-              new Date(notification.createdAt!).getTime(),
+              new Date(notification.createdAt!).getTime()
             )}
           />
           <IconButton

@@ -20,6 +20,7 @@ import NoteFilters from "@/app/_enums/NoteFilters";
 import styles from "@/app/_styles/notes/notesTest.module.css";
 import IUser from "@/app/_interfaces/IUser";
 import { fetchUserById } from "@/app/_utils/server actions/user";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function ListNotesPanel({
   checkNote,
@@ -78,6 +79,12 @@ export default function ListNotesPanel({
               <ListItem disablePadding key={`list-item-${note._id!}`}>
                 <ListItemButton onClick={() => checkNote({ ...note })}>
                   <ListItemText
+                    sx={{
+                      ".MuiListItemText-primary": {
+                        fontWeight: FontWeightValues.Semibold,
+                        color: "#666666",
+                      },
+                    }}
                     primary={note.title}
                     secondary={
                       <>
@@ -92,7 +99,12 @@ export default function ListNotesPanel({
             ))}
       </List>
       <Divider />
-      <Pagination id={styles["pagination"]} count={1} color="secondary" />
+      <Pagination
+        id={styles["pagination"]}
+        count={1}
+        color="secondary"
+        sx={{ mt: "10px" }}
+      />
     </div>
   );
 }

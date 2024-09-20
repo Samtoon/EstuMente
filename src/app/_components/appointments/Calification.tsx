@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { rateAppointment } from "@/app/_utils/server actions/appointment";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 interface Props {
   appointmentId: string;
@@ -64,7 +65,11 @@ export const Calification: FC<Props> = ({ appointmentId }) => {
             variant="h2"
             component="h2"
             gutterBottom
-            sx={{ fontSize: { xs: 20, md: 26 }, fontWeight: 300 }}
+            sx={{
+              fontSize: { xs: 20, md: 26 },
+              fontWeight: FontWeightValues.Regular,
+            }}
+            color="text2"
           >
             ¿Como valoras la calidad en la atención prestada?
           </Typography>
@@ -110,7 +115,10 @@ export const Calification: FC<Props> = ({ appointmentId }) => {
               {isPosting && (
                 <CircularProgress
                   size={20}
-                  sx={{ position: "absolute" }}
+                  sx={{
+                    position: "absolute",
+                    fontWeight: FontWeightValues.Semibold,
+                  }}
                   color="secondary"
                 />
               )}

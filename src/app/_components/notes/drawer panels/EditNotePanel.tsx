@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 // import ReactQuill from "react-quill";
 
 const modules = {
@@ -38,7 +39,7 @@ export default function EditNotePanel({
   const [title, setTitle] = useState("");
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
-    [],
+    []
   );
   function handleClick() {
     if (title !== "" && stripTags(content) !== "") {
@@ -79,6 +80,7 @@ export default function EditNotePanel({
         label="Título"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        sx={{ input: { fontWeight: FontWeightValues.Semibold } }}
       />
       <ReactQuill
         theme="snow"
@@ -86,7 +88,12 @@ export default function EditNotePanel({
         onChange={setContent}
         modules={modules}
       />
-      <Button id="save-note-button" color="secondary" onClick={handleClick}>
+      <Button
+        id="save-note-button"
+        color="secondary"
+        onClick={handleClick}
+        sx={{ fontWeight: FontWeightValues.Semibold }}
+      >
         {selectedNote ? "Editar" : "Guardar"}
       </Button>
     </div>

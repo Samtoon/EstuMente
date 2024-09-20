@@ -1,16 +1,25 @@
 import { createTheme } from "@mui/material/styles";
+import NextLink from "next/link";
+import { forwardRef } from "react";
+import { LinkBehaviour } from "../_components/LinkBehavior";
+import { blue } from "@mui/material/colors";
 
-export const lightTheme = createTheme({
+let lightTheme = createTheme({
+  typography: {
+    fontFamily: ["Open Sans", "sans-serif"].join(","),
+  },
   palette: {
     mode: "light",
     primary: {
       main: "#1E1E1E",
     },
     secondary: {
-      main: "#4D22B3",
+      main: "#CC0000",
+      contrastText: "#ffffff",
     },
     info: {
-      main: "#fff",
+      main: "#CCCCCC",
+      contrastText: "#333333",
     },
     success: {
       main: "#28a745",
@@ -22,7 +31,7 @@ export const lightTheme = createTheme({
   components: {
     MuiLink: {
       defaultProps: {
-        underline: "none",
+        component: LinkBehaviour,
       },
     },
     MuiAppBar: {
@@ -33,12 +42,15 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           background:
-            " linear-gradient(90deg, rgba(43,3,106,1) 0%, rgba(162,1,190,1) 100%)",
+            " linear-gradient(90deg, rgb(153,0,0) 0%, rgba(204,51,51) 100%)",
         },
       },
     },
 
     MuiTypography: {
+      defaultProps: {
+        color: "text2",
+      },
       styleOverrides: {
         h1: {
           fontSize: 30,
@@ -99,5 +111,45 @@ export const lightTheme = createTheme({
         },
       },
     },
+
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          border: "3px solid transparent",
+          background:
+            "linear-gradient(white, white) padding-box, linear-gradient(to right, #990000, #CC3333) border-box",
+        },
+      },
+    },
   },
 });
+
+lightTheme = createTheme(lightTheme, {
+  palette: {
+    text1: lightTheme.palette.augmentColor({
+      color: {
+        main: "#333333",
+      },
+      name: "text1",
+    }),
+    text2: lightTheme.palette.augmentColor({
+      color: {
+        main: "#666666",
+      },
+      name: "text2",
+    }),
+    contrast: lightTheme.palette.augmentColor({
+      color: {
+        main: "#ffffff",
+      },
+      name: "contrast",
+    }),
+    badge: lightTheme.palette.augmentColor({
+      color: {
+        main: blue[500],
+      },
+    }),
+  },
+});
+
+export { lightTheme };

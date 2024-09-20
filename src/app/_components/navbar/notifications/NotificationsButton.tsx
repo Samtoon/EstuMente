@@ -13,7 +13,7 @@ import { pusherClient } from "@/app/_lib/pusher";
 
 export default function NotificationsButton() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
+    null
   );
   const [notifications, setNotifications] = React.useState<INotification[]>([]);
   const { data: session } = useSession();
@@ -45,10 +45,10 @@ export default function NotificationsButton() {
           console.log(
             "Tengo",
             notifications.length,
-            "notifiaciones del servidor",
+            "notifiaciones del servidor"
           );
           setNotifications(notifications);
-        },
+        }
       );
       return () => {
         console.log("Me desuscribo");
@@ -60,12 +60,20 @@ export default function NotificationsButton() {
   }, [session]);
   return (
     <>
-      <IconButton color="info" onClick={handleClick}>
-        <Badge
-          badgeContent={notifications.length}
-          color="secondary"
-          sx={{ m: 1 }}
-        >
+      <IconButton
+        color="contrast"
+        onClick={handleClick}
+        sx={{
+          minHeight: "inherit",
+          borderRadius: "0px",
+          aspectRatio: 1,
+          "& .MuiTouchRipple-root .MuiTouchRipple-child": {
+            borderRadius: "0px",
+            minHeight: "inherit",
+          },
+        }}
+      >
+        <Badge badgeContent={notifications.length} color="badge" sx={{ m: 1 }}>
           <NotificationsNoneOutlined />
         </Badge>
       </IconButton>

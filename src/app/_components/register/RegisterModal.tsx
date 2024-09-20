@@ -20,6 +20,7 @@ import { sendNotification } from "@/app/_utils/server actions/notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { NotificationTypes } from "@/app/_enums/NotificationTypes";
 import { toast } from "react-toastify";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 export default function RegisterModal({
   open,
@@ -63,7 +64,7 @@ export default function RegisterModal({
               {
                 notificationType: NotificationTypes.Request,
                 clues: [request._id!],
-              },
+              }
             );
           });
           handleClose();
@@ -92,6 +93,7 @@ export default function RegisterModal({
               startIcon={<CloudUploadOutlined />}
               fullWidth
               size="large"
+              sx={{ fontWeight: FontWeightValues.Regular }}
             >
               Subir documento soporte
               <form id="pruebaForm" action={handleSubmit}>
@@ -104,7 +106,7 @@ export default function RegisterModal({
                     setFileURL(
                       e.target.files?.[0]
                         ? URL.createObjectURL(e.target.files?.[0])
-                        : "",
+                        : ""
                     );
                   }}
                   accept=".pdf"
@@ -125,7 +127,7 @@ export default function RegisterModal({
             color="secondary"
             disabled={!uploadedFile}
             startIcon={<SendOutlined />}
-            sx={{ width: "40%" }}
+            sx={{ width: "40%", fontWeight: FontWeightValues.Regular }}
             size="large"
             type="submit"
             form="pruebaForm"

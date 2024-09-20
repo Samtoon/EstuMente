@@ -9,6 +9,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import IUser from "@/app/_interfaces/IUser";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 interface Props {
   patient: IUser;
@@ -39,8 +40,8 @@ export const CardPatientAppointment: FC<Props> = ({ patient }) => {
         <CardContent>
           <Box className="fadeIn">
             <Typography
-              fontWeight={700}
-              color="inherit"
+              fontWeight={FontWeightValues.Semibold}
+              color="text1.main"
               align="center"
               variant="h2"
               gutterBottom

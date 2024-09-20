@@ -4,6 +4,7 @@ import {
   Badge,
   Box,
   Button,
+  Divider,
   IconButton,
   Toolbar,
   Typography,
@@ -12,7 +13,7 @@ import { UiContext } from "@/app/_contexts/ui/UiContext";
 import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NotificationsNoneOutlined } from "@mui/icons-material";
 import NotificationsButton from "./notifications/NotificationsButton";
 import Roles from "@/app/_enums/Roles";
@@ -22,7 +23,7 @@ import { registerSessionTime } from "@/app/_utils/session-time";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
-
+  const pathname = usePathname();
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
   const { sessionTime, setSessionTime } = useContext(SessionTimeContext);
   const { data: session, status } = useSession();
@@ -91,26 +92,55 @@ const Navbar = () => {
           <Box flex={1} />
           {middleButton()}
           <Box flex={1} />
+          <Divider
+            orientation="vertical"
+            sx={{ minHeight: "inherit", border: "2px solid white" }}
+          />
           {session ? (
             <NotificationsButton />
           ) : (
-            <Box sx={{ display: { xs: "none", sm: "block" }, m: 1 }}>
+            <Box
+              sx={{
+                display: { xs: "none", sm: "block", minHeight: "inherit" },
+              }}
+            >
               <Button
-                variant="contained"
-                color="secondary"
+                variant="text"
                 className="hero-btn"
                 onClick={() => signIn("google")}
+                color="contrast"
+                sx={{
+                  borderRadius: "0px",
+                  minWidth: "100px",
+                  maxWidth: "10%",
+                  minHeight: "inherit",
+                }}
               >
                 Iniciar sesión
               </Button>
             </Box>
           )}
-          <Button onClick={toggleSideMenu} variant="text">
+          <Divider
+            orientation="vertical"
+            sx={{ minHeight: "inherit", border: "2px solid white" }}
+          />
+          <Button
+            onClick={toggleSideMenu}
+            variant="text"
+            size="large"
+            color="contrast"
+            sx={{
+              minHeight: "inherit",
+              borderRadius: "0px",
+              minWidth: "100px",
+              maxWidth: "10%",
+            }}
+          >
             Menú
           </Button>
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      {pathname !== "/" && <Toolbar />}
       <SideMenu />
     </>
   );

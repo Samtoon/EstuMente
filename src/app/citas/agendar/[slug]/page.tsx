@@ -21,10 +21,8 @@ const ScheduleAppointmentPage = async ({
   const psychologist = await getPsychologistBySlug(params.slug);
   return (
     <PatientLayout title="Agendar cita" pageDescription="Agendar cita">
-      <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        {psychologist && <PsychologistDisplay psychologist={psychologist} />}
-        {/* <ModalBox /> */}
-      </Box>
+      {psychologist && <PsychologistDisplay psychologist={psychologist} />}
+      {/* <ModalBox /> */}
     </PatientLayout>
   );
 };

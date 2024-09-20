@@ -1,4 +1,5 @@
 import { getUserById } from "@/app/_database/daos/userDao";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { RequestStates } from "@/app/_enums/RequestStates";
 import { IRequest } from "@/app/_interfaces/IRequest";
 import IUser from "@/app/_interfaces/IUser";
@@ -7,6 +8,7 @@ import { answerRequest } from "@/app/_utils/server actions/request";
 import { fetchUserById } from "@/app/_utils/server actions/user";
 import {
   Avatar,
+  Box,
   Button,
   Dialog,
   DialogTitle,
@@ -50,7 +52,7 @@ export default function RequestModal({
   }) {
     return (
       <>
-        <Grid item xs={5}>
+        <Grid item xs={5} sx={{ fontWeight: FontWeightValues.Semibold }}>
           {field}
         </Grid>
         <Grid item xs={6}>
@@ -79,8 +81,17 @@ export default function RequestModal({
   }
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle fontWeight="bold">Solicitud</DialogTitle>
-      <Grid container px={3} spacing={1} columns={12} pb={3}>
+      <DialogTitle fontWeight={FontWeightValues.Bold} color="text1.main">
+        Solicitud
+      </DialogTitle>
+      <Grid
+        container
+        px={3}
+        spacing={1}
+        columns={12}
+        pb={3}
+        sx={{ color: "#666666" }}
+      >
         <RequestField
           field="Foto de perfil:"
           value={
@@ -88,7 +99,6 @@ export default function RequestModal({
               src={user?.profilePicture}
               slotProps={{ img: { referrerPolicy: "no-referrer" } }}
               sx={{ width: 90, height: 90 }}
-              variant="square"
             />
           }
           skeleton={<Skeleton variant="rectangular" width={90} height={90} />}
@@ -102,7 +112,7 @@ export default function RequestModal({
         />
         <RequestField
           field="Fecha solicitud:"
-          value={requestList[index]?.createdAt?.toString()}
+          value={new Date(requestList[index]?.createdAt!).toString()}
         />
         <RequestField
           field="Documento Soporte:"
@@ -133,7 +143,7 @@ export default function RequestModal({
           <Button
             size="large"
             fullWidth
-            color="success"
+            color="secondary"
             onClick={() => handleClick(RequestStates.Aprobado)}
             disabled={loading}
           >
@@ -144,7 +154,7 @@ export default function RequestModal({
           <Button
             size="large"
             fullWidth
-            color="error"
+            color="secondary"
             onClick={() => handleClick(RequestStates.Rechazado)}
             disabled={loading}
           >
@@ -152,7 +162,13 @@ export default function RequestModal({
           </Button>
         </Grid>
         <Grid item xs={4}>
-          <Button size="large" fullWidth onClick={handleClose}>
+          <Button
+            size="large"
+            color="secondary"
+            variant="outlined"
+            fullWidth
+            onClick={handleClose}
+          >
             Cancelar
           </Button>
         </Grid>

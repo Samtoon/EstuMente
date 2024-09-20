@@ -32,6 +32,7 @@ import {
   SeeScheduleButton,
   UpcomingAppointmentsButton,
 } from "./CardButtons";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 // import { IPsychologist } from "../../interfaces";
 
 interface Props {
@@ -92,8 +93,8 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
         <CardContent>
           <Box sx={{ display: "block" }} className="fadeIn">
             <Typography
-              fontWeight={700}
-              color="inherit"
+              fontWeight={FontWeightValues.Semibold}
+              color="text1"
               align="center"
               variant="h2"
               gutterBottom

@@ -24,9 +24,9 @@ export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
         minHeight="calc(100vh - 67px)"
         className="fadeIn"
       >
-        <VideocamOffOutlined sx={{ fontSize: 100 }} />
+        <VideocamOffOutlined sx={{ fontSize: 300 }} color="secondary" />
         <Stack spacing={2}>
-          <Typography align="center" gutterBottom>
+          <Typography align="center" color="text1" gutterBottom>
             Has salido de la cita antes de finalizar el tiempo
           </Typography>
 
