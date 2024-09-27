@@ -101,27 +101,27 @@ export const AppointmentCard: FC<Props> = ({
             <Typography
               color="text2.main"
               component="div"
-              variant="h5"
+              variant="h6"
               fontWeight={FontWeightValues.Semibold}
             >
               {`${role}: ${fullName}`}
             </Typography>
 
-            <Typography variant="h6" color="text2.main" component="div">
+            <Typography variant="subtitle1" color="text2.main" component="div">
               {`Fecha: ${format(appointment.date, "EEEE dd", {
                 locale: es,
               })} de ${format(appointment.date, "MMMM yyyy", {
                 locale: es,
               })}`}
             </Typography>
-            <Typography variant="h6" color="text2.main" component="div">
+            <Typography variant="subtitle1" color="text2.main" component="div">
               {`Hora de inicio: ${format(appointment.date, "HH:mm a")}`}
             </Typography>
             {!(appointment as IUpcomingAppointment).roomURL && (
               <Link
                 href={`/citas/historial/${appointment._id}`}
                 color="secondary"
-                variant="body1"
+                variant="body2"
                 gutterBottom
               >
                 Ver información de la cita

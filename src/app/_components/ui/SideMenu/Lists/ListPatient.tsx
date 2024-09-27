@@ -30,7 +30,7 @@ export default function ListPatient() {
       <MenuItem label="Historial de citas" path="/citas/historial">
         <HistoryOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Agendar una cita" path="/psicologos">
+      <MenuItem label="Agendar una cita" path="/practicantes">
         <ScheduleOutlined color="secondary" />
       </MenuItem>
     </List>

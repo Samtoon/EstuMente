@@ -12,7 +12,7 @@ export default function GoogleImage({
   const rootStyle: CSSProperties = {
     border: "3px solid transparent",
     background:
-      "linear-gradient(white, white) padding-box, linear-gradient(to right, #990000, #CC3333) border-box",
+      "linear-gradient(white, white) padding-box, linear-gradient(90deg, rgb(153,0,0) 0%, rgba(255,75,75) 100%) border-box",
   };
   return (
     <img

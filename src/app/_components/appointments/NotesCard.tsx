@@ -21,7 +21,7 @@ export default function NotesCard({ notes }: { notes: INote[] }) {
     //   <CardContent>
     <Box>
       <Typography
-        variant="h2"
+        variant="h6"
         color="text2.main"
         fontWeight={FontWeightValues.Semibold}
       >

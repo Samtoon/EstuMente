@@ -96,7 +96,7 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
               fontWeight={FontWeightValues.Semibold}
               color="text1"
               align="center"
-              variant="h2"
+              variant="h5"
               gutterBottom
             >
               {psychologist.fullName}

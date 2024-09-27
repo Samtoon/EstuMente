@@ -141,6 +141,7 @@ export default function ConfigureSchedulePage() {
               color: "#666666",
               fontWeight: `${FontWeightValues.Semibold} !important`,
             },
+            overflowY: "auto",
           }}
         >
           <ListItem key="addPeriod">

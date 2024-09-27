@@ -43,7 +43,7 @@ export const CardPatientAppointment: FC<Props> = ({ patient }) => {
               fontWeight={FontWeightValues.Semibold}
               color="text1.main"
               align="center"
-              variant="h2"
+              variant="h4"
               gutterBottom
             >
               {patient.fullName}

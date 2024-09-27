@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { EmptyPatient } from "../_components/ui/EmptyPatient";
 import { PatientList } from "../_components/patients/PatientList";
 import { getMyServerSession } from "../_utils/next-auth";
+import PageHeader from "../_components/PageHeader";
 // import { PsychologistLayout } from "../../../components/layout";
 // import { EmptyPatient, FullScreenLoading } from "../../../components/ui";
 // import { PatientList } from "../../../components/patients";
@@ -22,15 +23,7 @@ const PatientPage: NextPage = async () => {
   return (
     <PsychologistLayout title="Mis pacientes" pageDescription="Pacientes">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          gutterBottom
-          sx={{ fontSize: { xs: 22, md: 32 }, fontWeight: 500 }}
-        >
-          Mis pacientes
-        </Typography>
-
+        <PageHeader header="Mis Pacientes" />
         {patients.length === 0 ? (
           <EmptyPatient message={"No tienes pacientes activos"} />
         ) : (

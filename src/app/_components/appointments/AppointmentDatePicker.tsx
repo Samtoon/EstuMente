@@ -12,6 +12,7 @@ import React from "react";
 import {
   Button,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -151,73 +152,79 @@ export default function AppointmentDatePicker({
           // renderInput={(params: any) => <TextField {...params} />}
         />
       </LocalizationProvider>
-      <Stack spacing={2} justifyContent={"flex-start"} direction="row">
-        <FormControl sx={{ flexGrow: 1 }}>
-          <InputLabel id="hora-label">Hora:</InputLabel>
-          <Select
-            labelId="hora-label"
-            id="hora"
-            label="Hora"
-            value={state.date?.getHours()}
-            disabled={state.date ? false : true}
-            onChange={(e) =>
-              dispatcher({
-                type: "hour",
-                schedule: schedule,
-                body: e.target.value as number,
-              })
-            }
-          >
-            {state.availableHours?.map(
-              (hour, index) =>
-                hour && (
-                  <MenuItem value={index} key={`opcion${index}`}>
-                    {new Hour(index).getString()}
-                  </MenuItem>
-                )
-            )}
-          </Select>
-        </FormControl>
-        <Button
-          size="large"
-          color="secondary"
-          disabled={!state.availableHours![state.date?.getHours()!]}
-          sx={{ flexGrow: 1 }}
-          onClick={async () => {
-            const user = session?.user!;
-            console.log(`Mandando la fecha: ${state.date}`);
-            toast
-              .promise(
-                scheduleAppointment(
-                  user._id!,
-                  schedule.psychologist as string,
-                  state.date!
-                ),
-                {
-                  pending: "Programando cita...",
-                  success: "Cita programada con éxito",
-                  error: "Ha ocurrido un error, por favor inténtalo nuevamente",
-                }
-              )
-              .then((appointment) => {
-                appointments.push(appointment);
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <FormControl sx={{ width: "100%", height: "100%" }}>
+            <InputLabel id="hora-label">Hora:</InputLabel>
+            <Select
+              labelId="hora-label"
+              id="hora"
+              label="Hora"
+              sx={{ height: "100%" }}
+              value={state.date?.getHours()}
+              disabled={state.date ? false : true}
+              onChange={(e) =>
                 dispatcher({
-                  type: "reset",
-                  appointments: appointments,
+                  type: "hour",
                   schedule: schedule,
+                  body: e.target.value as number,
+                })
+              }
+            >
+              {state.availableHours?.map(
+                (hour, index) =>
+                  hour && (
+                    <MenuItem value={index} key={`opcion${index}`}>
+                      {new Hour(index).getString()}
+                    </MenuItem>
+                  )
+              )}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <Button
+            size="large"
+            color="secondary"
+            disabled={!state.availableHours![state.date?.getHours()!]}
+            sx={{ flexGrow: 1 }}
+            onClick={async () => {
+              const user = session?.user!;
+              console.log(`Mandando la fecha: ${state.date}`);
+              toast
+                .promise(
+                  scheduleAppointment(
+                    user._id!,
+                    schedule.psychologist as string,
+                    state.date!
+                  ),
+                  {
+                    pending: "Programando cita...",
+                    success: "Cita programada con éxito",
+                    error:
+                      "Ha ocurrido un error, por favor inténtalo nuevamente",
+                  }
+                )
+                .then((appointment) => {
+                  appointments.push(appointment);
+                  dispatcher({
+                    type: "reset",
+                    appointments: appointments,
+                    schedule: schedule,
+                  });
                 });
-              });
-            sendNotification(
-              { type: ReceiverTypes.User, id: psychologist.user as string },
-              `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
-              true,
-              user.profilePicture
-            );
-          }}
-        >
-          Programar ahora
-        </Button>
-      </Stack>
+              sendNotification(
+                { type: ReceiverTypes.User, id: psychologist.user as string },
+                `Tienes una nueva cita con ${user.firstName} ${user.lastName}`,
+                true,
+                user.profilePicture
+              );
+            }}
+          >
+            Programar ahora
+          </Button>
+        </Grid>
+      </Grid>
     </Stack>
   );
 }

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import IUser from "@/app/_interfaces/IUser";
 import GoogleImage from "../ui/GoogleImage";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 // import { IUser } from "../../interfaces";
 
 interface Props {
@@ -51,10 +52,10 @@ export const PatientCard: FC<Props> = ({ patient }) => {
             className="fadeIn"
           >
             <Typography
-              fontWeight={700}
+              fontWeight={FontWeightValues.Semibold}
               color="inherit"
               align="center"
-              variant="h2"
+              variant="h6"
               gutterBottom
             >
               {`${patient.firstName} ${patient.lastName}`}

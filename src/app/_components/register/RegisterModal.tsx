@@ -10,6 +10,7 @@ import {
   Link,
   DialogContent,
   DialogContentText,
+  Grid,
 } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -84,14 +85,63 @@ export default function RegisterModal({
             <iframe src={fileURL} width="100%" height="500px" />
           </div>
         )}
-        <Box display="flex" justifyContent="space-evenly" sx={{ py: 5 }}>
-          <Stack direction="column" sx={{ width: "40%" }}>
+        {/* <Box display="flex" justifyContent="space-evenly" sx={{ py: 5 }}>
+          <Button
+            component="label"
+            variant="outlined"
+            color="secondary"
+            startIcon={<CloudUploadOutlined />}
+            size="large"
+            sx={{ fontWeight: FontWeightValues.Regular, width: "40%" }}
+          >
+            Subir documento soporte
+            <form id="pruebaForm" action={handleSubmit}>
+              <input
+                name="document"
+                type="file"
+                hidden
+                onChange={(e) => {
+                  setUploadedFile(e.target.files?.[0]);
+                  setFileURL(
+                    e.target.files?.[0]
+                      ? URL.createObjectURL(e.target.files?.[0])
+                      : ""
+                  );
+                }}
+                accept=".pdf"
+              />
+            </form>
+          </Button>
+
+          <Button
+            color="secondary"
+            disabled={!uploadedFile}
+            startIcon={<SendOutlined />}
+            sx={{ width: "40%", fontWeight: FontWeightValues.Regular }}
+            size="large"
+            type="submit"
+            form="pruebaForm"
+          >
+            Enviar solicitud
+          </Button>
+        </Box>
+        <Link
+          component="button"
+          variant="body2"
+          color="secondary"
+          underline="always"
+          onClick={() => setHelpOpen(true)}
+        >
+          ¿Qué documento debo subir?
+        </Link> */}
+        <Grid container columnSpacing={2} p={3}>
+          <Grid item xs={6}>
             <Button
+              fullWidth
               component="label"
               variant="outlined"
               color="secondary"
               startIcon={<CloudUploadOutlined />}
-              fullWidth
               size="large"
               sx={{ fontWeight: FontWeightValues.Regular }}
             >
@@ -113,28 +163,34 @@ export default function RegisterModal({
                 />
               </form>
             </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              color="secondary"
+              fullWidth
+              disabled={!uploadedFile}
+              startIcon={<SendOutlined />}
+              sx={{ fontWeight: FontWeightValues.Regular }}
+              size="large"
+              type="submit"
+              form="pruebaForm"
+            >
+              Enviar solicitud
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
             <Link
               component="button"
               variant="body2"
               color="secondary"
               underline="always"
+              sx={{ width: "100%" }}
               onClick={() => setHelpOpen(true)}
             >
               ¿Qué documento debo subir?
             </Link>
-          </Stack>
-          <Button
-            color="secondary"
-            disabled={!uploadedFile}
-            startIcon={<SendOutlined />}
-            sx={{ width: "40%", fontWeight: FontWeightValues.Regular }}
-            size="large"
-            type="submit"
-            form="pruebaForm"
-          >
-            Enviar solicitud
-          </Button>
-        </Box>
+          </Grid>
+        </Grid>
         <Dialog open={helpOpen} onClose={() => setHelpOpen(false)}>
           <DialogContent>
             {/* <DialogContentText> */}

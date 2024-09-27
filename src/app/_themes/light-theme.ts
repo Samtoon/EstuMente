@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import NextLink from "next/link";
 import { forwardRef } from "react";
 import { LinkBehaviour } from "../_components/LinkBehavior";
@@ -42,28 +42,14 @@ let lightTheme = createTheme({
       styleOverrides: {
         root: {
           background:
-            " linear-gradient(90deg, rgb(153,0,0) 0%, rgba(204,51,51) 100%)",
+            " linear-gradient(90deg, rgb(153,0,0) 0%, rgba(255,75,75) 100%)",
         },
       },
     },
 
     MuiTypography: {
       defaultProps: {
-        color: "text2",
-      },
-      styleOverrides: {
-        h1: {
-          fontSize: 30,
-          fontWeight: 600,
-        },
-        h2: {
-          fontSize: 20,
-          fontWeight: 400,
-        },
-        subtitle1: {
-          fontSize: 18,
-          fontWeight: 600,
-        },
+        color: "text2.main",
       },
     },
 
@@ -117,7 +103,7 @@ let lightTheme = createTheme({
         root: {
           border: "3px solid transparent",
           background:
-            "linear-gradient(white, white) padding-box, linear-gradient(to right, #990000, #CC3333) border-box",
+            "linear-gradient(white, white) padding-box, linear-gradient(90deg, rgb(153,0,0) 0%, rgba(255,75,75) 100%) border-box",
         },
       },
     },
@@ -151,5 +137,7 @@ lightTheme = createTheme(lightTheme, {
     }),
   },
 });
+
+lightTheme = responsiveFontSizes(lightTheme);
 
 export { lightTheme };

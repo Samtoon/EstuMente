@@ -1,5 +1,12 @@
 import NextLink from "next/link";
-import { Button, ButtonProps, CircularProgress } from "@mui/material";
+import {
+  Button,
+  ButtonProps,
+  CircularProgress,
+  Link,
+  SxProps,
+  Theme,
+} from "@mui/material";
 import { ContentTypes } from "./PsychologistList";
 import { fetchScheduleByPsychologist } from "@/app/_utils/server actions/schedule";
 import { useState } from "react";
@@ -7,18 +14,24 @@ import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 function ButtonTemplate({
   secondary,
+  link,
   ...props
-}: ButtonProps & { secondary?: boolean }) {
+}: ButtonProps & { secondary?: boolean; link?: boolean }) {
+  const style: SxProps<Theme> = { width: "50%" };
+  if (!secondary) {
+    style.my = 1;
+    style.fontWeight = FontWeightValues.Extrabold;
+  } else {
+    style.my = 0.5;
+    style.fontWeight = FontWeightValues.Regular;
+  }
+  style.width = link ? "100%" : "50%";
   return (
     <Button
       size="small"
       color={!secondary ? "secondary" : "info"}
       className={!secondary ? "card-btn" : undefined}
-      sx={
-        !secondary
-          ? { my: 1, fontWeight: FontWeightValues.Extrabold }
-          : { my: 0.5, fontWeight: FontWeightValues.Regular }
-      }
+      sx={style}
       {...props}
     ></Button>
   );
@@ -30,9 +43,11 @@ export function ScheduleButton({
   psychologistSlug: string;
 }) {
   return (
-    <NextLink href={`/citas/agendar/${psychologistSlug}`}>
-      <ButtonTemplate>Pedir Cita</ButtonTemplate>
-    </NextLink>
+    <Link href={`/citas/agendar/${psychologistSlug}`} width="50%">
+      <ButtonTemplate fullWidth link>
+        Pedir Cita
+      </ButtonTemplate>
+    </Link>
   );
 }
 
@@ -46,9 +61,11 @@ export function UpcomingAppointmentsButton({
   psychologistId: string;
 }) {
   return (
-    <NextLink href={`/citas?psychologist=${psychologistId}`}>
-      <ButtonTemplate>Ver Citas programadas</ButtonTemplate>
-    </NextLink>
+    <Link href={`/citas?psychologist=${psychologistId}`} width="50%">
+      <ButtonTemplate fullWidth link>
+        Ver Citas programadas
+      </ButtonTemplate>
+    </Link>
   );
 }
 
@@ -58,9 +75,11 @@ export function PreviousAppointmentsButton({
   psychologistId: string;
 }) {
   return (
-    <NextLink href={`/citas/historial?psychologist=${psychologistId}`}>
-      <ButtonTemplate>Ver Historial de Citas</ButtonTemplate>
-    </NextLink>
+    <Link href={`/citas/historial?psychologist=${psychologistId}`} width="50%">
+      <ButtonTemplate fullWidth link>
+        Ver Historial de Citas
+      </ButtonTemplate>
+    </Link>
   );
 }
 

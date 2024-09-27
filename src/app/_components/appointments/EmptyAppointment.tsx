@@ -31,7 +31,7 @@ export const EmptyAppointment: FC<Props> = async ({ message }) => {
             {message}
           </Typography>
           {session?.user.role === Roles.Consultante && (
-            <NextLink href={`/psicologos`} passHref prefetch={false}>
+            <NextLink href={`/practicantes`} passHref prefetch={false}>
               {/* <Link> */}
               <Button color="secondary" className="card-btn">
                 Pide tu cita aquí

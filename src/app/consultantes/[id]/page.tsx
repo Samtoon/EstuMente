@@ -7,6 +7,7 @@ import { getPreviousAppointmentsByPatientAndPsychologist } from "@/app/_database
 import { SessionClinicHistoryList } from "@/app/_components/sessions/SessionClinicHistoryList";
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import { redirect } from "next/navigation";
+import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -51,7 +52,7 @@ const PatientInfoPage: NextPage<Props> = async ({ params }) => {
                 slotProps={{ img: { referrerPolicy: "no-referrer" } }}
               />
 
-              <Typography variant="h1" component="h1" align="center">
+              <Typography variant="h4" align="center" color="text1.main">
                 {`${patient.firstName} ${patient.lastName}`}
               </Typography>
             </Box>
@@ -59,10 +60,10 @@ const PatientInfoPage: NextPage<Props> = async ({ params }) => {
           <Grid item xs={12} sm={8}>
             <Box display="flex" flexDirection="column">
               <Typography
-                variant="h2"
-                component="h2"
-                fontWeight={500}
+                variant="h5"
+                fontWeight={FontWeightValues.Semibold}
                 gutterBottom
+                color="text1.main"
               >
                 Sesiones
               </Typography>

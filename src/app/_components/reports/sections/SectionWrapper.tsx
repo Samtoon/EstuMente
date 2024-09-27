@@ -15,7 +15,7 @@ export default function SectionWrapper({
     <Box m={2} p={2} sx={{ border: 1, borderRadius: 3 }}>
       <Box display="flex" justifyContent="space-between">
         <Typography
-          variant="h2"
+          variant="h5"
           color="text2.main"
           fontWeight={FontWeightValues.Bold}
         >

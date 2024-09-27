@@ -13,7 +13,7 @@ import { NextResponse } from "next/server";
 // }
 
 const allowedPaths = {
-  Consultante: ["/citas", "/perfil", "/psicologos"],
+  Consultante: ["/citas", "/perfil", "/practicantes"],
   Practicante: [
     "/citas",
     "/perfil",
@@ -22,14 +22,14 @@ const allowedPaths = {
     "/agenda",
     "/pruebas",
   ],
-  Tutor: ["/psicologos", "/perfil", "/citas", "/reportes", "/solicitudes"],
+  Tutor: ["/practicantes", "/perfil", "/citas", "/reportes", "/solicitudes"],
   Coordinador: [
     "/tutores",
     "/perfil",
     "/citas",
     "/reportes",
     "/solicitudes",
-    "/psicologos",
+    "/practicantes",
   ],
   Administrador: [
     "/reportes",
@@ -37,7 +37,7 @@ const allowedPaths = {
     "/citas",
     "/base_de_datos",
     "/solicitudes",
-    "/psicologos",
+    "/practicantes",
   ],
 };
 
@@ -65,6 +65,7 @@ export default withAuth(
           myAllowedPaths = allowedPaths.Administrador;
           break;
       }
+      myAllowedPaths.push("/");
       if (!myAllowedPaths.some((path) => pathname.startsWith(path))) {
         return NextResponse.redirect(new URL(myAllowedPaths[0], req.nextUrl));
       }

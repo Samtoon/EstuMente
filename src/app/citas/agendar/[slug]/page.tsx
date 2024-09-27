@@ -20,7 +20,7 @@ const ScheduleAppointmentPage = async ({
   params: { slug: string };
 }) => {
   const psychologist = await getPsychologistBySlug(params.slug);
-  if (!psychologist) redirect("/psicologos");
+  if (!psychologist) redirect("/practicantes");
 
   return (
     <PatientLayout title="Agendar cita" pageDescription="Agendar cita">

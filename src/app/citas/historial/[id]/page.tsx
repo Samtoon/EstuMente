@@ -68,11 +68,11 @@ export default async function AppointmentPage({
               <CardContent>
                 <Box display="flex" alignItems="center">
                   <Typography
-                    variant="h2"
+                    variant="h6"
                     fontWeight={FontWeightValues.Semibold}
                     color="text2.main"
                   >
-                    Resumen{" "}
+                    Resumen
                   </Typography>
                   <Box flex={1} />
                   <Chip
@@ -101,7 +101,7 @@ export default async function AppointmentPage({
                 )} */}
                 {notes && notes.length > 0 && <NotesCard notes={notes} />}
                 {notes && notes.length === 0 && (
-                  <Typography variant="h2" color="text2.main">
+                  <Typography variant="h6" color="text2.main">
                     No se tomaron notas durante esta sesión
                   </Typography>
                 )}

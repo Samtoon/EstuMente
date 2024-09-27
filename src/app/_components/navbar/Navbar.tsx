@@ -3,9 +3,11 @@ import {
   AppBar,
   Badge,
   Box,
+  Breadcrumbs,
   Button,
   Divider,
   IconButton,
+  Link,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -14,19 +16,21 @@ import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { NotificationsNoneOutlined } from "@mui/icons-material";
+import { Menu, NotificationsNoneOutlined } from "@mui/icons-material";
 import NotificationsButton from "./notifications/NotificationsButton";
 import Roles from "@/app/_enums/Roles";
 import { SideMenu } from "../ui/SideMenu/SideMenu";
 import { SessionTimeContext } from "@/app/_contexts/SessionTimeContext";
 import { registerSessionTime } from "@/app/_utils/session-time";
+import BreadcrumbsSection from "./BreadcrumbsSection";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
   const pathname = usePathname();
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
   const { sessionTime, setSessionTime } = useContext(SessionTimeContext);
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
+  console.log("Session es:", session);
   useEffect(() => {
     if (session) {
       console.log("useEffect por primera vez, sessionTime es:", sessionTime);
@@ -37,6 +41,8 @@ const Navbar = () => {
             registerSessionTime(sessionTime, session.user._id!);
           } else {
             setSessionTime(new Date());
+            console.log("Me cumplo");
+            update();
           }
         };
 
@@ -46,7 +52,7 @@ const Navbar = () => {
         };
       }
     }
-  }, [session, setSessionTime, sessionTime]);
+  }, [session, setSessionTime, sessionTime, update]);
   useEffect(() => {
     if (session) {
       setSessionTime(new Date());
@@ -58,7 +64,7 @@ const Navbar = () => {
       case undefined:
       case Roles.Consultante:
         return (
-          <NextLink href="/psicologos" passHref>
+          <NextLink href="/practicantes" passHref>
             <Button variant="text">Psicólogos</Button>
           </NextLink>
         );
@@ -77,27 +83,72 @@ const Navbar = () => {
     <>
       <AppBar>
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Typography
-              variant="h1"
-              component="h1"
+          <Box>
+            <Link
+              variant="h6"
               sx={{ ml: 0.5 }}
-              color="white"
+              color="secondary.contrastText"
+              href="/"
+              underline="none"
             >
               Acompañamiento Psicológico
-            </Typography>
+            </Link>
           </Box>
           <Box sx={{ display: "flex", minHeight: "inherit" }}>
             <Divider
               orientation="vertical"
-              sx={{ minHeight: "inherit", border: "2px solid white" }}
+              sx={{
+                minHeight: "inherit",
+                border: "2px solid white",
+                height: "inherit",
+              }}
             />
             {session ? (
-              <NotificationsButton />
+              <>
+                <NotificationsButton />
+                <Divider
+                  orientation="vertical"
+                  sx={{
+                    minHeight: "inherit",
+                    border: "2px solid white",
+                    height: "inherit",
+                  }}
+                />
+                <Button
+                  onClick={toggleSideMenu}
+                  variant="text"
+                  color="contrast"
+                  sx={{
+                    minHeight: "inherit",
+                    borderRadius: "0px",
+                    minWidth: "100px",
+                    maxWidth: "10%",
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  Menú
+                </Button>
+                <IconButton
+                  color="contrast"
+                  onClick={toggleSideMenu}
+                  sx={{
+                    minHeight: "inherit",
+                    borderRadius: "0px",
+                    aspectRatio: 1,
+                    "& .MuiTouchRipple-root .MuiTouchRipple-child": {
+                      borderRadius: "0px",
+                      minHeight: "inherit",
+                    },
+                    display: { xs: "block", sm: "none" },
+                  }}
+                >
+                  <Menu />
+                </IconButton>
+              </>
             ) : (
               <Box
                 sx={{
-                  display: { xs: "none", sm: "block", minHeight: "inherit" },
+                  display: { minHeight: "inherit" },
                 }}
               >
                 <Button
@@ -116,28 +167,16 @@ const Navbar = () => {
                 </Button>
               </Box>
             )}
-            <Divider
-              orientation="vertical"
-              sx={{ minHeight: "inherit", border: "2px solid white" }}
-            />
-            <Button
-              onClick={toggleSideMenu}
-              variant="text"
-              size="large"
-              color="contrast"
-              sx={{
-                minHeight: "inherit",
-                borderRadius: "0px",
-                minWidth: "100px",
-                maxWidth: "10%",
-              }}
-            >
-              Menú
-            </Button>
           </Box>
         </Toolbar>
       </AppBar>
-      {pathname !== "/" && <Toolbar />}
+      {pathname !== "/" && (
+        <>
+          <Toolbar />
+          <BreadcrumbsSection />
+        </>
+      )}
+
       <SideMenu />
     </>
   );

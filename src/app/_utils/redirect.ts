@@ -7,7 +7,7 @@ export function homepagePath(role: Roles) {
     case Roles.Practicante:
       return "/citas";
     case Roles.Tutor:
-      return "/psicologos";
+      return "/practicantes";
     case Roles.Coordinador:
       return "/tutores";
     case Roles.Administrador:

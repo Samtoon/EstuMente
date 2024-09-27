@@ -53,7 +53,12 @@ export const UploadProfilePicture: FC<Props> = ({ url }) => {
       flexDirection="column"
       sx={{ alignItems: "center", justifyContent: "center", mb: 4 }}
     >
-      <Avatar alt="Patient" src={url} sx={{ width: 120, height: 120, mb: 2 }} />
+      <Avatar
+        alt="Patient"
+        src={url}
+        sx={{ width: 120, height: 120, mb: 2 }}
+        slotProps={{ img: { referrerPolicy: "no-referrer" } }}
+      />
       {/* <Button
         variant="outlined"
         color="secondary"
