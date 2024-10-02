@@ -7,6 +7,8 @@ import banner2 from "@/../public/images/banner2.jpg";
 import banner3 from "@/../public/images/banner3.jpg";
 import QuoteContainer from "./_components/home/QuoteContainer";
 import BackgroundQuote from "./_components/home/BackgroundQuote";
+import VideoContainer from "./_components/home/VideoContainer";
+import Footer from "./_components/home/Footer";
 
 export default function Home() {
   const banners = [banner1, banner2, banner3];
@@ -67,6 +69,8 @@ export default function Home() {
       </Carousel>
       <QuoteContainer />
       <BackgroundQuote />
+      <VideoContainer />
+      <Footer />
     </Box>
   );
 }
