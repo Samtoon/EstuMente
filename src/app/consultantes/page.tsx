@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { Metadata, NextPage } from "next";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Typography, Box } from "@mui/material";
@@ -13,6 +13,10 @@ import PageHeader from "../_components/PageHeader";
 // import { EmptyPatient, FullScreenLoading } from "../../../components/ui";
 // import { PatientList } from "../../../components/patients";
 // import { usePatient } from "../../../hooks";
+
+export const metadata: Metadata = {
+  title: "Pacientes",
+};
 
 const PatientPage: NextPage = async () => {
   //   const { patients, isLoading } = usePatient("/appointments/patients");

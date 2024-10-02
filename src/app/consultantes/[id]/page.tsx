@@ -23,6 +23,13 @@ interface Props {
   };
 }
 
+export async function generateMetadata({ params }: Props) {
+  const fullName = await getUserById(params.id).then((user) => user.fullName);
+  return {
+    title: fullName,
+  };
+}
+
 const PatientInfoPage: NextPage<Props> = async ({ params }) => {
   const patient = await getUserById(params.id);
   if (!patient) redirect("/consultantes");

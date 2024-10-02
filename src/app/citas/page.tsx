@@ -13,6 +13,11 @@ import {
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import Roles from "../_enums/Roles";
 import PageHeader from "../_components/PageHeader";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Citas programadas",
+};
 
 const AppointmentPage = async ({
   searchParams,

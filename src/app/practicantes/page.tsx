@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 // import { getSession } from "next-auth/react";
 // import { Typography, Box } from "@mui/material";
 // import { PsiLayout } from "../../components/layout/PsiLayout";
@@ -20,6 +20,10 @@ import {
 import Roles from "../_enums/Roles";
 import { getMyServerSession } from "../_utils/next-auth";
 import PageHeader from "../_components/PageHeader";
+
+export const metadata: Metadata = {
+  title: "Practicantes",
+};
 
 const SearchPage: NextPage = async () => {
   const session = await getMyServerSession();

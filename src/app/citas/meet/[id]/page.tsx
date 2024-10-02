@@ -3,12 +3,16 @@ import PatientLayout from "@/app/_components/layout/PatientLayout";
 import CallDisplay from "@/app/_components/video/CallDisplay";
 import { getUpcomingAppointmentById } from "@/app/_database/daos/upcomingAppointmentDao";
 import { requestToken } from "@/app/_utils/server actions/other";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
 import Roles from "@/app/_enums/Roles";
 import { IPreviousAppointment } from "@/app/_interfaces/IPreviousAppointment";
 import { getPreviousAppointmentById } from "@/app/_database/daos/previousAppointmentDao";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Sesión",
+};
 
 const prueba = "https://estumente.daily.co/prueba";
 

@@ -17,6 +17,7 @@ import NotesCard from "@/app/_components/appointments/NotesCard";
 import { getMyServerSession } from "@/app/_utils/next-auth";
 import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 // import { PsychologistLayout } from "../../../components/layout";
 
@@ -38,6 +39,10 @@ export type OrderResponseBody = {
     | "APPROVED"
     | "VOIDED"
     | "PAYER_ACTION_REQUIRED";
+};
+
+export const metadata: Metadata = {
+  title: "Resumen de Cita",
 };
 
 export default async function AppointmentPage({

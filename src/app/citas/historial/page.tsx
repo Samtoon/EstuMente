@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { Metadata, NextPage } from "next";
 // import { getSession } from "next-auth/react";
 // import { GetServerSideProps } from "next";
 // import { PatientLayout } from "../../../components/layout/PatientLayout";
@@ -19,6 +19,10 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Roles from "@/app/_enums/Roles";
 import PageHeader from "@/app/_components/PageHeader";
+
+export const metadata: Metadata = {
+  title: "Historial de Citas",
+};
 
 interface Props {
   searchParams: { psychologist?: string };
@@ -51,7 +55,7 @@ const HistoryAppointmentPage: NextPage<Props> = async ({ searchParams }) => {
       pageDescription="Historial de citas"
     >
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
-        <PageHeader header="Historial de citas"/>
+        <PageHeader header="Historial de citas" />
         {/*Mejorar la validacion porque si hay citas pero no son del tipo para el historial*/}
         {appointments.length === 0 ? (
           <EmptyAppointment message={"Aún no tienes citas en tu historial"} />
