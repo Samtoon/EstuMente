@@ -3,7 +3,7 @@ import { INote } from "@/app/_interfaces/INote";
 import { fetchNoteById } from "@/app/_utils/server actions/note";
 import { Box } from "@mui/material";
 import { useSearchParams, usePathname } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import PageHeader from "../PageHeader";
 import EditNotePanel from "./drawer panels/EditNotePanel";

@@ -1,6 +1,5 @@
 import React from "react";
 // import { getSession } from "next-auth/react";
-// import { useRouter } from "next/router";
 // import { NextPage, GetServerSideProps } from "next";
 import PatientLayout from "@/app/_components/layout/PatientLayout";
 import PsychologistDisplay from "@/app/_components/appointments/Display";
