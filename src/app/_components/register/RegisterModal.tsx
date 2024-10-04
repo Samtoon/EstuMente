@@ -202,8 +202,8 @@ export default function RegisterModal({
                 con sus respectivas calificaciones y promedio acumulado. Se
                 puede descargar desde el SIRA
               </li>
-              <li>Tutor:</li>
-              <li>Coordinador:</li>
+              <li>Tutor: Tarjeta Profesional de Psicólogo</li>
+              <li>Coordinador: Tarjeta Profesional de Psicólogo</li>
             </ul>
             {/* </DialogContentText> */}
           </DialogContent>
