@@ -23,6 +23,8 @@ import { SideMenu } from "../ui/SideMenu/SideMenu";
 import { SessionTimeContext } from "@/app/_contexts/SessionTimeContext";
 import { registerSessionTime } from "@/app/_utils/session-time";
 import BreadcrumbsSection from "./BreadcrumbsSection";
+import Image from "next/image";
+import logo from "@/../public/images/logo-navbar.png";
 
 const Navbar = () => {
   console.log("Se renderiza Navbar");
@@ -85,13 +87,19 @@ const Navbar = () => {
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box>
             <Link
-              variant="h6"
+              // variant="h6"
               sx={{ ml: 0.5 }}
-              color="secondary.contrastText"
+              // color="secondary.contrastText"
               href="/"
               underline="none"
             >
-              Acompañamiento Psicológico
+              {/* Acompañamiento Psicológico */}
+              <Image
+                src={logo}
+                alt="logo"
+                height={50}
+                style={{ marginTop: 10 }}
+              />
             </Link>
           </Box>
           <Box sx={{ display: "flex", minHeight: "inherit" }}>

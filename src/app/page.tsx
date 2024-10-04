@@ -20,17 +20,17 @@ export default function Home() {
           style: {
             width: "2em",
             height: "2em",
-            color: "white",
+            // color: "white",
           },
         }}
-        activeIndicatorIconButtonProps={{
-          style: {
-            color: "lightblue",
-          },
-        }}
+        // activeIndicatorIconButtonProps={{
+        //   style: {
+        //     color: "lightblue",
+        //   },
+        // }}
         indicatorContainerProps={{
           style: {
-            marginTop: "-20%",
+            // marginTop: "-20%",
             zIndex: 1,
             position: "absolute",
           },
@@ -41,6 +41,7 @@ export default function Home() {
           ".indicators svg": {
             fontSize: "2em",
           },
+          mb: 5,
         }}
       >
         {banners.map((banner, index) => (
