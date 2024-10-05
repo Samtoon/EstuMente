@@ -32,6 +32,7 @@ export default function RegisterModal({
 }) {
   const [uploadedFile, setUploadedFile] = useState<File | undefined>();
   const [selectedRole, setSelectedRole] = useState<Roles>(Roles.Practicante);
+  const [sending, setSending] = useState(false);
   const [fileURL, setFileURL] = useState("");
   const { data: session } = useSession();
   const [helpOpen, setHelpOpen] = useState(false);
@@ -39,11 +40,17 @@ export default function RegisterModal({
   function handleSubmit(formData: FormData) {
     if (user) {
       toast
-        .promise(sendRequest(formData, user, selectedRole), {
-          pending: "Enviando solicitud...",
-          success: "Solicitud enviada",
-          error: "Ha ocurrido un error, por favor intenta nuevamente",
-        })
+        .promise(
+          () => {
+            setSending(true);
+            return sendRequest(formData, user, selectedRole);
+          },
+          {
+            pending: "Enviando solicitud...",
+            success: "Solicitud enviada",
+            error: "Ha ocurrido un error, por favor intenta nuevamente",
+          }
+        )
         .then((request) => {
           const possibleRoles = [
             Roles.Administrador,
@@ -56,6 +63,7 @@ export default function RegisterModal({
             case Roles.Tutor:
               possibleRoles.pop();
           }
+          handleClose();
           possibleRoles.forEach((role) => {
             sendNotification(
               { type: ReceiverTypes.Role, id: role },
@@ -68,7 +76,9 @@ export default function RegisterModal({
               }
             );
           });
-          handleClose();
+        })
+        .finally(() => {
+          setSending(false);
         });
     }
   }
@@ -168,7 +178,7 @@ export default function RegisterModal({
             <Button
               color="secondary"
               fullWidth
-              disabled={!uploadedFile}
+              disabled={!uploadedFile || sending}
               startIcon={<SendOutlined />}
               sx={{ fontWeight: FontWeightValues.Regular }}
               size="large"

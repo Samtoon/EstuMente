@@ -2,10 +2,12 @@ import { INote } from "@/app/_interfaces/INote";
 import Note from "../models/Note";
 import { connect, serialize } from "../connection";
 import { FilterQuery, Types } from "mongoose";
+import { unstable_noStore as noStore } from "next/cache";
 
 console.log("Entro al DAO de Notas");
 
 export async function getNotesByPatient(psychologist: string, patient: string) {
+  noStore();
   await connect();
   const notes = await Note.find({
     psychologist: new Types.ObjectId(psychologist),
@@ -15,6 +17,7 @@ export async function getNotesByPatient(psychologist: string, patient: string) {
 }
 
 export async function createNote(note: INote) {
+  noStore();
   await connect();
   const result = await Note.create(note);
   return result ? true : false;
@@ -25,8 +28,9 @@ export async function getFilteredNotes(
   patient?: string,
   patientName?: string,
   title?: string,
-  date?: Date,
+  date?: Date
 ) {
+  noStore();
   await connect();
   let dateExp: any = date;
   if (date) {
@@ -60,8 +64,9 @@ export async function getFilteredNotes(
 export async function getNotesByTitle(
   psychologist: string,
   patient: string,
-  title: string,
+  title: string
 ) {
+  noStore();
   await connect();
   const notes = await Note.find({
     psychologist: psychologist,
@@ -76,8 +81,9 @@ export async function getNotesByTitle(
 export async function getNotesByDate(
   psychologist: string,
   patient: string,
-  date: Date,
+  date: Date
 ) {
+  noStore();
   await connect();
   const dayStart = new Date(date);
   const dayEnd = new Date(date);
@@ -92,18 +98,21 @@ export async function getNotesByDate(
 }
 
 export async function getNotesByAppointment(appointment: string) {
+  noStore();
   await connect();
   const notes = await Note.find({ appointment: appointment }).lean();
   return serialize(notes) as INote[];
 }
 
 export async function updateNote(note: Partial<INote>) {
+  noStore();
   await connect();
   const result = await Note.updateOne({ _id: note._id }, note);
   return Boolean(result.modifiedCount);
 }
 
 export async function getNoteById(id: string) {
+  noStore();
   await connect();
   const note = await Note.findById(id).lean();
   return serialize(note) as INote;

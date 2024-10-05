@@ -3,8 +3,10 @@ import Notification from "../models/Notification";
 import { connect, serialize } from "../connection";
 import Roles from "@/app/_enums/Roles";
 import { FilterQuery } from "mongoose";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getNotificationsByUser(user: string, role: Roles) {
+  noStore();
   await connect();
   console.log("Llaman al notifications con", user, "y", role);
   const query: FilterQuery<INotification> = {
@@ -19,12 +21,14 @@ export async function getNotificationsByUser(user: string, role: Roles) {
 }
 
 export async function createNotification(notification: INotification) {
+  noStore();
   await connect();
   const result = await Notification.create(notification);
   return serialize(result) as INotification;
 }
 
 export async function deleteNotificationById(id: string) {
+  noStore();
   await connect();
   const result = await Notification.deleteOne({ _id: id });
   return Boolean(result.deletedCount);

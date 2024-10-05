@@ -12,6 +12,7 @@ export async function getPsychologists() {
 }
 
 export async function getPsychologistsByTutor(tutorId: string) {
+  noStore();
   await connect();
   const psychologists = await Psychologist.aggregate(
     getPsychologistsByTutorPipeline(tutorId)
@@ -20,18 +21,21 @@ export async function getPsychologistsByTutor(tutorId: string) {
 }
 
 export async function getPsychologistBySlug(slug: string) {
+  noStore();
   await connect();
   const psychologist = await Psychologist.findOne({ slug: slug }).lean();
   return serialize(psychologist) as IPsychologist;
 }
 
 export async function getPsychologistById(id: string) {
+  noStore();
   await connect();
   const psychologist = await Psychologist.findById(id).lean();
   return serialize(psychologist) as IPsychologist;
 }
 
 export async function getPsychologistByUser(user: string) {
+  noStore();
   await connect();
   const psychologist = await Psychologist.findOne({ user: user }).lean();
   console.log("Psicólogo:");
@@ -43,12 +47,14 @@ export async function updatePsychologistByUser(
   user: string,
   psychologist: IPsychologist
 ) {
+  noStore();
   await connect();
   const result = await Psychologist.updateOne({ user: user }, psychologist);
   return Boolean(result.modifiedCount);
 }
 
 export async function createPsychologist(psychologist: IPsychologist) {
+  noStore();
   await connect();
   const result = await Psychologist.create(psychologist);
   return Boolean(result);
