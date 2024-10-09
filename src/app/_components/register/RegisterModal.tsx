@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -36,21 +37,18 @@ export default function RegisterModal({
   const [fileURL, setFileURL] = useState("");
   const { data: session } = useSession();
   const [helpOpen, setHelpOpen] = useState(false);
+  const [formData, setFormData] = useState(new FormData());
   const user = session?.user;
-  function handleSubmit(formData: FormData) {
+  function handleSubmit() {
+    console.log("Corre el submit");
     if (user) {
+      setSending(true);
       toast
-        .promise(
-          () => {
-            setSending(true);
-            return sendRequest(formData, user, selectedRole);
-          },
-          {
-            pending: "Enviando solicitud...",
-            success: "Solicitud enviada",
-            error: "Ha ocurrido un error, por favor intenta nuevamente",
-          }
-        )
+        .promise(sendRequest(formData, user, selectedRole), {
+          pending: "Enviando solicitud...",
+          success: "Solicitud enviada",
+          error: "Ha ocurrido un error, por favor intenta nuevamente",
+        })
         .then((request) => {
           const possibleRoles = [
             Roles.Administrador,
@@ -156,18 +154,20 @@ export default function RegisterModal({
               sx={{ fontWeight: FontWeightValues.Regular }}
             >
               Subir documento soporte
-              <form id="pruebaForm" action={handleSubmit}>
+              <form id="pruebaForm">
                 <input
                   name="document"
                   type="file"
                   hidden
                   onChange={(e) => {
-                    setUploadedFile(e.target.files?.[0]);
-                    setFileURL(
-                      e.target.files?.[0]
-                        ? URL.createObjectURL(e.target.files?.[0])
-                        : ""
-                    );
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setUploadedFile(file);
+                      setFileURL(file ? URL.createObjectURL(file) : "");
+                      const data = new FormData();
+                      data.set("document", file);
+                      setFormData(data);
+                    }
                   }}
                   accept=".pdf"
                 />
@@ -184,6 +184,9 @@ export default function RegisterModal({
               size="large"
               type="submit"
               form="pruebaForm"
+              onClick={() => {
+                handleSubmit();
+              }}
             >
               Enviar solicitud
             </Button>

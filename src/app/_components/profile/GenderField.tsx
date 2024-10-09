@@ -3,29 +3,44 @@ import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import GenderDialog from "./GenderDialog";
 import { FontWeightValues } from "@/app/_enums/FontWeightValues";
 
-export default function GenderField({ readOnly }: { readOnly?: boolean }) {
+const defaultOptions = ["Masculino", "Femenino", "Prefiero no decirlo"];
+
+export default function GenderField({
+  readOnly,
+  defaultValue,
+}: {
+  readOnly?: boolean;
+  defaultValue?: string;
+}) {
+  console.log("El género inical es:", defaultValue);
   const addOption = "Añadir género personalizado...";
   const [open, setOpen] = useState(false);
   const [customGender, setCustomGender] = useState("");
-  const options = [
-    "Masculino",
-    "Femenino",
-    "Prefiero no decirlo",
-    customGender,
-    addOption,
-  ];
+  console.log("Custom gender es:", customGender);
+  const options = [...defaultOptions, customGender, addOption];
   const [selection, setSelection] = useState(options[2]);
+  // if (defaultValue && selection !== defaultValue) setSelection(defaultValue);
+  console.log("selection es:", selection);
+  // useEffect(() => {
+  //   if (customGender) {
+  //     setSelection(customGender);
+  //   }
+  // }, [customGender, setSelection]);
   useEffect(() => {
-    if (customGender) {
-      setSelection(customGender);
+    if (defaultValue) {
+      if (!defaultOptions.includes(defaultValue)) {
+        setCustomGender(defaultValue);
+      }
+      setSelection(defaultValue);
     }
-  }, [customGender, setSelection]);
+  }, [defaultValue, setSelection]);
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
     if (event.target.value === addOption) {
       setOpen(true);
     } else {
+      console.log("reacciono");
       setSelection(event.target.value);
     }
   }
@@ -56,7 +71,10 @@ export default function GenderField({ readOnly }: { readOnly?: boolean }) {
       <GenderDialog
         open={open}
         onClose={() => setOpen(false)}
-        setGender={setCustomGender}
+        setGender={(gender) => {
+          setCustomGender(gender);
+          setSelection(gender);
+        }}
       />
     </>
   );

@@ -36,7 +36,7 @@ export default function ProfileField({
       case "Género":
         return (
           <Grid item xs={12}>
-            <GenderField readOnly={!updating} />
+            <GenderField readOnly={!updating} defaultValue={defaultValue} />
           </Grid>
         );
       case "Carrera":
@@ -88,7 +88,7 @@ export default function ProfileField({
                 color="secondary"
                 sx={{ height: "100%", fontWeight: FontWeightValues.Regular }}
                 onClick={() => setModalOpen(true)}
-                disabled={pendingRequest}
+                // disabled={pendingRequest}
               >
                 Solicitar cambio de rol
               </Button>
