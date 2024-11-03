@@ -1,4 +1,5 @@
 import "@/app/_styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import Providers from "@/app/_providers/Providers";
 import Navbar from "@/app/_components/navbar/Navbar";
