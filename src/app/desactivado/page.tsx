@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Metadata } from "next";
 
+//Probando la nueva key de GitHub
 export const metadata: Metadata = {
   title: "Usuario desactivado",
 };
