@@ -1,3 +1,4 @@
+import { UserStates } from "../_enums/UserStates";
 import IUser from "./IUser";
 
 export interface IPsychologist {
@@ -12,7 +13,7 @@ export interface IPsychologist {
   specialties?: string[];
   services?: string[];
   isPublic: boolean;
-  state?: "Activo" | "Inactivo" | "Pendiente";
+  state: UserStates;
 
   createAt?: string;
   updatedAt?: string;

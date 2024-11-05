@@ -1,9 +1,10 @@
 import mongoose, { Schema, model, Model } from "mongoose";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
+import { UserStates } from "@/app/_enums/UserStates";
 
-const psychologistSchema = new Schema(
+const psychologistSchema = new Schema<IPsychologist>(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: Schema.Types.ObjectId,
     fullName: {
       type: String,
       required: true,
@@ -29,8 +30,14 @@ const psychologistSchema = new Schema(
       type: String,
       required: true,
     },
+    state: {
+      type: String,
+      enum: Object.values(UserStates),
+      required: true,
+      default: UserStates.Activo,
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 psychologistSchema.index({

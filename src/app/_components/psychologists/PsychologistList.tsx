@@ -1,15 +1,9 @@
 "use client";
 import { Dialog, DialogTitle, Grid } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 // import { IPsychologist } from "../../interfaces";
 import { PsychologistCard } from "./PsychologistCard";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
-import {
-  getPsychologists,
-  getPsychologistsByTutor,
-} from "@/app/_database/daos/psychologistDao";
-import { getMyServerSession } from "@/app/_utils/next-auth";
-import Roles from "@/app/_enums/Roles";
 import ScheduleTable from "../schedule/ScheduleTable";
 
 interface Props {

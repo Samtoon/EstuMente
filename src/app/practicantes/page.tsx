@@ -29,8 +29,8 @@ const SearchPage: NextPage = async () => {
   const session = await getMyServerSession();
   const psychologists =
     session?.user.role === Roles.Tutor
-      ? await getPsychologistsByTutor(session.user._id!)
-      : await getPsychologists();
+      ? await getPsychologistsByTutor(session.user._id!, true)
+      : await getPsychologists(true);
   return (
     <PsiLayout title="PsicologicaMente" pageDescription="Sanando Juntos">
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>

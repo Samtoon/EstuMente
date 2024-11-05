@@ -15,7 +15,7 @@ export default function AppointmentsByPsychologistSection() {
   >([allPsychologistsOption]);
   const [selectedOption, setSelectedOption] = useState(optionsList[0]);
   useEffect(() => {
-    fetchPsychologists().then((psychologists) => {
+    fetchPsychologists(true).then((psychologists) => {
       setOptionsList([
         { id: allPsychologistsOption.id, label: allPsychologistsOption.label },
         ...psychologists.map((psychologist) => ({

@@ -3,19 +3,25 @@ import Psychologist from "../models/Psychologist";
 import { connect, serialize } from "../connection";
 import { unstable_noStore as noStore } from "next/cache";
 import { getPsychologistsByTutorPipeline } from "../aggregation pipelines/psychologist";
+import { UserStates } from "@/app/_enums/UserStates";
 
-export async function getPsychologists() {
+export async function getPsychologists(activeOnly = false) {
   noStore();
   await connect();
-  const psychologists = await Psychologist.find().lean();
+  const psychologists = await Psychologist.find({
+    state: activeOnly ? UserStates.Activo : { $nin: [] },
+  }).lean();
   return serialize(psychologists) as IPsychologist[];
 }
 
-export async function getPsychologistsByTutor(tutorId: string) {
+export async function getPsychologistsByTutor(
+  tutorId: string,
+  activeOnly = false
+) {
   noStore();
   await connect();
   const psychologists = await Psychologist.aggregate(
-    getPsychologistsByTutorPipeline(tutorId)
+    getPsychologistsByTutorPipeline(tutorId, activeOnly)
   );
   return serialize(psychologists) as IPsychologist[];
 }
@@ -45,7 +51,7 @@ export async function getPsychologistByUser(user: string) {
 
 export async function updatePsychologistByUser(
   user: string,
-  psychologist: IPsychologist
+  psychologist: Partial<IPsychologist>
 ) {
   noStore();
   await connect();

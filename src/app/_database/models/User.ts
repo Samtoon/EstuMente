@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, Model } from "mongoose";
 import IUser from "../../_interfaces/IUser";
 import Roles from "@/app/_enums/Roles";
+import { UserStates } from "@/app/_enums/UserStates";
 
 const userSchema = new Schema<IUser>(
   {
@@ -37,12 +38,9 @@ const userSchema = new Schema<IUser>(
     },
     state: {
       type: String,
-      enum: {
-        values: ["activo", "inactivo", "revision"],
-        message: "{VALUES} no es un estado válido",
-        default: "activo",
-        required: true,
-      },
+      enum: Object.values(UserStates),
+      required: true,
+      default: UserStates.Activo,
     },
     gender: {
       type: String,
@@ -54,7 +52,7 @@ const userSchema = new Schema<IUser>(
     responsibleUser: Schema.Types.ObjectId,
     totalTimeSpent: { type: Number, default: 0, required: true },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema.index({ firstName: "text", lastName: "text" });

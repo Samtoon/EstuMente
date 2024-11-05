@@ -11,6 +11,7 @@ import {
   updateUserByEmail,
 } from "@/app/_database/daos/userDao";
 import Roles from "@/app/_enums/Roles";
+import { UserStates } from "@/app/_enums/UserStates";
 import { IPsychologist } from "@/app/_interfaces/IPsychologist";
 import IUser from "@/app/_interfaces/IUser";
 import { NextAuthOptions } from "next-auth";
@@ -66,6 +67,7 @@ const authOptions: NextAuthOptions = {
             user: user._id!,
             slug: slugify(profile.name!),
             isPublic: true,
+            state: UserStates.Activo,
           };
           // const psychologist = await Psychologist.findOne({ user: user._id });
           const psychologist = await getPsychologistByUser(user._id!);
@@ -80,7 +82,7 @@ const authOptions: NextAuthOptions = {
           }
         }
       } else {
-        newUser.state = "activo";
+        newUser.state = UserStates.Activo;
         newUser.role = Roles.Consultante;
         // await User.create(upsertUser);
         await createUser(newUser as IUser);

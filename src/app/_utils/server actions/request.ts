@@ -20,6 +20,7 @@ import { createPsychologist } from "@/app/_database/daos/psychologistDao";
 import { sendNotification } from "./notification";
 import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { Session } from "next-auth";
+import { UserStates } from "@/app/_enums/UserStates";
 
 export async function fetchRequests() {
   const session = await getMyServerSession();
@@ -30,22 +31,22 @@ export async function hasPendingRequests(userId: string) {
   const requests = await getRequestsByUser(userId);
   return Boolean(
     requests.filter((request) => request.state === RequestStates.Pendiente)
-      .length,
+      .length
   );
 }
 
 export async function sendRequest(
   formData: FormData,
   user: IUser,
-  requestedRole: Roles,
+  requestedRole: Roles
 ) {
   const previousRequests = await getRequestsByUser(user._id!);
   const promiseList: Promise<boolean | void>[] = [];
   for (let request of previousRequests) {
     promiseList.push(
       deleteFile(request.supportingDocumentId).then(() =>
-        deleteRequest(request._id!),
-      ),
+        deleteRequest(request._id!)
+      )
     );
   }
   await Promise.all(promiseList);
@@ -70,7 +71,7 @@ export async function answerRequest(
   request: IRequest,
   state: RequestStates,
   requestingUser: IUser,
-  comment?: string,
+  comment?: string
 ) {
   const updatedRequest = {
     _id: request._id,
@@ -91,6 +92,7 @@ export async function answerRequest(
           user: requestingUser._id!,
           slug: slugify(fullName),
           isPublic: true,
+          state: UserStates.Activo,
         };
         await createPsychologist(upsertPsychologist);
       default:
@@ -111,6 +113,6 @@ export async function answerRequest(
             : `estos fueron sus comentarios:\n${comment}`
         }`,
     true,
-    session.user.profilePicture!,
+    session.user.profilePicture!
   );
 }

@@ -17,6 +17,7 @@ import {
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
+import StateDialog from "./StateDialog";
 
 export default function UserDialog({
   index,
@@ -35,6 +36,7 @@ export default function UserDialog({
   const dbUser = index === undefined ? index : users[index];
   const [editingAssignedUsers, setEditingAssignedUsers] = useState(false);
   const [editingResponsibleUser, setEditingResponsibleUser] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const responsibleUserCounts: Record<string, number> = {};
   const indexedUsers = users.map((user, index) => {
     if (user.responsibleUser) {
@@ -182,12 +184,21 @@ export default function UserDialog({
     console.log(user);
     return (
       <Dialog open={open} onClose={handleClose} sx={{ overflow: "auto" }}>
+        {index !== undefined && (
+          <StateDialog
+            open={subOpen}
+            onClose={() => setSubOpen(false)}
+            users={users}
+            index={index}
+          />
+        )}
         <DialogTitle fontWeight={FontWeightValues.Bold} color="secondary">
           {dbUser.fullName}
         </DialogTitle>
         <DialogContent sx={{ color: "#666666" }}>
           <Grid container spacing={1}>
             {Object.entries(user).map(([key, value], index) => {
+              //Campos interactivos
               switch (key) {
                 case "Usuarios asignados":
                   return (
@@ -279,6 +290,34 @@ export default function UserDialog({
                             onClick={() => setEditingResponsibleUser(false)}
                           >
                             <Cancel />
+                          </IconButton>
+                        </Grid>
+                      </>
+                    )
+                  );
+                case "Estado":
+                  return (
+                    value && (
+                      <>
+                        {index > 0 && (
+                          <Grid item xs={12}>
+                            <Divider />
+                          </Grid>
+                        )}
+                        <Grid item xs={4}>
+                          <Typography fontWeight={FontWeightValues.Semibold}>
+                            {key + ":"}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          {value.toString()}
+                        </Grid>
+                        <Grid item xs={2}>
+                          <IconButton
+                            color="secondary"
+                            onClick={() => setSubOpen(true)}
+                          >
+                            <Edit />
                           </IconButton>
                         </Grid>
                       </>

@@ -1,6 +1,7 @@
 import PatientFilters from "@/app/_enums/reports/PatientFilters";
 import PsychologistFilters from "@/app/_enums/reports/PsychologistFilters";
 import Roles from "@/app/_enums/Roles";
+import { UserStates } from "@/app/_enums/UserStates";
 import mongoose, { PipelineStage } from "mongoose";
 
 export const addAgePipeline: PipelineStage[] = [
@@ -23,11 +24,13 @@ export const addAgePipeline: PipelineStage[] = [
 export function filterUsersByRolePipeline(
   filter: PsychologistFilters,
   role: Roles,
+  activeOnly: boolean
 ) {
   const pipeline: PipelineStage[] = [
     {
       $match: {
         role: role,
+        state: activeOnly ? UserStates : { $nin: [] },
       },
     },
     {
@@ -43,11 +46,15 @@ export function filterUsersByRolePipeline(
   return pipeline;
 }
 
-export function getPatientsByPsychologistPipeline(psychologist: string) {
+export function getPatientsByPsychologistPipeline(
+  psychologist: string,
+  activeOnly: boolean
+) {
   const pipeline: PipelineStage[] = [
     {
       $match: {
         role: Roles.Consultante,
+        state: activeOnly ? UserStates.Activo : { $nin: [] },
       },
     },
     {

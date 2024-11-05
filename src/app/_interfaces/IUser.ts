@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import Roles from "../_enums/Roles";
+import { UserStates } from "../_enums/UserStates";
 
 export default interface IUser {
   _id?: string;
@@ -12,7 +13,7 @@ export default interface IUser {
   phone?: string;
   profilePicture?: string;
   accept?: boolean;
-  state?: string;
+  state: UserStates;
   gender?: string;
   supportingDocumentId?: string;
   createdAt?: string;

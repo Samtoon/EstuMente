@@ -4,6 +4,7 @@ import { withAuth } from "next-auth/middleware";
 import Roles from "./app/_enums/Roles";
 import path from "path";
 import { NextResponse } from "next/server";
+import { UserStates } from "./app/_enums/UserStates";
 // import { getMyServerSession } from "./app/_utils/next-auth";
 
 // export async function middleware(request: NextRequest) {
@@ -46,28 +47,35 @@ export default withAuth(
     const pathname = req.nextUrl.pathname;
     if (req.nextauth.token) {
       const session = req.nextauth.token as unknown as Session;
-      console.log("Pathname es:", pathname);
-      let myAllowedPaths: string[];
-      switch (session.user.role) {
-        case Roles.Consultante:
-          myAllowedPaths = allowedPaths.Consultante;
-          break;
-        case Roles.Practicante:
-          myAllowedPaths = allowedPaths.Practicante;
-          break;
-        case Roles.Tutor:
-          myAllowedPaths = allowedPaths.Tutor;
-          break;
-        case Roles.Coordinador:
-          myAllowedPaths = allowedPaths.Coordinador;
-          break;
-        case Roles.Administrador:
-          myAllowedPaths = allowedPaths.Administrador;
-          break;
-      }
-      myAllowedPaths.push("/");
-      if (!myAllowedPaths.some((path) => pathname.startsWith(path))) {
-        return NextResponse.redirect(new URL(myAllowedPaths[0], req.nextUrl));
+      if (
+        session.user.state === UserStates.Inactivo &&
+        pathname !== "/desactivado"
+      ) {
+        return NextResponse.redirect(new URL("/desactivado", req.nextUrl));
+      } else {
+        console.log("Pathname es:", pathname);
+        let myAllowedPaths: string[];
+        switch (session.user.role) {
+          case Roles.Consultante:
+            myAllowedPaths = allowedPaths.Consultante;
+            break;
+          case Roles.Practicante:
+            myAllowedPaths = allowedPaths.Practicante;
+            break;
+          case Roles.Tutor:
+            myAllowedPaths = allowedPaths.Tutor;
+            break;
+          case Roles.Coordinador:
+            myAllowedPaths = allowedPaths.Coordinador;
+            break;
+          case Roles.Administrador:
+            myAllowedPaths = allowedPaths.Administrador;
+            break;
+        }
+        myAllowedPaths.push("/");
+        if (!myAllowedPaths.some((path) => pathname.startsWith(path))) {
+          return NextResponse.redirect(new URL(myAllowedPaths[0], req.nextUrl));
+        }
       }
     } else {
       if (pathname !== "/")
