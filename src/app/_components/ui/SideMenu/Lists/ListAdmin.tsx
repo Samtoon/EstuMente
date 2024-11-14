@@ -19,12 +19,12 @@ export default function ListAdmin() {
       <MenuItem label="Dar Aval" path="/solicitudes">
         <ThumbUpOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Coordinadores" path="">
+      {/* <MenuItem label="Coordinadores" path="">
         <SupervisorAccountOutlined color="secondary" />
       </MenuItem>
       <MenuItem label="Tutores" path="">
         <SupervisorAccountOutlined color="secondary" />
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem label="Practicantes" path="/practicantes">
         <SupervisorAccountOutlined color="secondary" />
       </MenuItem>
@@ -34,9 +34,9 @@ export default function ListAdmin() {
       <MenuItem label="Administrar Base de Datos" path="/base_de_datos">
         <StorageOutlined color="secondary" />
       </MenuItem>
-      <MenuItem label="Crear Especialidades" path="">
+      {/* <MenuItem label="Crear Especialidades" path="">
         <AddCircleOutlineOutlined color="secondary" />
-      </MenuItem>
+      </MenuItem> */}
     </List>
   );
 }

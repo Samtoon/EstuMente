@@ -153,9 +153,6 @@ export const SideMenu = () => {
             </ListItem> */}
           </List>
         )}
-        <MenuItem label="Pruebas" path="">
-          <Build color="secondary" />
-        </MenuItem>
       </Box>
     </Drawer>
   );

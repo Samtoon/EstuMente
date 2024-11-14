@@ -62,8 +62,8 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
       <SeeScheduleButton
         psychologistId={psychologist._id!}
         setContent={setContent}
-      />,
-      <CommentsButton />
+      />
+      // <CommentsButton />
     );
     return buttons;
   })();
@@ -102,14 +102,14 @@ export const PsychologistCard: FC<Props> = ({ psychologist, setContent }) => {
               {psychologist.fullName}
             </Typography>
 
-            <Stack spacing={1} alignItems="center" sx={{ m: 2 }}>
+            {/* <Stack spacing={1} alignItems="center" sx={{ m: 2 }}>
               <Rating
                 name="half-rating-read"
                 defaultValue={psychologist.calification}
                 precision={0.5}
                 readOnly
               />
-            </Stack>
+            </Stack> */}
 
             <Box
               sx={{

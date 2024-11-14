@@ -4,6 +4,7 @@ import { Typography, Box, Link, Button, Stack } from "@mui/material";
 import { VideocamOffOutlined } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Roles from "@/app/_enums/Roles";
 
 interface Props {
   joinTrigger: () => void;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
-  // const {data: session} = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   return (
     <Box>
@@ -34,7 +35,6 @@ export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
             color="secondary"
             className="card-btn"
             onClick={() => {
-              console.log("Click!");
               joinTrigger!();
               // router.refresh();
             }}
@@ -45,12 +45,16 @@ export const EndCall: FC<Props> = ({ joinTrigger, leaveTrigger }) => {
             color="secondary"
             className="card-btn"
             onClick={() => {
-              console.log("Click!");
+              if (session?.user.role === Roles.Consultante) {
+                router.push("/citas");
+              }
               leaveTrigger();
               // router.refresh();
             }}
           >
-            Calificar la cita y salir
+            {session?.user.role === Roles.Consultante
+              ? "Calificar la cita y salir"
+              : "Salir"}
           </Button>
         </Stack>
       </Box>

@@ -14,7 +14,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PatientLayout from "../layout/PatientLayout";
 import RoleCardList from "./RoleCardList";
 import Roles from "@/app/_enums/Roles";
@@ -23,6 +23,7 @@ import { ReceiverTypes } from "@/app/_enums/ReceiverTypes";
 import { NotificationTypes } from "@/app/_enums/NotificationTypes";
 import { toast } from "react-toastify";
 import { FontWeightValues } from "@/app/_enums/FontWeightValues";
+import ProfileFieldContext from "@/app/_contexts/ProfileFieldContext";
 
 export default function RegisterModal({
   open,
@@ -38,6 +39,7 @@ export default function RegisterModal({
   const { data: session } = useSession();
   const [helpOpen, setHelpOpen] = useState(false);
   const [formData, setFormData] = useState(new FormData());
+  const { setPendingRequest } = useContext(ProfileFieldContext);
   const user = session?.user;
   function handleSubmit() {
     console.log("Corre el submit");
@@ -62,6 +64,7 @@ export default function RegisterModal({
               possibleRoles.pop();
           }
           handleClose();
+          setPendingRequest(true);
           possibleRoles.forEach((role) => {
             sendNotification(
               { type: ReceiverTypes.Role, id: role },

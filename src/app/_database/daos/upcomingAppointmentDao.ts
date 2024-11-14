@@ -14,7 +14,9 @@ export async function getUpcomingAppointmentsByPsychologist(
   console.log("Trayendo appointments desde el DAO");
   const appointments = await UpcomingAppointment.find({
     psychologist: psychologist,
-  }).lean();
+  })
+    .sort({ date: 1 })
+    .lean();
   // console.log("Ejemplo");
   // console.log(appointments[0])
   console.log(
@@ -29,7 +31,9 @@ export async function getUpcomingAppointmentsByPatient(patient: string) {
   console.log("Trayendo appointments desde el DAO");
   const appointments = await UpcomingAppointment.find({
     patient: patient,
-  }).lean();
+  })
+    .sort({ date: 1 })
+    .lean();
   // console.log("Ejemplo");
   // console.log(appointments[0])
   console.log(
@@ -89,7 +93,9 @@ export async function getOverdueUpcomingAppointments() {
   date.setMinutes(0, 0, 0);
   const appointments = await UpcomingAppointment.find({
     date: { $lt: date },
-  }).lean();
+  })
+    .sort({ date: 1 })
+    .lean();
   console.log("Hay " + appointments.length + " citas atrasadas");
   return serialize(appointments) as IUpcomingAppointment[];
 }

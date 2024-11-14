@@ -15,17 +15,17 @@ interface Props {
 }
 
 export const AppointmentList: FC<Props> = async ({ appointments, history }) => {
-  function helper(
-    appointmentLeft: IUpcomingAppointment | IPreviousAppointment,
-    appointmentRight: IUpcomingAppointment | IPreviousAppointment
-  ) {
-    const a = new Date(appointmentLeft.date);
-    const b = new Date(appointmentRight.date);
-    return compareAsc(a, b);
-  }
+  // function helper(
+  //   appointmentLeft: IUpcomingAppointment | IPreviousAppointment,
+  //   appointmentRight: IUpcomingAppointment | IPreviousAppointment
+  // ) {
+  //   const a = new Date(appointmentLeft.date);
+  //   const b = new Date(appointmentRight.date);
+  //   return compareAsc(a, b);
+  // }
   const session = await getMyServerSession();
 
-  appointments.sort(helper);
+  // appointments.sort(helper);
   return (
     <Grid container spacing={4}>
       {appointments.map(async (appointment) => {

@@ -55,12 +55,6 @@ export default function ReportsDisplay() {
                 countUsersByRole(PsychologistFilters.Gender, Roles.Tutor)
               }
             />
-            <Chart
-              title="Semestre"
-              fetcher={() =>
-                countUsersByRole(PsychologistFilters.Semester, Roles.Tutor)
-              }
-            />
           </SectionWrapper>
         )}
         {session?.user.role === Roles.Administrador && (
@@ -75,15 +69,6 @@ export default function ReportsDisplay() {
               title="Género"
               fetcher={() =>
                 countUsersByRole(PsychologistFilters.Gender, Roles.Coordinador)
-              }
-            />
-            <Chart
-              title="Semestre"
-              fetcher={() =>
-                countUsersByRole(
-                  PsychologistFilters.Semester,
-                  Roles.Coordinador
-                )
               }
             />
           </SectionWrapper>

@@ -17,7 +17,9 @@ export async function getPreviousAppointmentsByPsychologist(
   await connect();
   const appointments = await PreviousAppointment.find({
     psychologist: psychologist,
-  }).lean();
+  })
+    .sort({ date: -1 })
+    .lean();
   return serialize(appointments) as IPreviousAppointment[];
 }
 
@@ -26,7 +28,9 @@ export async function getPreviousAppointmentsByPatient(patient: string) {
   await connect();
   const appointments = await PreviousAppointment.find({
     patient: patient,
-  }).lean();
+  })
+    .sort({ date: -1 })
+    .lean();
   return serialize(appointments) as IPreviousAppointment[];
 }
 
@@ -39,7 +43,9 @@ export async function getPreviousAppointmentsByPatientAndPsychologist(
   const appointments = await PreviousAppointment.find({
     patient,
     psychologist,
-  }).lean();
+  })
+    .sort({ date: -1 })
+    .lean();
   return serialize(appointments) as IPreviousAppointment[];
 }
 

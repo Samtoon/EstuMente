@@ -36,7 +36,7 @@ const SearchPage: NextPage = async () => {
       <Box sx={{ margin: "80px auto", padding: "0px 30px" }}>
         <PageHeader header="Elige un practicante" />
 
-        <Search onQueryChange="asdlfjasf" />
+        {/* <Search onQueryChange="asdlfjasf" /> */}
         <Suspense fallback="Cargando...">
           <PsychologistList psychologists={psychologists} />
         </Suspense>

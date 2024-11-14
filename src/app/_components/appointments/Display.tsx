@@ -68,14 +68,14 @@ export default async function PsychologistDisplay({
           >
             {psychologist.fullName}
           </Typography>
-          <Stack spacing={1} alignItems="center" sx={{ m: 1 }}>
+          {/* <Stack spacing={1} alignItems="center" sx={{ m: 1 }}>
             <Rating
               name="half-rating-read"
               defaultValue={psychologist.calification}
               precision={0.5}
               readOnly
             />
-          </Stack>
+          </Stack> */}
         </Paper>
       </Grid>
       <Grid item xs={12}>
