@@ -46,18 +46,13 @@ export default function Footer() {
           </Typography>
           <Typography>Cali - Colombia</Typography>
           <Typography>© 1994 - 2024</Typography>
-          <br />
-          <Typography fontWeight={FontWeightValues.Semibold}>
-            Notificaciones judiciales:
-          </Typography>
-          <Typography>Click aquí</Typography>
         </Grid>
         <Grid item xs={17} sm={6} lg={3}>
           <Typography fontWeight={FontWeightValues.Semibold}>
             Dirección:
           </Typography>
           <Typography>Ciudad Universitaria Meléndez</Typography>
-          <Typography>Calle 17 # 100-00</Typography>
+          <Typography>Calle 13 # 100-00</Typography>
           <br />
           <Typography>Sede San Fernando</Typography>
           <Typography>Calle 4B N° 36-00</Typography>
